@@ -1,0 +1,21 @@
+﻿@model IEnumerable<BreakOutGame.Models.Domain.BoBGroup>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+<div>
+    @foreach (var group in Model)
+    {
+        <div>
+            <p>@group.GroupName</p>
+            <ul>
+                @foreach (var student in group.Students)
+                {
+                    <li>@student.FirstName @student.LastName</li>
+                }
+            </ul>
+            <a asp-action="WaitScreen" asp-route-id="@group.Id">Kies deze groep</a>
+        </div>
+    }
+</div>

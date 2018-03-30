@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BreakOutGame.Data;
+using BreakOutGame.Data.Repositories;
 using BreakOutGame.Models;
+using BreakOutGame.Models.Domain;
 using BreakOutGame.Services;
 
 namespace BreakOutGame
@@ -35,6 +37,8 @@ namespace BreakOutGame
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IBoBGroupRepository, BoBGroupRepository>();
+            services.AddSession();
 
             services.AddMvc();
         }
@@ -54,7 +58,8 @@ namespace BreakOutGame
             }
 
             app.UseStaticFiles();
-
+            app.UseStatusCodePages();
+            app.UseSession();
             app.UseAuthentication();
 
             app.UseMvc(routes =>
