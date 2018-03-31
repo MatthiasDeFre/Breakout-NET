@@ -10,12 +10,14 @@
         <div>
             <p>@group.GroupName</p>
             <ul>
-                @foreach (var student in group.Students)
+                @foreach (var groupStudent in group.Students)
                 {
-                    <li>@student.FirstName @student.LastName</li>
+                   
+                    <li>@groupStudent.Student.FirstName @groupStudent.Student.LastName</li>
                 }
             </ul>
             <a asp-action="WaitScreen" asp-route-id="@group.Id">Kies deze groep</a>
+            <a asp-action="Index">Test</a>
         </div>
     }
 </div>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BreakOutGame.Models.Domain;
+using BreakOutGame.Models.Domain.RepsitoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BreakOutGame.Data.Repositories
@@ -19,7 +20,7 @@ namespace BreakOutGame.Data.Repositories
         }
         public IEnumerable<BoBGroup> GetAll()
         {
-            return _dbSet.Include(g => g.Students).OrderBy(e => e.GroupName).ToList();
+            return _dbSet.Include(g => g.Students).ThenInclude(g => g.Student).OrderBy(e => e.GroupName).ToList();
         }
 
         public BoBGroup GetById(long id)

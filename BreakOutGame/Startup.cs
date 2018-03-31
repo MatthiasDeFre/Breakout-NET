@@ -12,6 +12,7 @@ using BreakOutGame.Data;
 using BreakOutGame.Data.Repositories;
 using BreakOutGame.Models;
 using BreakOutGame.Models.Domain;
+using BreakOutGame.Models.Domain.RepsitoryInterfaces;
 using BreakOutGame.Services;
 
 namespace BreakOutGame
@@ -38,6 +39,7 @@ namespace BreakOutGame
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IBoBGroupRepository, BoBGroupRepository>();
+            services.AddScoped<IBoBSessionRepository, BoBSessionRepository>();
             services.AddSession();
 
             services.AddMvc();

@@ -5,6 +5,10 @@
     <UserSecretsId>aspnet-BreakOutGame-9588A772-7E2A-48DF-AC62-54F1C1397F6E</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Models\Domain\Session.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />

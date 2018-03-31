@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BreakOutGame.Models.Domain
+namespace BreakOutGame.Models.Domain.RepsitoryInterfaces
 {
     public interface IBoBGroupRepository
     {

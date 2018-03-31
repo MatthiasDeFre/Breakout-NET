@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BreakOutGame.Models.Domain;
+using BreakOutGame.Models.Domain.RepsitoryInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BreakOutGame.Controllers
@@ -10,14 +11,18 @@ namespace BreakOutGame.Controllers
     public class BoBGroupController : Controller
     {
         private readonly IBoBGroupRepository _boBGroupRepository;
-
-        public BoBGroupController(IBoBGroupRepository boBGroupRepository)
+        private readonly IBoBSessionRepository _boBSessionRepository;
+        public BoBGroupController(IBoBGroupRepository boBGroupRepository, IBoBSessionRepository boBSessionRepository)
         {
             _boBGroupRepository = boBGroupRepository;
+            _boBSessionRepository = boBSessionRepository;
         }
         public IActionResult Index()
         {
-            IEnumerable<BoBGroup> groups = _boBGroupRepository.GetAll();
+            //   IEnumerable<BoBGroup> groups = _boBGroupRepository.GetAll();
+
+
+            IEnumerable<BoBGroup> groups = _boBSessionRepository.GetGroupsFromSession(1);
             return View(groups);
         }
 
