@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BreakOutGame.Models.Domain;
 using BreakOutGame.Models.Domain.RepsitoryInterfaces;
+using BreakOutGame.Util;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BreakOutGame.Controllers
@@ -22,7 +23,7 @@ namespace BreakOutGame.Controllers
             //   IEnumerable<BoBGroup> groups = _boBGroupRepository.GetAll();
 
 
-            IEnumerable<BoBGroup> groups = _boBSessionRepository.GetGroupsFromSession(1);
+            IEnumerable<BoBGroup> groups = _boBSessionRepository.GetGroupsFromSession(1).OrderBy(g => g.GroupName, new GroupNameComparer());
             return View(groups);
         }
 
