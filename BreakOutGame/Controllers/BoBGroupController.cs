@@ -23,7 +23,7 @@ namespace BreakOutGame.Controllers
             //   IEnumerable<BoBGroup> groups = _boBGroupRepository.GetAll();
 
 
-            IEnumerable<BoBGroup> groups = _boBSessionRepository.GetGroupsFromSession(1).OrderBy(g => g.GroupName, new GroupNameComparer());
+            IEnumerable<BoBGroup> groups = _boBSessionRepository.GetGroupsFromSession(1).OrderBy(g => g.Status, new GroupStatusComparer()).ThenBy(g => g.GroupName, new GroupNameComparer());
             return View(groups);
         }
 

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BreakOutGame.Models.Domain.BoBGroup>
+﻿@using BreakOutGame.Models.Domain
+@model IEnumerable<BreakOutGame.Models.Domain.BoBGroup>
 @{
     ViewData["Title"] = "Index";
 }
@@ -6,27 +7,29 @@
 <h2>Index</h2>
 <div class="grouplist">
     @foreach (var group in Model)
-    {
-        <div class="col-xs-12 col-sm-6 col-md-6 groupparent">
-        <div class="group" id="@(group.GroupName.Replace(" ", "_"))">
-                
-            <p>@group.GroupName</p>
-            <hr/>
-            <img src="images/group.png" class="groupimg"/>
-            <p>Groepsleden</p>
-            <ul class="groupmemberlist">
-                @foreach (var groupStudent in group.Students)
-                {
+    {   
+        <div id="@("groupparent" + "_" + group.GroupName.Replace(" ", "_"))" class="col-xs-12 col-sm-6 col-md-6 groupparent">
+            <div class="overlay"></div>
+            <div class="group @(group.Status != GroupStatus.NotSelected ? "" : "groupselected")" id="@(group.GroupName.Replace(" ", "_"))">
 
-                    <li>@groupStudent.Student.FirstName @groupStudent.Student.LastName</li>
-                }
-            </ul>
-          
-            <a asp-action="Index">Test</a>
-             <input class="nonclick"type="text"/>
-        </div>
+                <p>@group.GroupName</p>
+                <hr/>
+                <img src="images/group.png" class="groupimg"/>
+                <p>Groepsleden</p>
+                <ul class="groupmemberlist">
+                    @foreach (var groupStudent in group.Students)
+                    {
+
+                        <li>@groupStudent.Student.FirstName @groupStudent.Student.LastName</li>
+                    }
+                </ul>
+
+                <a asp-action="Index">Test</a>
+                <input class="nonclick"type="text"/>
+            </div>
             <div class="confirmation hidden group" id="@((group.GroupName.Replace(" ", "_")) + "hid")">
-                <p>Ben je zeker dat je <strong>@group.GroupName</strong> wilt kiezen als je actieve groep?</p>
+                <p>Ben je zeker dat je <strong>@group.GroupName</strong> wilt kiezen als je actieve groep?
+                </p>
                 <p>Groepsleden</p>
                 <ul class="groupmemberlist">
                     @foreach (var groupStudent in group.Students)
@@ -39,13 +42,14 @@
                 <a class="btn btn-danger">Nee ik ben toch niet zeker</a>
             </div>
         </div>
-            }
+           
+    }
 </div>
 <script>
     window.onload =function() {
         $(".grouplist").find(".group").each(function(index, item) {
             $(item).click(function(e) {
-                if (!$(e.target).hasClass("nonclick")) {
+                if (!$(e.target).hasClass("nonclick") && !$(item).hasClass("groupselected")) {
 
                     console.log($(item).attr("id"));
 
@@ -61,7 +65,11 @@
 
                     $(item).addClass("hidden");
                     $("#" + $(item).attr("id") + "hid").removeClass("hidden");
-
+                    console.log("#" + $(item).attr("id") + "hid");
+                    $("html, body").animate({
+                        scrollTop: $("#groupparent_" + $(item).attr("id")).offset().top - 80
+                    }, 'slow');
+                    
                 }
             });
         });

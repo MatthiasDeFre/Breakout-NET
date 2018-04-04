@@ -25,8 +25,13 @@
 #qrCode {
     margin: 15px;
 }
-
-
+.overlay {
+    position: absolute;
+    background: yellow;
+}
+.groupselected {
+    opacity: 0.4;
+}
 .grouplist > .groupparent:nth-child(odd){
     clear: left;
 }

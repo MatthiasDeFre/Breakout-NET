@@ -23,7 +23,7 @@ namespace BreakOutGame.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
+         
             builder.Entity<GroupStudent>().ToTable("BOBGROUP_Student");
             builder.Entity<GroupStudent>()
                 .HasKey(t => new { GroupId = t.BoBGroup_ID, StudentId = t.students_ID});
@@ -36,6 +36,7 @@ namespace BreakOutGame.Data
                 .HasOne(pt => pt.Group)
                 .WithMany(t => t.Students)
                 .HasForeignKey(pt => pt.BoBGroup_ID);
+      
             builder.ApplyConfiguration(new BoBGroupConfiguration());
             builder.ApplyConfiguration(new BoBSessionConfiguration());
             builder.ApplyConfiguration(new StudentConfiguration());

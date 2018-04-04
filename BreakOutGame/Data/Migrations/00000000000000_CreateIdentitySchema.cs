@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BreakOutGame.Models.Domain;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
@@ -190,6 +191,12 @@ namespace BreakOutGame.Data.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+           
+            migrationBuilder.AddColumn<GroupStatus>(
+                name: "Status",
+                table: "dbo.BOBGROUP");
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -214,6 +221,14 @@ namespace BreakOutGame.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+              name:
+                "test");          
+            migrationBuilder.DropColumn(
+               name: "Status",
+               table: "BOBGROUP"
+               );
         }
     }
 }
