@@ -20,7 +20,7 @@ namespace BreakOutGame.Controllers
             _boBGroupRepository = boBGroupRepository;
             _boBSessionRepository = boBSessionRepository;
         }
-        public IActionResult Index(decimal? id)
+        public IActionResult Index(int? id)
         {
             //   IEnumerable<BoBGroup> groups = _boBGroupRepository.GetAll();
             if (id == null)
@@ -32,7 +32,7 @@ namespace BreakOutGame.Controllers
                     TempData["bruteforce"] = "Gelieve de startpagina te gebruiken om mee te doen aan een sessie";
                     return RedirectToAction("Index", "Home");
                 }
-                id = Decimal.Parse(serSessionId);
+                id = Int32.Parse(serSessionId);
             }
             else
             {
@@ -47,9 +47,9 @@ namespace BreakOutGame.Controllers
         }
 
         
-        public IActionResult WaitScreen(decimal id)
+        public IActionResult WaitScreen(int id)
         {
-            BoBGroup group = _boBGroupRepository.GetById(Convert.ToInt64(id));
+            BoBGroup group = _boBGroupRepository.GetById(id);
             return View(group);
         }
     }

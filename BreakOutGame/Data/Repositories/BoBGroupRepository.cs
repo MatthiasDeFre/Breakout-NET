@@ -23,7 +23,7 @@ namespace BreakOutGame.Data.Repositories
             return _dbSet.Include(g => g.Students).ThenInclude(g => g.Student).OrderBy(e => e.GroupName).ToList();
         }
 
-        public BoBGroup GetById(long id)
+        public BoBGroup GetById(int id)
         {
             return _dbSet.FirstOrDefault(g => g.Id == id);
         }

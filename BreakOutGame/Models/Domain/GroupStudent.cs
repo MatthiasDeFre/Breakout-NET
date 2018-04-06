@@ -7,9 +7,9 @@ namespace BreakOutGame.Models.Domain
 {
     public class GroupStudent
     {
-        public decimal BoBGroup_ID { get; set; }
+        public int BoBGroup_ID { get; set; }
         public BoBGroup Group { get; set; }
-        public decimal students_ID { get; set; }
+        public int students_ID { get; set; }
         public Student Student { get; set; }
     }
 }

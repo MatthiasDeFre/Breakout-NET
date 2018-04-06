@@ -8,7 +8,7 @@ namespace BreakOutGame.Models.Domain
 {
     public class Student
     {
-        public decimal Id { get; set; }
+        public int Id { get; set; }
         public String ClassNumber { get; set; }
         public String FirstName { get; set; }
         public String LastName { get; set; }

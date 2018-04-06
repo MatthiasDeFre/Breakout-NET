@@ -8,8 +8,8 @@ namespace BreakOutGame.Models.Domain.RepsitoryInterfaces
     public interface IBoBSessionRepository
     {
         IEnumerable<BoBSession> GetAll();
-        BoBSession GetById(decimal id);
-        IEnumerable<BoBGroup> GetGroupsFromSession(decimal id);
+        BoBSession GetById(int id);
+        IEnumerable<BoBGroup> GetGroupsFromSession(int id);
         
     }
 }

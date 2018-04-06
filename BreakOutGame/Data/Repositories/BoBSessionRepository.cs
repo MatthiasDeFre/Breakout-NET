@@ -24,12 +24,12 @@ namespace BreakOutGame.Data.Repositories
             return _sessions.ToList();
         }
 
-        public BoBSession GetById(decimal id)
+        public BoBSession GetById(int id)
         {
             return _sessions.Include(s => s.Groups).ThenInclude(g => g.Students).ThenInclude(g => g.Student).FirstOrDefault(s => s.Id == id);
         }
 
-        public IEnumerable<BoBGroup> GetGroupsFromSession(decimal id)
+        public IEnumerable<BoBGroup> GetGroupsFromSession(int id)
         {
             return _sessions.Where(s => s.Id == id).SelectMany(s => s.Groups).Include(g => g.Students).ThenInclude(g => g.Student).OrderBy(g => g.GroupName);
      

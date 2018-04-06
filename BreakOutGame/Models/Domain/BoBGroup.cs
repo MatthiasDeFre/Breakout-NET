@@ -8,7 +8,7 @@ namespace BreakOutGame.Models.Domain
 {
     public class BoBGroup
     {
-        public decimal Id { get; set; }
+        public int Id { get; set; }
         public String GroupName { get; set; }
         public IEnumerable<GroupStudent> Students { get; set; }
         public GroupStatus Status { get; set; }
