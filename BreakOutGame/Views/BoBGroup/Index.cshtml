@@ -14,7 +14,7 @@
 
                 <p>@group.GroupName</p>
                 <hr/>
-                <img src="images/group.png" class="groupimg"/>
+                <img alt="De groepsafbeelding" src="/images/group.png" class="groupimg" />
                 <p>Groepsleden</p>
                 <ul class="groupmemberlist">
                     @foreach (var groupStudent in group.Students)
@@ -27,7 +27,7 @@
                 <a asp-action="Index">Test</a>
                 <input class="nonclick"type="text"/>
             </div>
-            <div class="confirmation hidden group" id="@((group.GroupName.Replace(" ", "_")) + "hid")">
+            <div class="confirmation hidden group sideDiv" id="@((group.GroupName.Replace(" ", "_")) + "hid")">
                 <p>Ben je zeker dat je <strong>@group.GroupName</strong> wilt kiezen als je actieve groep?
                 </p>
                 <p>Groepsleden</p>
@@ -46,11 +46,20 @@
     }
 </div>
 <script>
-    window.onload =function() {
+    window.onload = function () {
+        var doingstuff = false;
+  
         $(".grouplist").find(".group").each(function(index, item) {
             $(item).click(function(e) {
                 if (!$(e.target).hasClass("nonclick") && !$(item).hasClass("groupselected")) {
-
+                    console.log("click");
+                    console.log($(e.target));
+                    if ($(this).hasClass("sideDiv")) {
+                        console.log("snap");
+                        doingstuff = false;
+                    }
+                    else
+                        doingstuff = true;
                     console.log($(item).attr("id"));
 
                     $(".grouplist").find(".group").each(function(index2, item2) {
@@ -73,6 +82,20 @@
                 }
             });
         });
+        $(document).bind("ajaxSend", function () {
+            console.log("waiting for all requests to complete...");
+            // ajaxStop (Global Event)
+            // This global event is triggered if there are no more Ajax requests being processed.
+        }).bind("ajaxStop", function () {
+            // maybe reload here?
+            location.reload();
+            });
+        setInterval(function () {
+            console.log(doingstuff);
+            if (!doingstuff)
+                $.ajax({ url: "/BoBGroup/Index/" });
+        }, 2000);
+
     };
   
 </script>

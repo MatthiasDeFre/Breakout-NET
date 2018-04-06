@@ -26,7 +26,7 @@ namespace BreakOutGame.Data.Repositories
 
         public BoBSession GetById(decimal id)
         {
-            return _sessions.FirstOrDefault(s => s.Id == id);
+            return _sessions.Include(s => s.Groups).ThenInclude(g => g.Students).ThenInclude(g => g.Student).FirstOrDefault(s => s.Id == id);
         }
 
         public IEnumerable<BoBGroup> GetGroupsFromSession(decimal id)

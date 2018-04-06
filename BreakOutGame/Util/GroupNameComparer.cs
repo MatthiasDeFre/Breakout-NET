@@ -27,6 +27,10 @@ namespace BreakOutGame.Util
             
                 counter++;
             }
+            if (compareValue == 0 && ar1.Length != ar2.Length)
+            {
+                compareValue = ar1.Length < ar2.Length ? -1 : 1;
+            }
             return compareValue;
         }
     }

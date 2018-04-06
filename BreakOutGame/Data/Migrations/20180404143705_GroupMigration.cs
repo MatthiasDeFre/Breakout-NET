@@ -31,7 +31,7 @@ namespace BreakOutGame.Data.Migrations
             migrationBuilder.AddColumn<GroupStatus>(
                 name: "Status",
                 table: "BOBGROUP",
-                defaultValue: 0
+                defaultValue: 1
             );
         }
 
