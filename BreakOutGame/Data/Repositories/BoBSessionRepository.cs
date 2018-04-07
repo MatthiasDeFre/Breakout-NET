@@ -34,5 +34,16 @@ namespace BreakOutGame.Data.Repositories
             return _sessions.Where(s => s.Id == id).SelectMany(s => s.Groups).Include(g => g.Students).ThenInclude(g => g.Student).OrderBy(g => g.GroupName);
      
         }
+
+        public BoBGroup GetSpecificGroupFromSession(int id, int groupId)
+        {
+            return _sessions.Where(s => s.Id == id).SelectMany(s => s.Groups).Include(g => g.Students)
+                .ThenInclude(g => g.Student).FirstOrDefault(g => g.Id == groupId);
+        }
+
+        public void SaveChanges()
+        {
+            _dbContext.SaveChanges();
+        }
     }
 }

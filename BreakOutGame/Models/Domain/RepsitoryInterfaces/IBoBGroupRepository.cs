@@ -9,5 +9,6 @@ namespace BreakOutGame.Models.Domain.RepsitoryInterfaces
     {
         IEnumerable<BoBGroup> GetAll();
         BoBGroup GetById(int id);
+        void SaveChanges();
     }
 }

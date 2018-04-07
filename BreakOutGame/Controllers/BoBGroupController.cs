@@ -49,7 +49,35 @@ namespace BreakOutGame.Controllers
         
         public IActionResult WaitScreen(int id)
         {
-            BoBGroup group = _boBGroupRepository.GetById(id);
+            //   BoBGroup group = _boBGroupRepository.GetById(id);
+            if(!Int32.TryParse(HttpContext.Session.GetString("SessionId"), out var sessionId))
+            {
+                TempData["bruteforce"] = "Nice try";
+                return RedirectToAction("Index", "Home");
+            }
+
+            //Make sure the chosen groupId is from the current session
+            BoBGroup group = _boBSessionRepository.GetSpecificGroupFromSession(sessionId, id);
+
+            //Chosen group is not from this session
+            if (group == null)
+            {
+                TempData["bruteforce"] = "Nice try";
+                return RedirectToAction("Index", "Home");
+            }
+              
+            //Chosen group has already been chosen
+            if (group.Status != GroupStatus.NotSelected)
+            {
+                TempData["groupchosen"] = "Deze groep is toch al gekozen :(";
+                return RedirectToAction("Index");
+            }
+
+            //Change group status to selected
+            group.Status = GroupStatus.Selected;
+
+            //Save Changes to database
+            _boBSessionRepository.SaveChanges();
             return View(group);
         }
     }

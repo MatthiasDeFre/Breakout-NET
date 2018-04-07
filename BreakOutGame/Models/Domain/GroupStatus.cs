@@ -7,8 +7,8 @@ namespace BreakOutGame.Models.Domain
 {
     public enum GroupStatus
     {
-        NotSelected,
-        Selected,
-        Blocked
+        NotSelected = 0,
+        Selected = 1,
+        Blocked = 2
     }
 }

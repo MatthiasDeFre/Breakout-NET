@@ -27,5 +27,9 @@ namespace BreakOutGame.Data.Repositories
         {
             return _dbSet.FirstOrDefault(g => g.Id == id);
         }
+        public void SaveChanges()
+        {
+            _dbContext.SaveChanges();
+        }
     }
 }
