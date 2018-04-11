@@ -16,15 +16,7 @@
                 <p>@group.GroupName</p>
                 <hr/>
                 <img alt="De groepsafbeelding" src="/images/group.png" class="groupimg" />
-                <p>Groepsleden</p>
-                <ul class="groupmemberlist">
-                    @foreach (var groupStudent in group.Students)
-                    {
-
-                        <li>@groupStudent.Student.FirstName @groupStudent.Student.LastName</li>
-                    }
-                </ul>
-
+                @await Html.PartialAsync("_GroupMembers", group)
                 <a asp-action="Index">Test</a>
                 <input class="nonclick"type="text"/>
             </div>
@@ -33,15 +25,10 @@
                 <div class="confirmation group sideDiv" hidden id="@((group.GroupName.Replace(" ", "_")) + "hid")">
                     <p>Ben je zeker dat je <strong>@group.GroupName</strong> wilt kiezen als je actieve groep?
                     </p>
-                    <p>Groepsleden</p>
-                    <ul class="groupmemberlist">
-                        @foreach (var groupStudent in group.Students)
-                        {
-
-                            <li>@groupStudent.Student.FirstName @groupStudent.Student.LastName</li>
-                        }
-                    </ul>
-                    <a class="btn btn-primary nonclick" asp-action="WaitScreen" asp-route-id="@group.Id">Kies deze groep</a>
+                    @await Html.PartialAsync("_GroupMembers", group)
+                    <form method="post" asp-action="WaitScreen" asp-route-id="@group.Id">                
+                        <button type="submit" class="btn btn-primary nonclick" >Selecteer deze groep</button>
+                    </form>
                     <a class="btn btn-danger">Nee ik ben toch niet zeker</a>
                 </div>
             }
@@ -49,8 +36,8 @@
 
     }
 </div>
+
 @section Scripts
 {
     <script type="text/javascript" src="/js/groupoverview.js"></script>
-
 }

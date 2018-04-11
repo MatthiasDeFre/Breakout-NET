@@ -41,6 +41,7 @@ namespace BreakOutGame
             services.AddScoped<IBoBGroupRepository, BoBGroupRepository>();
             services.AddScoped<IBoBSessionRepository, BoBSessionRepository>();
             services.AddSession();
+            
 
             services.AddMvc();
         }
@@ -63,13 +64,24 @@ namespace BreakOutGame
             app.UseStatusCodePages();
             app.UseSession();
             app.UseAuthentication();
-           
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "GroupOverview",
+                    template: "GroupOverview/{id}",
+                    defaults: new
+                    {
+                        controller="BoBGroup",
+                        action="Index"
+                    }
+                );
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+           
             });
         }
+
     }
 }

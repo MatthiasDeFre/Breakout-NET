@@ -9,6 +9,8 @@ namespace BreakOutGame.Models.Domain
     {
         NotSelected = 0,
         Selected = 1,
-        Blocked = 2
+        Locked = 2,
+        Blocked = 3
+
     }
 }

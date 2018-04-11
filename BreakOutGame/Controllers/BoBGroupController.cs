@@ -20,65 +20,102 @@ namespace BreakOutGame.Controllers
             _boBGroupRepository = boBGroupRepository;
             _boBSessionRepository = boBSessionRepository;
         }
+        /// <summary>
+        /// Method to retrieve the overview of groups, parameter should only be used if the teacher gave a direct link to the students
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Index(int? id)
         {
             //   IEnumerable<BoBGroup> groups = _boBGroupRepository.GetAll();
-            if (id == null)
+            //Already chosen a group => deselect current group
+            CheckForCurrentGroup();
+
+            if (!id.HasValue)
             {
-                var serSessionId = HttpContext.Session.GetString("SessionId");
+                var serSessionId = HttpContext.Session.GetInt32("SessionId");
                 if (serSessionId == null)
                 {
                     //Person tried to bruteforce onto page
                     TempData["bruteforce"] = "Gelieve de startpagina te gebruiken om mee te doen aan een sessie";
                     return RedirectToAction("Index", "Home");
                 }
-                id = Int32.Parse(serSessionId);
+                id = serSessionId;
             }
             else
             {
-                HttpContext.Session.SetString("SessionId", id.Value.ToString());
+                HttpContext.Session.SetInt32("SessionId", id.Value);
             }
             //Retrieve session and check if session is activated
             BoBSession session = _boBSessionRepository.GetById(id.Value);
             //if(check session active) => redirect else nothing
-            //IEnumerable <BoBGroup> groups = _boBSessionRepository.GetGroupsFromSession(sessionId).OrderBy(g => g.Status, new GroupStatusComparer()).ThenBy(g => g.GroupName, new GroupNameComparer());
+            //IEnumerable <BoBGroup> groups = _boBSessionRepository.GetGroupsFromSession(id).OrderBy(g => g.Status, new GroupStatusComparer()).ThenBy(g => g.GroupName, new GroupNameComparer());
             IEnumerable<BoBGroup> groups = session.Groups.OrderBy(g => g.Status, new GroupStatusComparer()).ThenBy(g => g.GroupName, new GroupNameComparer());
             return View(groups);
         }
 
-        
+        public IActionResult WaitScreen()
+        {
+            int? groupId = HttpContext.Session.GetInt32("groupId");
+            if (!groupId.HasValue)
+                return RedirectToAction("Index");
+
+            BoBGroup group = _boBGroupRepository.GetById(groupId.Value);
+            return View(group);
+        }
+
+        [HttpPost]
         public IActionResult WaitScreen(int id)
         {
+            int? sessionId = HttpContext.Session.GetInt32("SessionId");
             //   BoBGroup group = _boBGroupRepository.GetById(id);
-            if(!Int32.TryParse(HttpContext.Session.GetString("SessionId"), out var sessionId))
+            if (!sessionId.HasValue)
             {
-                TempData["bruteforce"] = "Nice try";
+                TempData["bruteforce"] = "Zonder sessie";
                 return RedirectToAction("Index", "Home");
             }
 
             //Make sure the chosen groupId is from the current session
-            BoBGroup group = _boBSessionRepository.GetSpecificGroupFromSession(sessionId, id);
+            BoBGroup group = _boBSessionRepository.GetSpecificGroupFromSession(sessionId.Value, id);
 
             //Chosen group is not from this session
             if (group == null)
             {
-                TempData["bruteforce"] = "Nice try";
+                TempData["bruteforce"] = "Groep is niet van de geselecteerde sessie";
                 return RedirectToAction("Index", "Home");
             }
-              
-            //Chosen group has already been chosen
-            if (group.Status != GroupStatus.NotSelected)
-            {
-                TempData["groupchosen"] = "Deze groep is toch al gekozen :(";
-                return RedirectToAction("Index");
-            }
 
-            //Change group status to selected
-            group.Status = GroupStatus.Selected;
+            //Chosen group has already been chosen
+            try
+            {
+                group.Select();
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["groupchosen"] = ex.Message;
+                return RedirectToAction("Index", null);
+            }
 
             //Save Changes to database
             _boBSessionRepository.SaveChanges();
-            return View(group);
+            HttpContext.Session.SetInt32("groupId", group.Id);
+            return RedirectToAction("WaitScreen");
+        }
+
+        private void CheckForCurrentGroup()
+        {
+            int? groupId = HttpContext.Session.GetInt32("groupId");
+            
+            //Deselect current group
+            if (groupId.HasValue)
+            {
+                int groupIdVal = groupId.Value;
+                BoBGroup group = _boBGroupRepository.GetById(groupIdVal);
+                group.Deselect();
+                _boBGroupRepository.SaveChanges();
+                TempData["groupchosen"] = "De vorig geselecteerde groep is nu niet meer geselecteerd!";
+                HttpContext.Session.Remove("groupId");
+            }
         }
     }
 }

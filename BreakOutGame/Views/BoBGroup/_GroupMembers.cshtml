@@ -1,0 +1,11 @@
+﻿@using BreakOutGame.Models.Domain
+@model BreakOutGame.Models.Domain.BoBGroup
+<p>Groepsleden</p>
+<ul class="groupmemberlist">
+    @foreach (var groupStudent in Model.Students)
+    {
+
+        <li>@groupStudent.Student.FirstName @groupStudent.Student.LastName</li>
+    }
+</ul>
+
