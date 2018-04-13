@@ -23,23 +23,16 @@ namespace BreakOutGame.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-         
-            builder.Entity<GroupStudent>().ToTable("BOBGROUP_Student");
-            builder.Entity<GroupStudent>()
-                .HasKey(t => new { GroupId = t.BoBGroup_ID, StudentId = t.students_ID});
-            builder.Entity<GroupStudent>()
-                .HasOne(pt => pt.Student)
-                .WithMany(p => p.Groups)
-                .HasForeignKey(pt => pt.students_ID);
 
-            builder.Entity<GroupStudent>()
-                .HasOne(pt => pt.Group)
-                .WithMany(t => t.Students)
-                .HasForeignKey(pt => pt.BoBGroup_ID);
-      
+            //Normal tables
             builder.ApplyConfiguration(new BoBGroupConfiguration());
             builder.ApplyConfiguration(new BoBSessionConfiguration());
             builder.ApplyConfiguration(new StudentConfiguration());
+            builder.ApplyConfiguration(new BoBActionConfiguration());
+
+            //Cross tables
+            builder.ApplyConfiguration(new SessionActionConfiguration());
+            builder.ApplyConfiguration(new GroupStudentConfiguration());
         }
     }
 }

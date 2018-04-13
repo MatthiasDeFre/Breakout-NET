@@ -15,6 +15,7 @@ namespace BreakOutGame.Data.Mappers
             builder.ToTable("BoBSession");
             builder.HasKey(s => s.Id);
             builder.HasMany(s => s.Groups).WithOne();
+            builder.Property(s => s.BoxId).HasColumnName("BOX_ID");
         }
     }
 }

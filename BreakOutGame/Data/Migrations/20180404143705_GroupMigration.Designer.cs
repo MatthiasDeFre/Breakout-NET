@@ -105,13 +105,13 @@ namespace BreakOutGame.Data.Migrations
 
             modelBuilder.Entity("BreakOutGame.Models.Domain.GroupStudent", b =>
                 {
-                    b.Property<decimal>("BoBGroup_ID");
+                    b.Property<decimal>("BoBGroupId");
 
-                    b.Property<decimal>("students_ID");
+                    b.Property<decimal>("StudentId");
 
-                    b.HasKey("BoBGroup_ID", "students_ID");
+                    b.HasKey("BoBGroupId", "StudentId");
 
-                    b.HasIndex("students_ID");
+                    b.HasIndex("StudentId");
 
                     b.ToTable("BOBGROUP_Student");
                 });
@@ -253,12 +253,12 @@ namespace BreakOutGame.Data.Migrations
                 {
                     b.HasOne("BreakOutGame.Models.Domain.BoBGroup", "Group")
                         .WithMany("Students")
-                        .HasForeignKey("BoBGroup_ID")
+                        .HasForeignKey("BoBGroupId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BreakOutGame.Models.Domain.Student", "Student")
                         .WithMany("Groups")
-                        .HasForeignKey("students_ID")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

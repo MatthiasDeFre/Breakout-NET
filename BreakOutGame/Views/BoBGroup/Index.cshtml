@@ -11,18 +11,18 @@
     {   
         <div id="@("groupparent" + "_" + group.GroupName.Replace(" ", "_"))" class="col-xs-12 col-sm-6 col-md-6 groupparent">
             <div class="overlay"></div>
-            <div class="group @(group.Status == GroupStatus.NotSelected ? "" : "groupselected")" id="@(group.GroupName.Replace(" ", "_"))">
+            <div class="group @(group.Status == GroupStatus.NotSelected ? "groupnotselected" : "groupselected")" id="@(group.GroupName.Replace(" ", "_"))">
 
                 <p>@group.GroupName</p>
                 <hr/>
-                <img alt="De groepsafbeelding" src="/images/group.png" class="groupimg" />
+                <img alt="De groepsafbeelding" src="/images/group2.png" class="groupimg" />
                 @await Html.PartialAsync("_GroupMembers", group)
                 <a asp-action="Index">Test</a>
                 <input class="nonclick"type="text"/>
             </div>
             @if (group.Status == GroupStatus.NotSelected)
             {
-                <div class="confirmation group sideDiv" hidden id="@((group.GroupName.Replace(" ", "_")) + "hid")">
+                <div class="confirmation group sideDiv groupnotselected" hidden id="@((group.GroupName.Replace(" ", "_")) + "hid")">
                     <p>Ben je zeker dat je <strong>@group.GroupName</strong> wilt kiezen als je actieve groep?
                     </p>
                     @await Html.PartialAsync("_GroupMembers", group)

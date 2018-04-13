@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace BreakOutGame.Models.Domain
 {
-    public class BoBSession
+    public class BoBAction
     {
         public int Id { get; set; }
-        public IEnumerable<BoBGroup> Groups { get; set; }
-        public int BoxId { get; set; }
-        public IEnumerable<SessionAction> Actions { get; set; }
+        public String Action { get; set; }
+       
+        public IEnumerable<SessionAction> Session { get; set; }
     }
 }

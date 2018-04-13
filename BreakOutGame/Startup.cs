@@ -68,18 +68,8 @@ namespace BreakOutGame
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "GroupOverview",
-                    template: "GroupOverview/{id}",
-                    defaults: new
-                    {
-                        controller="BoBGroup",
-                        action="Index"
-                    }
-                );
-                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-           
             });
         }
 

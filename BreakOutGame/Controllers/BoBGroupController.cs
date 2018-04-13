@@ -34,6 +34,7 @@ namespace BreakOutGame.Controllers
             if (!id.HasValue)
             {
                 var serSessionId = HttpContext.Session.GetInt32("SessionId");
+            
                 if (serSessionId == null)
                 {
                     //Person tried to bruteforce onto page
@@ -46,6 +47,7 @@ namespace BreakOutGame.Controllers
             {
                 HttpContext.Session.SetInt32("SessionId", id.Value);
             }
+            Console.WriteLine(id);
             //Retrieve session and check if session is activated
             BoBSession session = _boBSessionRepository.GetById(id.Value);
             //if(check session active) => redirect else nothing
@@ -67,6 +69,9 @@ namespace BreakOutGame.Controllers
         [HttpPost]
         public IActionResult WaitScreen(int id)
         {
+            
+            CheckForCurrentGroup();
+
             int? sessionId = HttpContext.Session.GetInt32("SessionId");
             //   BoBGroup group = _boBGroupRepository.GetById(id);
             if (!sessionId.HasValue)
