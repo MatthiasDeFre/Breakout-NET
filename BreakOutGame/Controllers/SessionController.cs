@@ -19,6 +19,11 @@ namespace BreakOutGame.Controllers
         {
             this._boBSessionRepository = boBSessionRepository;
         }
-        
+        public IActionResult ValidateSessionCode(int id)
+        {
+            throw new NotImplementedException("Not Implemented");
+        }
+
+
     }
 }
