@@ -21,19 +21,6 @@ namespace BreakOutGame.Controllers
         {
             this._boBSessionRepository = boBSessionRepository;
         }
-
-        [HttpPost]
-        public IActionResult Control(int id)
-        {
-            BoBSession session = _boBSessionRepository.GetById(id);
-            if(session==null)
-            {
-                TempData["sessionCode"] = "Deze sessiecode bestaat niet";
-                RedirectToAction("Index");
-            }
-            HttpContext.Session.SetInt32("SessionId", id);
-            //Keert terug naar het scherm van controller 'BobGroup' naar de html 'Index'
-            return RedirectToAction("BobGroup", "Index");
-        } 
+        
     }
 }
