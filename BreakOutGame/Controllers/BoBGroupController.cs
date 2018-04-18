@@ -30,23 +30,23 @@ namespace BreakOutGame.Controllers
             //   IEnumerable<BoBGroup> groups = _boBGroupRepository.GetAll();
             //Already chosen a group => deselect current group
             CheckForCurrentGroup();
-
-            if (!id.HasValue)
-            {
-                var serSessionId = HttpContext.Session.GetInt32("SessionId");
+            id = 1;
+            //if (!id.HasValue)
+            //{
+            //    var serSessionId = HttpContext.Session.GetInt32("SessionId");
             
-                if (serSessionId == null)
-                {
-                    //Person tried to bruteforce onto page
-                    TempData["bruteforce"] = "Gelieve de startpagina te gebruiken om mee te doen aan een sessie";
-                    return RedirectToAction("Index", "Home");
-                }
-                id = serSessionId;
-            }
-            else
-            {
+            //    if (serSessionId == null)
+            //    {
+            //        //Person tried to bruteforce onto page
+            //        TempData["bruteforce"] = "Gelieve de startpagina te gebruiken om mee te doen aan een sessie";
+            //        return RedirectToAction("Index", "Home");
+            //    }
+            //    id = serSessionId;
+            //}
+            //else
+            //{
                 HttpContext.Session.SetInt32("SessionId", id.Value);
-            }
+            //}
             Console.WriteLine(id);
             //Retrieve session and check if session is activated
             BoBSession session = _boBSessionRepository.GetById(id.Value);
