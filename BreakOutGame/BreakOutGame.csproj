@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Mappers\SessionPathConfiguration.cs" />
     <Compile Remove="Models\Domain\Session.cs" />
   </ItemGroup>
 

@@ -24,6 +24,12 @@ namespace BreakOutGame.Controllers
             throw new NotImplementedException("Not Implemented");
         }
 
+        public int getTotalAssignmentsForSession(int id)
+        {
+            //get alle SESSIONPATH_ASSIGNMENTS voor een session path id
+            return 0;
+        }
+
 
     }
 }

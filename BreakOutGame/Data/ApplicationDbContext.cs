@@ -15,6 +15,8 @@ namespace BreakOutGame.Data
 
         public DbSet<BoBGroup> BoBGroups { get; set; }
         public DbSet<BoBSession> BoBSessions { get; set; }
+
+        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
