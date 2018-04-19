@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using BreakOutGame.Filters;
 using BreakOutGame.Models.Domain;
 using BreakOutGame.Models.Domain.RepsitoryInterfaces;
 using BreakOutGame.Util;
@@ -30,23 +31,23 @@ namespace BreakOutGame.Controllers
             //   IEnumerable<BoBGroup> groups = _boBGroupRepository.GetAll();
             //Already chosen a group => deselect current group
             CheckForCurrentGroup();
-
-            if (!id.HasValue)
-            {
-                var serSessionId = HttpContext.Session.GetInt32("SessionId");
+            id = 1;
+            //if (!id.HasValue)
+            //{
+            //    var serSessionId = HttpContext.Session.GetInt32("SessionId");
             
-                if (serSessionId == null)
-                {
-                    //Person tried to bruteforce onto page
-                    TempData["bruteforce"] = "Gelieve de startpagina te gebruiken om mee te doen aan een sessie";
-                    return RedirectToAction("Index", "Home");
-                }
-                id = serSessionId;
-            }
-            else
-            {
+            //    if (serSessionId == null)
+            //    {
+            //        //Person tried to bruteforce onto page
+            //        TempData["bruteforce"] = "Gelieve de startpagina te gebruiken om mee te doen aan een sessie";
+            //        return RedirectToAction("Index", "Home");
+            //    }
+            //    id = serSessionId;
+            //}
+            //else
+            //{
                 HttpContext.Session.SetInt32("SessionId", id.Value);
-            }
+            //}
             Console.WriteLine(id);
             //Retrieve session and check if session is activated
             BoBSession session = _boBSessionRepository.GetById(id.Value);
@@ -54,16 +55,6 @@ namespace BreakOutGame.Controllers
             //IEnumerable <BoBGroup> groups = _boBSessionRepository.GetGroupsFromSession(id).OrderBy(g => g.Status, new GroupStatusComparer()).ThenBy(g => g.GroupName, new GroupNameComparer());
             IEnumerable<BoBGroup> groups = session.Groups.OrderBy(g => g.Status, new GroupStatusComparer()).ThenBy(g => g.GroupName, new GroupNameComparer());
             return View(groups);
-        }
-
-        public IActionResult WaitScreen()
-        {
-            int? groupId = HttpContext.Session.GetInt32("groupId");
-            if (!groupId.HasValue)
-                return RedirectToAction("Index");
-
-            BoBGroup group = _boBGroupRepository.GetById(groupId.Value);
-            return View(group);
         }
 
         [HttpPost]
@@ -106,6 +97,23 @@ namespace BreakOutGame.Controllers
             HttpContext.Session.SetInt32("groupId", group.Id);
             return RedirectToAction("WaitScreen");
         }
+
+       
+        [ResponseCache(VaryByHeader = "*", NoStore = true)]
+        public IActionResult WaitScreen()
+        {
+            int? groupId = HttpContext.Session.GetInt32("groupId");
+            if (!groupId.HasValue)
+            {
+                TempData["groupchosen"]= "Kies een groep aub";
+                return RedirectToAction("Index");
+            }
+              
+
+            BoBGroup group = _boBGroupRepository.GetById(groupId.Value);
+            return View(group);
+        }
+
 
         private void CheckForCurrentGroup()
         {
