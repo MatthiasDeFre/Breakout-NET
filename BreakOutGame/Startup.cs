@@ -10,10 +10,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BreakOutGame.Data;
 using BreakOutGame.Data.Repositories;
+using BreakOutGame.Filters;
 using BreakOutGame.Models;
 using BreakOutGame.Models.Domain;
 using BreakOutGame.Models.Domain.RepsitoryInterfaces;
 using BreakOutGame.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace BreakOutGame
 {
@@ -40,8 +43,10 @@ namespace BreakOutGame
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IBoBGroupRepository, BoBGroupRepository>();
             services.AddScoped<IBoBSessionRepository, BoBSessionRepository>();
+            services.AddScoped<SessionNotAvailableFilter>();
+           
             services.AddSession();
-            
+
 
             services.AddMvc();
         }
