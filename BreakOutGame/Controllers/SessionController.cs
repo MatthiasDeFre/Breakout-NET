@@ -34,11 +34,11 @@ namespace BreakOutGame.Controllers
             if (session == null)
             {
                 TempData["sessionCode"] = "Deze sessiecode bestaat niet";
-                RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
             HttpContext.Session.SetInt32("SessionId", id);
             //Keert terug naar het scherm van controller 'BobGroup' naar de html 'Index'
-            return RedirectToAction("BobGroup", "Index");
+            return RedirectToAction("Index", "BoBGroup");
         }
 
     }

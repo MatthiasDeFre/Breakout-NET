@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using BreakOutGame.Filters;
 using BreakOutGame.Models.Domain;
 using BreakOutGame.Models.Domain.RepsitoryInterfaces;
 using BreakOutGame.Util;
@@ -56,16 +57,6 @@ namespace BreakOutGame.Controllers
             return View(groups);
         }
 
-        public IActionResult WaitScreen()
-        {
-            int? groupId = HttpContext.Session.GetInt32("groupId");
-            if (!groupId.HasValue)
-                return RedirectToAction("Index");
-
-            BoBGroup group = _boBGroupRepository.GetById(groupId.Value);
-            return View(group);
-        }
-
         [HttpPost]
         public IActionResult WaitScreen(int id)
         {
@@ -106,6 +97,23 @@ namespace BreakOutGame.Controllers
             HttpContext.Session.SetInt32("groupId", group.Id);
             return RedirectToAction("WaitScreen");
         }
+
+       
+        [ResponseCache(VaryByHeader = "*", NoStore = true)]
+        public IActionResult WaitScreen()
+        {
+            int? groupId = HttpContext.Session.GetInt32("groupId");
+            if (!groupId.HasValue)
+            {
+                TempData["groupchosen"]= "Kies een groep aub";
+                return RedirectToAction("Index");
+            }
+              
+
+            BoBGroup group = _boBGroupRepository.GetById(groupId.Value);
+            return View(group);
+        }
+
 
         private void CheckForCurrentGroup()
         {

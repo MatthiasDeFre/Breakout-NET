@@ -12,6 +12,7 @@ namespace BreakOutGame.Controllers
     {
         public IActionResult Index()
         {
+            TempData["error"] = RouteData.Values["error"];
             return View();
         }
 
