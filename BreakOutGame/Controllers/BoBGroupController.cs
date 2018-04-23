@@ -145,5 +145,14 @@ namespace BreakOutGame.Controllers
 
         }
 
+        public IActionResult BlockGroup(int groupId, int sessionId)
+        {
+            BoBGroup group = _boBSessionRepository.GetSpecificGroupFromSession(sessionId, groupId);
+            group.Block();
+            _boBSessionRepository.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }
