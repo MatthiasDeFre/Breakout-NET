@@ -10,13 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BreakOutGameTest.Controllers
 {
-    class SessionTest
+    public class SessionTest
     {
         private readonly DummyApplicationDbContext _dummyContext;
         private readonly Mock<IBoBSessionRepository> _sessionRepository;
         private readonly SessionController _controller;
 
-        SessionTest()
+        public SessionTest()
         {
             this._dummyContext = new DummyApplicationDbContext();
             this._controller = new SessionController(_sessionRepository.Object);

@@ -74,10 +74,10 @@ namespace BreakOutGame.Data.Migrations
 
             modelBuilder.Entity("BreakOutGame.Models.Domain.BoBGroup", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<int>("Id")
                         .HasColumnName("ID");
 
-                    b.Property<decimal?>("BoBSessionId");
+                    b.Property<int?>("BoBSessionId");
 
                     b.Property<string>("GroupName")
                         .HasColumnName("name");
@@ -95,7 +95,7 @@ namespace BreakOutGame.Data.Migrations
 
             modelBuilder.Entity("BreakOutGame.Models.Domain.BoBSession", b =>
                 {
-                    b.Property<decimal>("Id");
+                    b.Property<int>("Id");
 
                     b.HasKey("Id");
 
@@ -104,9 +104,9 @@ namespace BreakOutGame.Data.Migrations
 
             modelBuilder.Entity("BreakOutGame.Models.Domain.GroupStudent", b =>
                 {
-                    b.Property<decimal>("BoBGroupId");
+                    b.Property<int>("BoBGroupId");
 
-                    b.Property<decimal>("StudentId");
+                    b.Property<int>("StudentId");
 
                     b.HasKey("BoBGroupId", "StudentId");
 
@@ -117,7 +117,7 @@ namespace BreakOutGame.Data.Migrations
 
             modelBuilder.Entity("BreakOutGame.Models.Domain.Student", b =>
                 {
-                    b.Property<decimal>("Id");
+                    b.Property<int>("Id");
 
                     b.Property<string>("ClassNumber")
                         .HasColumnName("CLASSNUMBER");

@@ -28,6 +28,11 @@ namespace BreakOutGame.Models.Domain
             }
             set => _groupState = value;
         }
+
+        public BoBGroup()
+        {
+            Status = GroupStatus.NotSelected;
+        }
         public void Select()
         {
             GroupState.Select();
