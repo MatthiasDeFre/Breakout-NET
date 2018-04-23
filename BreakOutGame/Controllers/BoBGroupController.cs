@@ -170,11 +170,28 @@ namespace BreakOutGame.Controllers
             IEnumerable<BoBGroup> groups = _boBSessionRepository.GetGroupsFromSession(sessionId);
             foreach (BoBGroup group in groups)
             {
-                group.Block();
+                //if (group.Status == GroupStatus.NotBlockedChecken??)
+                //{
+                    group.Block();
+                //}
             }
             _boBSessionRepository.SaveChanges();
             return RedirectToAction(nameof(Index));
 
+        }
+
+        public IActionResult DeblockAllGroups(int sessionId, IEnumerable<BoBGroup> id)
+        {
+            IEnumerable<BoBGroup> groups = _boBSessionRepository.GetGroupsFromSession(sessionId);
+            foreach (BoBGroup group in groups)
+            {
+                if (group.Status == GroupStatus.Blocked)
+                {
+                    group.Deblock();
+                }
+            }
+            _boBSessionRepository.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
