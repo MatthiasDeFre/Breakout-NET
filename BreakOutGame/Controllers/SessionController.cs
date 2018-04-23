@@ -47,5 +47,12 @@ namespace BreakOutGame.Controllers
             return RedirectToAction("Index", "BoBGroup");
         }
 
+        public void ActivateSession(int id)
+        {
+            BoBSession session = _boBSessionRepository.GetById(id);
+            session.SessionStatus = SessionStatus.ACTIVATED;
+            _boBSessionRepository.SaveChanges();
+        }
+
     }
 }
