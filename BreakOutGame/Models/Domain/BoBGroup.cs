@@ -12,6 +12,8 @@ namespace BreakOutGame.Models.Domain
         public int Id { get; set; }
         public String GroupName { get; set; }
         public IEnumerable<GroupStudent> Students { get; set; }
+
+        public int PathId { get; set; }
       
 
         public GroupStatus Status { get; set; }
