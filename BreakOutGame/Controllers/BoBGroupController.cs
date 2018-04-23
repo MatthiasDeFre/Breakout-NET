@@ -154,5 +154,16 @@ namespace BreakOutGame.Controllers
         }
 
 
+        public IActionResult DeblockGroup(int groupId, int sessionId)
+        {
+            BoBGroup group = _boBSessionRepository.GetSpecificGroupFromSession(sessionId, groupId);
+            if (group.Status == GroupStatus.Blocked)
+            {
+                group.Deblock();
+                _boBSessionRepository.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
