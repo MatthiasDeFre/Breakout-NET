@@ -130,5 +130,20 @@ namespace BreakOutGame.Controllers
                 HttpContext.Session.Remove("groupId");
             }
         }
+
+        public IActionResult LockGroup(int groupId, int sessionId)
+        {
+            BoBGroup group = _boBSessionRepository.GetSpecificGroupFromSession(sessionId, groupId);
+            group.Lock(true);
+            _boBSessionRepository.SaveChanges();
+
+            //BoBGroup group2 = _boBGroupRepository.GetById(groupId);
+            //group2.Lock(true);
+            //_boBGroupRepository.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
     }
 }
