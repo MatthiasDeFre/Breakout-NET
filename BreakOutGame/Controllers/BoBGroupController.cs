@@ -130,5 +130,68 @@ namespace BreakOutGame.Controllers
                 HttpContext.Session.Remove("groupId");
             }
         }
+
+        public IActionResult LockGroup(int groupId, int sessionId)
+        {
+            BoBGroup group = _boBSessionRepository.GetSpecificGroupFromSession(sessionId, groupId);
+            group.Lock(true);
+            _boBSessionRepository.SaveChanges();
+
+            //BoBGroup group2 = _boBGroupRepository.GetById(groupId);
+            //group2.Lock(true);
+            //_boBGroupRepository.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        public IActionResult BlockGroup(int groupId, int sessionId)
+        {
+            BoBGroup group = _boBSessionRepository.GetSpecificGroupFromSession(sessionId, groupId);
+            group.Block();
+            _boBSessionRepository.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        public IActionResult DeblockGroup(int groupId, int sessionId)
+        {
+            BoBGroup group = _boBSessionRepository.GetSpecificGroupFromSession(sessionId, groupId);
+            if (group.Status == GroupStatus.Blocked)
+            {
+                group.Deblock();
+                _boBSessionRepository.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult BlockAllGroups(int sessionId, IEnumerable<BoBGroup> id)
+        {
+            IEnumerable<BoBGroup> groups = _boBSessionRepository.GetGroupsFromSession(sessionId);
+            foreach (BoBGroup group in groups)
+            {
+                //if (group.Status == GroupStatus.NotBlockedChecken??)
+                //{
+                    group.Block();
+                //}
+            }
+            _boBSessionRepository.SaveChanges();
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        public IActionResult DeblockAllGroups(int sessionId, IEnumerable<BoBGroup> id)
+        {
+            IEnumerable<BoBGroup> groups = _boBSessionRepository.GetGroupsFromSession(sessionId);
+            foreach (BoBGroup group in groups)
+            {
+                if (group.Status == GroupStatus.Blocked)
+                {
+                    group.Deblock();
+                }
+            }
+            _boBSessionRepository.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
