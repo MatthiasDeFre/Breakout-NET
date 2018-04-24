@@ -193,9 +193,6 @@ namespace BreakOutGame.Data.Migrations
                 unique: true);
 
            
-            migrationBuilder.AddColumn<GroupStatus>(
-                name: "Status",
-                table: "dbo.BOBGROUP");
 
         }
 

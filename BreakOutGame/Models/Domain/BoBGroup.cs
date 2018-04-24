@@ -31,6 +31,9 @@ namespace BreakOutGame.Models.Domain
             set => _groupState = value;
         }
 
+        public SessionPath Path { get; set; }
+
+
         public BoBGroup()
         {
             Status = GroupStatus.NotSelected;

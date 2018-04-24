@@ -19,7 +19,8 @@ namespace BreakOutGame.Data.Mappers
             builder.Property(g => g.Status).HasDefaultValue(GroupStatus.NotSelected);
             builder.Ignore(g => g.GroupState);
             //      builder.HasMany(g => g.Students).WithOne().HasForeignKey(g => g.Id);
-            builder.Property(g => g.PathId).HasColumnName("PATH_ID");
+            //builder.Property(g => g.PathId).HasColumnName("PATH_ID");
+            builder.HasOne(g => g.Path).WithOne();
 
         }
     }

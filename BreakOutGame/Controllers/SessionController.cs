@@ -46,6 +46,5 @@ namespace BreakOutGame.Controllers
             //Keert terug naar het scherm van controller 'BobGroup' naar de html 'Index'
             return RedirectToAction("Index", "BoBGroup");
         }
-
     }
 }

@@ -13,8 +13,6 @@ namespace BreakOutGame.Models.Domain
 
         public int ReferenceNr { get; set; }
 
-        public int ExerciseId { get; set; }
 
-        public int GroupOperationId { get; set; }
     }
 }
