@@ -10,15 +10,17 @@ namespace BreakOutGame.Models.Domain.GroupStates
     {
         public BoBGroup Group { get; set; }
 
+        protected GroupState(BoBGroup group)
+        {
+            Group = group;
+        }
+
         public virtual void Select() => throw new InvalidOperationException();
         public virtual void Deselect() => throw new InvalidOperationException();
         public virtual void Lock(Boolean force) => throw new InvalidOperationException();
         public virtual void Block() => throw new InvalidOperationException();
         public virtual void Deblock() => throw new InvalidOperationException();
 
-        protected GroupState(BoBGroup group)
-        {
-            Group = group;
-        }
+       
     }
 }

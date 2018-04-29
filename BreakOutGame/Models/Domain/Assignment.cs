@@ -13,6 +13,7 @@ namespace BreakOutGame.Models.Domain
 
         public int ReferenceNr { get; set; }
 
+        
 
     }
 }

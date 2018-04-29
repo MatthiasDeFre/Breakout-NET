@@ -27,11 +27,13 @@ namespace BreakOutGame.Data
             base.OnModelCreating(builder);
 
             //Normal tables
+            BoBGroupConfiguration s =new BoBGroupConfiguration();
+
             builder.ApplyConfiguration(new BoBGroupConfiguration());
             builder.ApplyConfiguration(new BoBSessionConfiguration());
             builder.ApplyConfiguration(new StudentConfiguration());
             builder.ApplyConfiguration(new BoBActionConfiguration());
-
+            builder.ApplyConfiguration(new PathConfiguration());
             //Cross tables
             builder.ApplyConfiguration(new SessionActionConfiguration());
             builder.ApplyConfiguration(new GroupStudentConfiguration());

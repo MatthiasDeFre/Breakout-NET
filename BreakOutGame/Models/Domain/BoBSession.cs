@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BreakOutGame.Models.Domain.SessionStates;
 
 namespace BreakOutGame.Models.Domain
 {
@@ -14,5 +15,43 @@ namespace BreakOutGame.Models.Domain
         public IEnumerable<SessionAction> Actions { get; set; }
 
         public SessionStatus SessionStatus { get; set; }
+
+        private SessionState _sessionState;
+        public SessionState SessionState {
+            get
+            {
+                if (_sessionState == null)
+                    _sessionState = SessionStateFactory.CreateState(this, SessionStatus);
+                return _sessionState;
+            }
+            set => _sessionState = value;
+        }
+
+        public void Activate()
+        {
+            SessionState.Activate();   
+        }
+        public void Start()
+        {
+            SessionState.Start();
+        }
+        public void Lock()
+        {
+            SessionState.Lock();
+        }
+        public void Unlock()
+        {
+            SessionState.Unlock();
+        }
+
+        public void SelectGroup(BoBGroup group)
+        {
+            SessionState.SelectGroup(group);
+        }
+
+        public void DeselectGroup(BoBGroup group)
+        {
+            SessionState.DeselectGroup(group);
+        }
     }
 }

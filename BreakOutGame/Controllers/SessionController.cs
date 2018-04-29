@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BreakOutGame.Filters;
 using BreakOutGame.Models.Domain;
 using BreakOutGame.Models.Domain.RepsitoryInterfaces;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +27,8 @@ namespace BreakOutGame.Controllers
             throw new NotImplementedException("Not Implemented");
         }
 
-        public int getTotalAssignmentsForSession(int id)
+        [SessionFilter]
+        public int getTotalAssignmentsForSession(int sessionId)
         {
             //get alle SESSIONPATH_ASSIGNMENTS voor een session path id
             return 0;
@@ -47,11 +49,22 @@ namespace BreakOutGame.Controllers
             return RedirectToAction("Index", "BoBGroup");
         }
 
-        public void ActivateSession(int id)
+        [HttpPost]
+        [SessionFilter]
+        public IActionResult ActivateSession(int sessionId)
         {
-            BoBSession session = _boBSessionRepository.GetById(id);
-            session.SessionStatus = SessionStatus.ACTIVATED;
+            BoBSession session = _boBSessionRepository.GetById(sessionId);
+            try
+            {
+                session.Activate();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Index");
+            }
             _boBSessionRepository.SaveChanges();
+            //Go to session detail screen
+            return RedirectToAction("Index");
         }
 
     }

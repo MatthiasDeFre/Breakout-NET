@@ -9,7 +9,8 @@ namespace BreakOutGame.Models.Domain
     {
         public int Id { get; set; }
 
-        public int GroupId { get; set; }
-        public IEnumerable<PathAssignment> Assignments { get; set; }
+        public IEnumerable<Assignment> Assignments { get; set; }
+     
+
     }
 }

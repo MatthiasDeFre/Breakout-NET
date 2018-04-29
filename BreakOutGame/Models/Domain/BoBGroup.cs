@@ -13,8 +13,6 @@ namespace BreakOutGame.Models.Domain
         public String GroupName { get; set; }
         public IEnumerable<GroupStudent> Students { get; set; }
 
-        public int PathId { get; set; }
-      
 
         public GroupStatus Status { get; set; }
 
@@ -32,7 +30,7 @@ namespace BreakOutGame.Models.Domain
         }
 
         public SessionPath Path { get; set; }
-
+        private int _pathid;
 
         public BoBGroup()
         {

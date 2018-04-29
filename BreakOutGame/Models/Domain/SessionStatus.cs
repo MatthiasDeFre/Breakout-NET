@@ -7,8 +7,10 @@ namespace BreakOutGame.Models.Domain
 {
     public enum SessionStatus
     {
-        ACTIVATED,
-        CLOSED,
-        SCHEDULED
+        Activated,
+        Closed,
+        Scheduled,
+        Started
+
     }
 }

@@ -17,6 +17,9 @@ namespace BreakOutGame.Data.Mappers
             builder.HasMany(s => s.Groups).WithOne();
             builder.Property(s => s.BoxId).HasColumnName("BOX_ID");
             builder.Property(s => s.SessionStatus).HasColumnName("SESSIONSTATUS");
+
+            //Ignore :(
+            builder.Ignore(s => s.SessionState);
         }
     }
 }
