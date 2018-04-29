@@ -32,7 +32,7 @@ namespace BreakOutGame.Controllers
         {
             //   IEnumerable<BoBGroup> groups = _boBGroupRepository.GetAll();
             //Already chosen a group => deselect current group
-            CheckForCurrentGroup();
+            CheckForCurrentGroup(sessionId);
             //if (!id.HasValue)
             //{
             //    var serSessionId = HttpContext.Session.GetInt32("SessionId");
@@ -58,10 +58,11 @@ namespace BreakOutGame.Controllers
         }
 
         [HttpPost]
+        [SessionFilter]
         public IActionResult WaitScreen(int id, int sessionId)
         {
             
-            CheckForCurrentGroup();
+            CheckForCurrentGroup(sessionId);
 
             //   BoBGroup group = _boBGroupRepository.GetById(id);
 
@@ -110,7 +111,7 @@ namespace BreakOutGame.Controllers
         }
 
 
-        [SessionFilter]
+        
         private void CheckForCurrentGroup(int sessionId)
         {
             //GROUP FILTER TODO
