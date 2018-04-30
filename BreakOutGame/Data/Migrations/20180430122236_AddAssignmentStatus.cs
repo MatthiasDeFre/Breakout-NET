@@ -15,12 +15,22 @@ namespace BreakOutGame.Data.Migrations
                 table: "Assignment",
                 defaultValue: 0
             );
+            migrationBuilder.AddColumn<int>(
+                name: "WrongCount",
+                table: "Assignment",
+                defaultValue: 0
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
                 name: "Status",
+                table: "Assignment"
+
+            );
+            migrationBuilder.DropColumn(
+                name: "WrongCount",
                 table: "Assignment"
 
             );

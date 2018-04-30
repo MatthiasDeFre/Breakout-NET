@@ -25,5 +25,16 @@ namespace BreakOutGame.Models.Domain.GroupStates
             Group.Status = GroupStatus.Locked;
             Group.GroupState = new LockedState(Group);
         }
+
+        public override bool ValidateAnswer(Assignment assignment, string answer)
+        {
+            bool correct = assignment.ValidateAnswer(answer);
+            if (assignment.WrongCount == 3)
+            {
+                Group.Status = GroupStatus.Blocked;
+                Group.GroupState = new BlockedState(Group);
+            }
+            return correct;
+        }
     }
 }

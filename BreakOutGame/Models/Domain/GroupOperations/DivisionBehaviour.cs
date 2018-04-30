@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BreakOutGame.Data.GroupOperations
+namespace BreakOutGame.Models.Domain.GroupOperations
 {
-    public class MinBehaviour : IAnswerBehaviour
+    public class DivisionBehaviour : IAnswerBehaviour
     {
         public string GetAnwser(string exValue, string groupOpValue)
         {
+         
             double anwser = Double.Parse(exValue);
             double actionValue = Double.Parse(groupOpValue);
 
-            return (anwser - actionValue).ToString();
+            return (anwser / actionValue).ToString();
         }
     }
 }

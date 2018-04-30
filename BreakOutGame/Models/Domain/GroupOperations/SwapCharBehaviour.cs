@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BreakOutGame.Data.GroupOperations
+namespace BreakOutGame.Models.Domain.GroupOperations
 {
     public class SwapCharBehaviour : IAnswerBehaviour
     {

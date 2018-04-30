@@ -30,7 +30,6 @@ namespace BreakOutGame.Models.Domain
         }
 
         public SessionPath Path { get; set; }
-        private int _pathid;
 
         public BoBGroup()
         {
@@ -58,6 +57,11 @@ namespace BreakOutGame.Models.Domain
         public void Deblock()
         {
             GroupState.Deblock();
+        }
+
+        public bool ValidateAnswer(Assignment assignment, String answer)
+        {
+            return GroupState.ValidateAnswer(assignment, answer);
         }
     }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BreakOutGame.Data.GroupOperations
+namespace BreakOutGame.Models.Domain.GroupOperations
 {
-    interface IAnswerBehaviour
+    public interface IAnswerBehaviour
     {
         String GetAnwser(String exValue, String groupOpValue);
     }

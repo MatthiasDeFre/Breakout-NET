@@ -15,7 +15,20 @@ namespace BreakOutGame.Models.Domain
 
         public Exercise Exercise { get; set; }
         public GroupOperation GroupOperation { get; set; }
-        public AssignmentStatus Status { get; set; }
+        public AssignmentStatus Status { get; private set; }
+        public int WrongCount { get; set; }
+
+        public Boolean ValidateAnswer(String answer)
+        {
+            String correctAnswer = GroupOperation.GetAnswer(Exercise.Answer);
+            if (answer.Equals(correctAnswer))
+            {
+                Status = AssignmentStatus.Completed;
+                return true;
+            }
+            WrongCount++;
+            return false;
+        }
 
     }
 }
