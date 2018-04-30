@@ -13,7 +13,9 @@ namespace BreakOutGame.Models.Domain
 
         public int ReferenceNr { get; set; }
 
-        
+        public Exercise Exercise { get; set; }
+        public GroupOperation GroupOperation { get; set; }
+        public AssignmentStatus Status { get; set; }
 
     }
 }

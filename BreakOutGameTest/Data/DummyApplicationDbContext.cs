@@ -16,9 +16,9 @@ namespace BreakOutGameTest.Data
             ValidSession = new BoBSession();
             InvalidSession1 = new BoBSession();
             InvalidSession2 = new BoBSession();
-            ValidSession.SessionStatus = SessionStatus.ACTIVATED;
-            InvalidSession1.SessionStatus = SessionStatus.SCHEDULED;
-            InvalidSession2.SessionStatus = SessionStatus.CLOSED;
+            ValidSession.SessionStatus = SessionStatus.Activated;
+            InvalidSession1.SessionStatus = SessionStatus.Scheduled;
+            InvalidSession2.SessionStatus = SessionStatus.Closed;
 
         }
     }

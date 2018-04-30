@@ -12,6 +12,7 @@ namespace BreakOutGame.Data.Mappers
     {
         public void Configure(EntityTypeBuilder<SessionPath> builder)
         {
+           
             builder.HasMany(p => p.Assignments).WithOne();
         }
     }
