@@ -20,20 +20,13 @@ namespace BreakOutGame.Controllers
 
         [GroupFilter]
         [SessionFilter]
-        public IActionResult Opgave(int groupid, int sessionid)
+        public IActionResult Index(int groupid, int sessionid)
         {
             BoBGroup bobgroup=_bobsessionRepository.GetSpecificGroupFromSession(groupid, sessionid);
-            SessionPath path = bobgroup.Path;
-            IEnumerable<Assignment> assignments = path.Assignments;
-            Assignment assignment= assignments.First();
-            ViewData["assignment"] = assignment;
+            var serSessionId = HttpContext.Session.GetInt32("SessionId");
+            Assignment assignment=_bobsessionRepository.GetNextAssignment((int)serSessionId,bobgroup.Id);
             return View(assignment);
         }
 
-
-        public IActionResult Index()
-        {
-            return View();
-        }
     }
 }
