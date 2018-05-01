@@ -23,7 +23,7 @@ namespace BreakOutGameTest.Controllers
         }
 
         #region tests
-        
+
         [Fact]
         public void SessionCode_Valid_RedirectsTo_BoBGroup_Index()
         {
@@ -44,7 +44,7 @@ namespace BreakOutGameTest.Controllers
         {
             _sessionRepository.Setup(s => s.GetById(2)).Returns(_dummyContext.InvalidSession1);
             var result = _controller.ValidateSessionCode(2) as RedirectToActionResult;
-            
+
             Assert.Equal("Session", result?.ControllerName);
             Assert.Equal("Index", result?.ActionName);
             //temp data checken
