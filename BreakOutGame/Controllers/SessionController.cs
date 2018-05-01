@@ -22,10 +22,6 @@ namespace BreakOutGame.Controllers
         {
             this._boBSessionRepository = boBSessionRepository;
         }
-        public IActionResult ValidateSessionCode(int id)
-        {
-            throw new NotImplementedException("Not Implemented");
-        }
 
         [SessionFilter]
         public int getTotalAssignmentsForSession(int sessionId)
@@ -60,11 +56,10 @@ namespace BreakOutGame.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Session");
             }
             _boBSessionRepository.SaveChanges();
-            //Go to session detail screen
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "BoBGroup");
         }
 
     }

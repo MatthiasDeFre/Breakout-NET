@@ -9,9 +9,13 @@ namespace BreakOutGameTest.Data
 {
     class DummyApplicationDbContext
     {
-        public BoBSession ValidSession { get; }
-        public BoBSession InvalidSession1 { get; }
-        public BoBSession InvalidSession2 { get; }
+        private BoBSession[] _sessions;
+
+        public BoBSession ValidSession { get { return _sessions[0]; } }
+        public BoBSession ActiveSession { get { return _sessions[1]; } }
+
+        public BoBSession ClosedSession { get { return _sessions[2]; } }
+        public BoBSession StartedSession { get { return _sessions[3]; } }
 
         public Assignment Assignment1 { get; }
         public Assignment LazyAssignment { get; }
@@ -19,12 +23,17 @@ namespace BreakOutGameTest.Data
         public DummyApplicationDbContext()
         {
             //Invullen
-            ValidSession = new BoBSession();
-            InvalidSession1 = new BoBSession();
-            InvalidSession2 = new BoBSession();
-            ValidSession.SessionStatus = SessionStatus.Activated;
-            InvalidSession1.SessionStatus = SessionStatus.Scheduled;
-            InvalidSession2.SessionStatus = SessionStatus.Closed;
+            this._sessions = new BoBSession[4];
+            _sessions[0] = new BoBSession();
+            //invalid
+            _sessions[1] = new BoBSession();
+            _sessions[2] = new BoBSession();
+            _sessions[3] = new BoBSession();
+
+            _sessions[0].SessionStatus = SessionStatus.Scheduled;
+            _sessions[1].SessionStatus = SessionStatus.Activated;
+            _sessions[2].SessionStatus = SessionStatus.Closed;
+            _sessions[3].SessionStatus = SessionStatus.Started;
 
             Assignment1 = new Assignment
             {
@@ -60,7 +69,7 @@ namespace BreakOutGameTest.Data
              
 
             };
-            SelectedGroup.GroupState = new SelectedState(SelectedGroup);
+            SelectedGroup.GroupState = new LockedState(SelectedGroup);
         }
     }
 }

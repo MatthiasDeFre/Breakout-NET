@@ -35,6 +35,10 @@ namespace BreakOutGame.Data.Repositories
      
         }
 
+        public BoBAction GetAction(int sessionId, int referenceNumber)
+        {
+            return _sessions.Where(s => s.Id == sessionId).SelectMany(g => g.Actions).Where(a => a.OrderNumber == referenceNumber).Select(a => a.Action).FirstOrDefault();
+        }
         public BoBGroup GetSpecificGroupFromSession(int id, int groupId)
         {
             return _sessions.Where(s => s.Id == id).SelectMany(s => s.Groups).Include(g => g.Students)
@@ -44,6 +48,14 @@ namespace BreakOutGame.Data.Repositories
                 .Include(g => g.Path)
                      .ThenInclude(g => g.Assignments).ThenInclude(g => g.Exercise)
                 .FirstOrDefault(g => g.Id == groupId);
+        }
+
+        public Assignment GetNextAssignment(int sessionId, int groupId)
+        {
+            return _sessions.Where(g => g.Id == sessionId).SelectMany(g => g.Groups).Where(g => g.Id == groupId).SelectMany(g => g.Path.Assignments)
+                .OrderBy(g => g.ReferenceNr)
+                .Include(g => g.Exercise)
+                .FirstOrDefault(g => g.Status == AssignmentStatus.NotCompleted);
         }
 
         public void SaveChanges()

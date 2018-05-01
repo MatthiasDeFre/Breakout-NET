@@ -13,6 +13,7 @@ namespace BreakOutGame.Data.Mappers
         public void Configure(EntityTypeBuilder<GroupOperation> builder)
         {
             builder.Ignore(op => op.AnswerBehaviour);
+            builder.Ignore(op => op.AssignmentString);
             builder.Property(o => o.GroupOperationCategory).HasColumnName("category");
         }
     }

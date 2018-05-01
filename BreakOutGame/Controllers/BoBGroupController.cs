@@ -197,5 +197,44 @@ namespace BreakOutGame.Controllers
             _boBSessionRepository.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+
+        [SessionFilter]
+        [GroupFilter]
+        [HttpPost]
+        public IActionResult ValidateAnswer(int sessionId, int groupId, String answer)
+        {
+            BoBGroup group = _boBSessionRepository.GetSpecificGroupFromSession(sessionId, groupId);
+            Assignment assignment = _boBSessionRepository.GetNextAssignment(sessionId, groupId);
+            bool correct = group.ValidateAnswer(assignment, answer);
+            _boBSessionRepository.SaveChanges();
+            if (!correct && group.Status == GroupStatus.Blocked)
+            {
+                TempData["blocked"] = true;
+                //return RedirectToAction("Opgave");
+            }
+            //return RedirectToAction("Action", assignment.ReferenceNumber);
+            //SERIALIZE ACCESSCODE
+            return RedirectToAction("");
+        }
+
+        [SessionFilter]
+        public IActionResult Action(int sessionId, int referenceNumber)
+        {
+            BoBAction boBAction = _boBSessionRepository.GetAction(sessionId, referenceNumber);
+            //return View(bobAction)
+            return null;
+        }
+
+        [HttpPost]
+        public IActionResult ValidateAccessCode(int accessCode)
+        {
+            int test = 0;
+            if (test != accessCode)
+            {
+                TempData["wrongaccess"] = true;
+                return RedirectToAction("Action");
+            }
+            return RedirectToAction("Opgave");
+        }
     }
 }
