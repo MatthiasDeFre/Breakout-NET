@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿using Xunit;
 using Moq;
 using BreakOutGameTest.Data;
 using BreakOutGame.Models.Domain.RepsitoryInterfaces;
@@ -19,6 +16,7 @@ namespace BreakOutGameTest.Controllers
         public SessionTest()
         {
             this._dummyContext = new DummyApplicationDbContext();
+            this._sessionRepository = new Mock<IBoBSessionRepository>();
             this._controller = new SessionController(_sessionRepository.Object);
         }
 
@@ -29,38 +27,47 @@ namespace BreakOutGameTest.Controllers
         {
             //trek een id binnen, get sessie met id, check of deze sessie actief is
             _sessionRepository.Setup(s => s.GetById(1)).Returns(_dummyContext.ValidSession);
-            var result = _controller.ValidateSessionCode(1) as RedirectToActionResult;
+            var result = _controller.ActivateSession(1) as RedirectToActionResult;
 
             Assert.Equal("BoBGroup", result?.ControllerName);
             Assert.Equal("Index", result?.ActionName);
-            //kijk of route parameter opnieuw is meegegeven tijdens de RedirectToAction
-            int? number = result.RouteValues["id"] as int?;
-            Assert.True(number.HasValue);
-            Assert.True(number.Value == 1);
         }
 
+
         [Fact]
-        public void SessionCode_ScheduledSession_RedirectBackTo_SessionCodeScreen()
+        public void SessionCode_ClosedSession_RedirectBackTo_SessionCodeScreen()
         {
-            _sessionRepository.Setup(s => s.GetById(2)).Returns(_dummyContext.InvalidSession1);
-            var result = _controller.ValidateSessionCode(2) as RedirectToActionResult;
+            _sessionRepository.Setup(s => s.GetById(2)).Returns(_dummyContext.ClosedSession);
+            var result = _controller.ActivateSession(2) as RedirectToActionResult;
 
             Assert.Equal("Session", result?.ControllerName);
             Assert.Equal("Index", result?.ActionName);
-            //temp data checken
         }
 
         [Fact]
-        public void SessionCode_CancelledSession_RedirectBackTo_SessionCodeScreen()
+        public void SessionCode_ActiveSession_RedirectBackTo_SessionCodeScreen()
         {
-            _sessionRepository.Setup(s => s.GetById(3)).Returns(_dummyContext.InvalidSession2);
-            var result = _controller.ValidateSessionCode(3) as RedirectToActionResult;
+            _sessionRepository.Setup(s => s.GetById(3)).Returns(_dummyContext.ActiveSession);
+            var result = _controller.ActivateSession(3) as RedirectToActionResult;
 
             Assert.Equal("Session", result?.ControllerName);
             Assert.Equal("Index", result?.ActionName);
-            //temp data checken
+        }
+
+        [Fact]
+        public void SessionCode_StartedSession_RedirectBackTo_SessionCodeScreen()
+        {
+            _sessionRepository.Setup(s => s.GetById(4)).Returns(_dummyContext.StartedSession);
+            var result = _controller.ActivateSession(4) as RedirectToActionResult;
+
+            Assert.Equal("Session", result?.ControllerName);
+            Assert.Equal("Index", result?.ActionName);
         }
 
         #endregion
     }
 }
+
+
+
+
