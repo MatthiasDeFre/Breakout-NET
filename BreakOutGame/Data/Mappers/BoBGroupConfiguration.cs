@@ -26,6 +26,7 @@ namespace BreakOutGame.Data.Mappers
             builder.HasOne(g => g.Path).WithOne();
 
             builder.Ignore(g => g.GroupState);
+            builder.Ignore(g => g.NextAssignment);
         }
     }
 }

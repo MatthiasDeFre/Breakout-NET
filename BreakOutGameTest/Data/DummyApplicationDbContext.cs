@@ -60,7 +60,7 @@ namespace BreakOutGameTest.Data
              
 
             };
-            SelectedGroup.GroupState = new SelectedState(SelectedGroup);
+            SelectedGroup.GroupState = new LockedState(SelectedGroup);
         }
     }
 }

@@ -12,11 +12,12 @@ namespace BreakOutGame.Data.Repositories
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly DbSet<BoBGroup> _dbSet;
-
+        private readonly DbSet<Assignment> _assignments;
         public BoBGroupRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
             _dbSet = _dbContext.BoBGroups;
+            _assignments = _dbContext.Assignments;
         }
         public IEnumerable<BoBGroup> GetAll()
         {
@@ -30,6 +31,10 @@ namespace BreakOutGame.Data.Repositories
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
+        }
+        public Assignment GetByIdWithIncludes(int pathId)
+        {
+            return _assignments.FirstOrDefault(a => EF.Property<int>(a, "PathId") == pathId);
         }
     }
 }

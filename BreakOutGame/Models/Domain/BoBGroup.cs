@@ -31,6 +31,10 @@ namespace BreakOutGame.Models.Domain
 
         public SessionPath Path { get; set; }
 
+        public Assignment NextAssignment
+        {
+            get { return Path.Assignments.OrderBy(a => a.ReferenceNr).FirstOrDefault(a => a.Status == AssignmentStatus.NotCompleted); }
+        }
         public BoBGroup()
         {
             Status = GroupStatus.NotSelected;

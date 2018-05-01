@@ -15,7 +15,7 @@ namespace BreakOutGame.Data
 
         public DbSet<BoBGroup> BoBGroups { get; set; }
         public DbSet<BoBSession> BoBSessions { get; set; }
-
+        public DbSet<Assignment> Assignments { get; set; }
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -36,6 +36,7 @@ namespace BreakOutGame.Data
             builder.ApplyConfiguration(new PathConfiguration());
             builder.ApplyConfiguration(new ExerciseConfiguration());
             builder.ApplyConfiguration(new AssignmentConfiguration());
+            builder.ApplyConfiguration(new GroupOperationConfiguration());
             //Cross tables
             builder.ApplyConfiguration(new SessionActionConfiguration());
             builder.ApplyConfiguration(new GroupStudentConfiguration());
