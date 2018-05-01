@@ -26,6 +26,7 @@ namespace BreakOutGame.Controllers
             SessionPath path = bobgroup.Path;
             IEnumerable<Assignment> assignments = path.Assignments;
             Assignment assignment= assignments.First();
+            ViewData["assignment"] = assignment;
             return View(assignment);
         }
 

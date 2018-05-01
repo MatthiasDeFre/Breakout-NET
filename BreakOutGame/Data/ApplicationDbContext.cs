@@ -40,6 +40,7 @@ namespace BreakOutGame.Data
             builder.ApplyConfiguration(new SessionActionConfiguration());
             builder.ApplyConfiguration(new GroupStudentConfiguration());
             builder.ApplyConfiguration(new AssignmentConfiguration());
+            builder.ApplyConfiguration(new GroupOperationConfiguration());
             
         }
     }

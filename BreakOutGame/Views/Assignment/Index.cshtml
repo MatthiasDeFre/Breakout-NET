@@ -1,7 +1,16 @@
-﻿
+﻿@model BreakOutGame.Models.Domain.Assignment
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Oefening";
+    var bobgroup = (ViewData["groep"] as BreakOutGame.Models.Domain.BoBGroup);
 }
 
-<h2>Index</h2>
-
+<h2>WaitScreen</h2>
+<p>@Model</p>
+<div>
+    <div>
+        <div>
+            <h3>Opdracht @(bobgroup.Path.Assignments)</h3>
+            
+        </div>
+    </div>
+</div>
