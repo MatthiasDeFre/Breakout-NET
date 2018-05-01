@@ -36,7 +36,7 @@ bld/
 TestResult.xml
 
 #appsetting file ignoren
-BreakOutGame/appsettings.json
+BreakOutGame/appsettings
 
 # Build Results of an ATL Project
 [Dd]ebugPS/

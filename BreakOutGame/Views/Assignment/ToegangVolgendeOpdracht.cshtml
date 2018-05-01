@@ -1,0 +1,18 @@
+﻿@model BreakOutGame.Models.ViewModels.AssignmentCodeViewModel;
+
+
+<div>
+    <h3>Doorgaan naar volgende opdracht</h3>
+    @if ((bool)TempData["FouteCode"])
+    {
+        <h3>Foute Code!</h3>
+    }
+    <form method="post" asp-action="ValideerCodeOpdracht">
+        <div class="input-group">
+            <label for="code">Toegangscode voor volgende opdracht</label>
+            <input type="number" name="code" asp-for="@Model.Code" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-success">Controleer</button>
+    </form>
+</div>
+

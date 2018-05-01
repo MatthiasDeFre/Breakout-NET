@@ -7,6 +7,7 @@ using BreakOutGame.Models.Domain;
 using BreakOutGame.Models.Domain.RepsitoryInterfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using BreakOutGame.Models.ViewModels;
 
 namespace BreakOutGame.Controllers
 {
@@ -28,5 +29,10 @@ namespace BreakOutGame.Controllers
             return View(assignment);
         }
 
+
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
 }
