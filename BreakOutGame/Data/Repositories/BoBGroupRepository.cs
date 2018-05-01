@@ -36,13 +36,5 @@ namespace BreakOutGame.Data.Repositories
         {
             return _assignments.FirstOrDefault(a => EF.Property<int>(a, "PathId") == pathId);
         }
-
-        public Assignment Test(int groupId)
-        {
-            return _dbSet.Where(g => g.Id == groupId).SelectMany(g => g.Path.Assignments)
-                .OrderBy(g => g.ReferenceNr)
-                .Include(g => g.Exercise)
-                .FirstOrDefault(g => g.Status == AssignmentStatus.NotCompleted);
-        }
     }
 }

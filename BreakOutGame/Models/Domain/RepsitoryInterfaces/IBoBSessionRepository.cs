@@ -12,7 +12,6 @@ namespace BreakOutGame.Models.Domain.RepsitoryInterfaces
         IEnumerable<BoBGroup> GetGroupsFromSession(int id);
         BoBGroup GetSpecificGroupFromSession(int id, int groupId);
         BoBAction GetAction(int sessionId, int referenceNumber);
-        Assignment GetNextAssignment(int sessionId, int groupId);
         void SaveChanges();
     }
 }

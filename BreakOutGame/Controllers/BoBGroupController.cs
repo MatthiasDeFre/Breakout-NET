@@ -204,7 +204,7 @@ namespace BreakOutGame.Controllers
         public IActionResult ValidateAnswer(int sessionId, int groupId, String answer)
         {
             BoBGroup group = _boBSessionRepository.GetSpecificGroupFromSession(sessionId, groupId);
-            Assignment assignment = _boBSessionRepository.GetNextAssignment(sessionId, groupId);
+            Assignment assignment = group.NextAssignment;
             bool correct = group.ValidateAnswer(assignment, answer);
             _boBSessionRepository.SaveChanges();
             if (!correct && group.Status == GroupStatus.Blocked)

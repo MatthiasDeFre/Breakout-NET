@@ -7,6 +7,7 @@ using BreakOutGame.Models.Domain;
 using BreakOutGame.Models.Domain.RepsitoryInterfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using BreakOutGame.Models.ViewModels;
 
 namespace BreakOutGame.Controllers
 {
@@ -26,7 +27,6 @@ namespace BreakOutGame.Controllers
             SessionPath path = bobgroup.Path;
             IEnumerable<Assignment> assignments = path.Assignments;
             Assignment assignment= assignments.First();
-            ViewData["assignment"] = assignment;
             return View(assignment);
         }
 
@@ -35,5 +35,20 @@ namespace BreakOutGame.Controllers
         {
             return View();
         }
+
+        public IActionResult ToegangVolgendeOpdracht()
+        {
+            TempData["FouteCode"] = false;
+            return View(new AssignmentCodeViewModel());
+        }
+        [HttpPost]
+        public IActionResult ValideerCodeOpdracht(AssignmentCodeViewModel avm)
+        {
+            //TODO -> temporary false
+            TempData["FouteCode"] = true;
+            return View("ToegangVolgendeOpdracht", avm);
+        }
+
+
     }
 }
