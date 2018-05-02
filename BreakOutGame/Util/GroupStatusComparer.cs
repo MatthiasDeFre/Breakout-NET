@@ -12,7 +12,7 @@ namespace BreakOutGame.Util
         {
             if (x == y)
                 return 0;
-            if (x == GroupStatus.Selected)
+            if (x != GroupStatus.NotSelected)
                 return 1;
             return -1;
         }

@@ -7,6 +7,10 @@
 <p>@Model.GroupName</p>
 <script>
     window.onload = function() {
-        
+        setInterval(
+            function () {
+                console.log("Rolling out");
+                window.location.href = '@Url.Action("Index","Assignment")';
+            }, 2000);
     }
 </script>

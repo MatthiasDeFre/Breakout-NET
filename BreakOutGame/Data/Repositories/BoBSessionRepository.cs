@@ -50,6 +50,15 @@ namespace BreakOutGame.Data.Repositories
                 .FirstOrDefault(g => g.Id == groupId);
         }
 
+        public Assignment GetNextAssignment(int sessionId, int groupId)
+        {
+            return _sessions.Where(g => g.Id == sessionId).SelectMany(g => g.Groups).Where(g => g.Id == groupId).SelectMany(g => g.Path.Assignments)
+                .OrderBy(g => g.ReferenceNr)
+                .Include(g => g.Exercise)
+                .Include(g => g.GroupOperation)
+                .FirstOrDefault(g => g.Status == AssignmentStatus.NotCompleted);
+        }
+
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
