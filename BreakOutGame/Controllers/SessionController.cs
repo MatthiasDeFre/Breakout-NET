@@ -62,6 +62,12 @@ namespace BreakOutGame.Controllers
             return RedirectToAction("Index", "BoBGroup");
         }
 
+        public IActionResult ListSessions()
+        {
+            IEnumerable<BoBSession> lijst = _boBSessionRepository.GetAll();
+            return View("ListSessions",lijst);
+        }
+
 
 
     }
