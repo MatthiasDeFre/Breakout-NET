@@ -1,5 +1,34 @@
 ﻿@model BreakOutGame.Models.Domain.BoBSession
 @{
     ViewData["Title"] = "SessionDetailScreen";
-    int aantalGroepen = Model.Groups.Count();
 }
+<h2>Detail Session_@Model.name</h2>
+<h3>Session actions</h3>
+<div class="text-center">
+    <a asp-action="Activeer" asp-route-id="@Model.Id" class="btn btn-success btn-lg">Activeer</a>
+</div>
+
+<table class="table">
+    <tr><th>Groupname</th><th colspan="4">Members</th></tr>
+
+    @foreach (var group in Model.Groups)
+    {
+        <tr>
+            <th>@group.GroupName</th>
+            @for (int i = 0; i < 4; i++)
+            {
+                try
+                {
+                    string naam = group.Students.ElementAt(i).Student.FirstName + group.Students.ElementAt(i).Student.LastName;
+                    <td>@naam</td>
+                }
+                catch
+                {
+                    <td></td>
+                }
+            }
+        </tr>
+    }
+
+
+</table>
