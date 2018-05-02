@@ -56,7 +56,7 @@ namespace BreakOutGame.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                return RedirectToAction("Index","Session");
+                return RedirectToAction("Index", "Session");
             }
             _boBSessionRepository.SaveChanges();
             return RedirectToAction("Index", "BoBGroup");
@@ -69,6 +69,12 @@ namespace BreakOutGame.Controllers
         }
 
 
+        public IActionResult StartSession(int sessionId)
+        {
+            _boBSessionRepository.GetById(sessionId).Start();
+            _boBSessionRepository.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 }

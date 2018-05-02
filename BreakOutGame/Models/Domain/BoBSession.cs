@@ -10,6 +10,7 @@ namespace BreakOutGame.Models.Domain
     {
         
         public int Id { get; set; }
+        public String name { get; set; }
         public IEnumerable<BoBGroup> Groups { get; set; }
         public int BoxId { get; set; }
         public IEnumerable<SessionAction> Actions { get; set; }
