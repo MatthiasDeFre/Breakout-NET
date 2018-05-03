@@ -1,0 +1,14 @@
+﻿@model IEnumerable<BreakOutGame.Models.Domain.BoBSession>
+@{
+    ViewData["Title"] = "ListSessions";
+}
+
+<h2>ListSessions</h2>
+@foreach(var item in Model)
+{
+    <tr>
+        <td>
+            <p>@item.BoxId</p>
+        </td>
+    </tr>
+}

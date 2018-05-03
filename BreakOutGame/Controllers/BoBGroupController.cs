@@ -168,7 +168,7 @@ namespace BreakOutGame.Controllers
 
 
         [SessionFilter]
-        public IActionResult BlockAllGroups(int sessionId, IEnumerable<BoBGroup> id)
+        public IActionResult BlockAllGroups(int sessionId)
         {
             IEnumerable<BoBGroup> groups = _boBSessionRepository.GetGroupsFromSession(sessionId);
             foreach (BoBGroup group in groups)
@@ -184,7 +184,7 @@ namespace BreakOutGame.Controllers
         }
 
         [SessionFilter]
-        public IActionResult DeblockAllGroups(int sessionId, IEnumerable<BoBGroup> id)
+        public IActionResult DeblockAllGroups(int sessionId)
         {
             IEnumerable<BoBGroup> groups = _boBSessionRepository.GetGroupsFromSession(sessionId);
             foreach (BoBGroup group in groups)
