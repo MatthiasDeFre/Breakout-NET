@@ -35,6 +35,13 @@
 .groupnotselected {
     
 }
+.boxedArea {
+    margin-top: 20px;
+    padding: 20px;
+    border-style: solid;
+    border-color: rgb(201, 202, 204);
+    border-width: 1px;
+}
 .grouplist > .groupparent:nth-child(odd){
     clear: left;
 }

@@ -2,15 +2,55 @@
 @{
     ViewData["Title"] = "WaitScreen";
 }
+<div class="boxedArea center-block text-center">
+    <h2>De Wachtkamer</h2>
+    <h3>@Model.GroupName</h3>
+    <p>Wacht tot het spel begint!</p>
+    <div>
+        <img id="waitImg" class="center-block"/>
+    </div>
+</div>
+@section Scripts {
 
-<h2>WaitScreen</h2>
-<p>@Model.GroupName</p>
 <script>
+    var images = new Array();
+    var x = 0;
+    var intervalId;
+   
+    images[0] = "/images/2dayslater.jpg";
+    images[1] = "/images/5hourslater.jpg";
+    images[2] = "/images/1eternitylater.jpg";
+
+    function changeImage() {
+        document.getElementById('waitImg').src = images[x];
+        if (x < 2) {
+            x += 1;
+        } else {
+            console.log("rip");
+            clearInterval(intervalId);
+        }
+    }
+
     window.onload = function() {
+
+        intervalId =setInterval(function() {
+            changeImage();
+        }, 5000);
         setInterval(
             function () {
-                console.log("Rolling out");
-                window.location.href = '@Url.Action("Index","Assignment")';
-            }, 2000);
+                var answer;
+                $.ajax({
+                    url: "/BoBGroup/GetSessionStatus"
+                }).done(function(data) {
+                    if (data === true) {
+                        window.location.href = '@Url.Action("Index","Assignment")';
+                    } else {
+                        console.log("nope");
+                    }
+                    
+                });
+            }, 1000);
     }
 </script>
+
+}

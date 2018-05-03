@@ -219,5 +219,13 @@ namespace BreakOutGame.Controllers
             }
             return RedirectToAction("Opgave");
         }
+        //???????????
+        [SessionFilter]
+        public IActionResult GetSessionStatus(int sessionId)
+        {
+            BoBSession boBSession = _boBSessionRepository.GetById(sessionId);
+            bool active = boBSession.SessionStatus == SessionStatus.Started;
+            return Json(active);
+        }
     }
 }

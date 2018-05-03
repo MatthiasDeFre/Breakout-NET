@@ -59,6 +59,11 @@ namespace BreakOutGame.Data.Repositories
                 .FirstOrDefault(g => g.Status == AssignmentStatus.NotCompleted);
         }
 
+        public Boolean IsGroupAuthedForAction(int sessionId, int groupId)
+        {
+            return true;
+        }
+
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
