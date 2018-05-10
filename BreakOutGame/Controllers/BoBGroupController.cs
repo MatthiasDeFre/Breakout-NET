@@ -87,7 +87,7 @@ namespace BreakOutGame.Controllers
                 TempData["groupchosen"] = ex.Message;
                 return RedirectToAction("Index", null);
             }
-
+            group.Lock(true);
             //Save Changes to database
             _boBSessionRepository.SaveChanges();
             HttpContext.Session.SetInt32("groupId", group.Id);

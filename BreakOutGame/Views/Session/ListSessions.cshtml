@@ -8,7 +8,12 @@
 {
     <tr>
         <td>
-            <p>@item.BoxId</p>
+            <p>@item.name</p>
+            
+            <form method="post" asp-action="StartSession" asp-route-sessionId="@item.Id">
+               
+                <button class="btn btn-primary" type="submit">Start</button>-
+            </form>
         </td>
     </tr>
 }

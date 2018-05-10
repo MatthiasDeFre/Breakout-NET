@@ -46,9 +46,9 @@ namespace BreakOutGame.Controllers
         }
 
         [HttpPost]
-        [SessionFilter]
         public IActionResult ActivateSession(int sessionId)
         {
+            HttpContext.Session.SetInt32("sessionId", sessionId);
             BoBSession session = _boBSessionRepository.GetById(sessionId);
             try
             {
@@ -59,7 +59,7 @@ namespace BreakOutGame.Controllers
                 return RedirectToAction("Index", "Session");
             }
             _boBSessionRepository.SaveChanges();
-            return RedirectToAction("Index", "BoBGroup");
+            return RedirectToAction(nameof(SessionDetail));
         }
 
         public IActionResult ListSessions()
@@ -68,6 +68,7 @@ namespace BreakOutGame.Controllers
             return View("ListSessions",lijst);
         }
 
+      
 
         public IActionResult StartSession(int sessionId)
         {
@@ -76,5 +77,11 @@ namespace BreakOutGame.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [SessionFilter]
+        public IActionResult SessionDetail(int sessionId)
+        {
+            BoBSession session = _boBSessionRepository.GetById(sessionId);
+            return View("SessionDetail", session);
+        }
     }
 }
