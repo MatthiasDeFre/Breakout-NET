@@ -1,6 +1,110 @@
-﻿body {
+﻿html {
+    overflow-x:hidden !important;
+}
+footer {
+    bottom: 0;
+    left: 5%;
+    font-size: large;
+    color: white;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background: url(/images/bg.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+.kader {
+    padding: 5%;
+    background-color: white;
+    border-radius: 10px;
+    width: 35%;
+    top: 40%;
+    left: 32.5%;
+    position: absolute;
+
+    /*shadows*/
+    -webkit-box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
+    box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
+}
+.sc {
+    margin-top:28%;
+    margin-left: 44.5%;
+    color: white;
+}
+.inpf {
+    margin-left: 42%;
+}
+.btnf {
+    margin-left: 46%;
+    margin-top: 1%;
+    font-weight: 600;
+}
+.navbar {
+    background: none;
+    border-bottom: 0px;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: white !important;
+}
+.logo {
+    width: 200px;
+    height: auto;
+}
+
+
+
+
+
+#pot {
+    position: absolute;
+    top:20%;
+    -webkit-animation: linear infinite normal;
+    -webkit-animation-name: run;
+    -webkit-animation-duration: 15s;
+}
+
+@-webkit-keyframes run {
+    0% {
+        left: -20%;
+    }
+
+    50% {
+        left: 100%;
+    }
+
+    100% {
+        left: 300%;
+    }
+}
+#pot2 {
+    position: absolute;
+    top: 20%;
+    -webkit-animation: linear infinite normal;
+    -webkit-animation-name: lrun;
+    -webkit-animation-duration: 15s;
+}
+
+@-webkit-keyframes lrun {
+    0% {
+        right: -200%;
+    }
+
+    50% {
+        right: -50%;
+    }
+
+    100% {
+        right: 200%;
+    }
+}
+
+.firsth2 {
+    text-align: center;
+    margin: 30px;
+    color: white;
 }
 
 /* Wrapping element */
@@ -53,10 +157,10 @@
     border-style: solid;
     border-color: rgb(201, 202, 204);
     border-width: 1px;
-   
-    margin: 10px;
-    margin-left: 0px;
+    margin: 20px;
     box-sizing: border-box;
+    background-color: rgba(180, 185, 193,0.3);
+    border-radius: 10px;
 }
 .groupnotselected:hover {
   

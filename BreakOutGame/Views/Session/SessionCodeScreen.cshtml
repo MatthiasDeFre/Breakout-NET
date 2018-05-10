@@ -2,12 +2,14 @@
 @{
     ViewData["Title"] = "SessionCodeScreen";
 }
-
-<h2>SessionCodeScreen</h2>
-<label>session</label>
-
-<form method="post" asp-action="control">
-    <label>Sessiecode</label>
-    <input name="id">
-    <button class="btn btn-primary" type="submit">Controleer</button>
-</form>
+<div id="pot">
+    <img src="~/images/vogel.gif" alt="vogel">
+</div>
+<div id="pot2">
+    <img src="~/images/vogel2.gif" alt="vogel">
+</div>
+    <form method="post" asp-action="control">
+        <h3 class="sc">Sessiecode</h3>
+        <input name="id" class="inpf">
+        <button class="btn btn-success btnf" type="submit">Controleer</button>
+    </form>
