@@ -7,16 +7,19 @@
     <h3>@Model.GroupName</h3>
     <p>Wacht tot het spel begint!</p>
     <div>
-        <img id="waitImg" class="center-block"/>
+        <div class="game">
+            <script src="https://cdn.htmlgames.com/embed.js?game=CubeCrash&amp;width=800&amp;height=480&amp;bgcolor=white"></script>
+        </div>
+        @*<img id="waitImg" class="center-block" />*@
     </div>
 </div>
 @section Scripts {
 
-<script>
+    <script>
     var images = new Array();
     var x = 0;
     var intervalId;
-   
+
     images[0] = "/images/2dayslater.jpg";
     images[1] = "/images/5hourslater.jpg";
     images[2] = "/images/1eternitylater.jpg";
@@ -47,10 +50,9 @@
                     } else {
                         console.log("nope");
                     }
-                    
+
                 });
             }, 1000);
     }
-</script>
-
+    </script>
 }

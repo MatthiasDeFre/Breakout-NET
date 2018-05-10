@@ -13,6 +13,7 @@ body {
     padding-bottom: 20px;
     background: url(/images/bg.jpg) no-repeat center center fixed;
     background-size: cover;
+    color: white !important;
 }
 
 .kader {
@@ -140,11 +141,15 @@ body {
     
 }
 .boxedArea {
-    margin-top: 20px;
+    margin-top: 10%;
     padding: 20px;
     border-style: solid;
     border-color: rgb(201, 202, 204);
     border-width: 1px;
+    -webkit-box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
+    box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
+    border-radius: 10px;
 }
 .grouplist > .groupparent:nth-child(odd){
     clear: left;
@@ -152,6 +157,19 @@ body {
 .groupparent {
     
 }
+.game {
+    margin-left: 12.5%;
+}
+
+.groupName {
+    text-align: center;
+    font-size: 1.5em;
+}
+.loginLeerkracht {
+    margin-top: 20% !important;
+    font-size: 1.2em;
+}
+
 .group {
     padding: 20px;
     border-style: solid;
@@ -188,4 +206,5 @@ body {
     .carousel-caption {
         display: none;
     }
+
 }

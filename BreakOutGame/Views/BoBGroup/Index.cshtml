@@ -12,7 +12,7 @@
             <div class="overlay"></div>
             <div class="group @(group.Status == GroupStatus.NotSelected ? "groupnotselected" : "groupselected")" id="@(group.GroupName.Replace(" ", "_"))">
 
-                <p>@group.GroupName</p>
+                <p class="groupName ">@group.GroupName</p>
                 <hr/>
                 <img alt="De groepsafbeelding" src="/images/group2.png" class="groupimg" />
                 @await Html.PartialAsync("_GroupMembers", group)
