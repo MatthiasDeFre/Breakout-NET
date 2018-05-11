@@ -3,17 +3,19 @@
     ViewData["Title"] = "ListSessions";
 }
 
-<h2>ListSessions</h2>
-@foreach(var item in Model)
-{
-    <tr>
-        <td>
-            <p>@item.name</p>
-            
-            <form method="post" asp-action="StartSession" asp-route-sessionId="@item.Id">
-               
-                <button class="btn btn-primary" type="submit">Start</button>-
-            </form>
-        </td>
-    </tr>
-}
+<div class="row">
+    <h3 class="fixer">Sessions</h3>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="row sessiesGoedzetten">
+            <tr>
+                <td>
+                    <p>@item.name</p>
+                    <form method="post" asp-action="StartSession" asp-route-sessionId="@item.Id">
+                        <button class="btn btn-primary" type="submit">Start</button>
+                    </form>
+                </td>
+            </tr>
+        </div>
+    }

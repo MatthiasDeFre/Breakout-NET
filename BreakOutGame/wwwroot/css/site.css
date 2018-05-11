@@ -1,7 +1,9 @@
 ﻿html {
-    overflow-x:hidden !important;
+    overflow-x: hidden !important;
 }
+
 footer {
+    position: fixed;
     bottom: 0;
     left: 5%;
     font-size: large;
@@ -24,32 +26,42 @@ body {
     top: 40%;
     left: 32.5%;
     position: absolute;
-
     /*shadows*/
     -webkit-box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
     -moz-box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
     box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
 }
+
+.progress {
+    margin-top: 5%;
+}
+
 .sc {
-    margin-top:28%;
+    margin-top: 28%;
     margin-left: 44.5%;
     color: white;
 }
+
 .inpf {
     margin-left: 42%;
+    color: black !important;
 }
+
 .btnf {
     margin-left: 46%;
     margin-top: 1%;
     font-weight: 600;
 }
+
 .navbar {
     background: none;
     border-bottom: 0px;
 }
+
 .navbar-inverse .navbar-nav > li > a {
     color: white !important;
 }
+
 .logo {
     width: 200px;
     height: auto;
@@ -61,7 +73,7 @@ body {
 
 #pot {
     position: absolute;
-    top:20%;
+    top: 20%;
     -webkit-animation: linear infinite normal;
     -webkit-animation-name: run;
     -webkit-animation-duration: 15s;
@@ -80,6 +92,7 @@ body {
         left: 300%;
     }
 }
+
 #pot2 {
     position: absolute;
     top: 20%;
@@ -102,11 +115,35 @@ body {
     }
 }
 
+.fixer {
+    margin-left: 45%;
+    margin-top: 8%;
+}
+
 .firsth2 {
     text-align: center;
     margin: 30px;
     color: white;
 }
+
+.opdrachtNaamf {
+    margin-left: 40%;
+    margin-top: 8%;
+}
+.sessiesGoedzetten {
+    margin-top: 10%;
+}
+
+#pdf {
+    margin-left: -15%;
+    margin-top: 5%;
+}
+
+.formEx {
+    /*margin-left: 45%;*/
+    margin-top: 50%;
+}
+
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
@@ -130,16 +167,19 @@ body {
 #qrCode {
     margin: 15px;
 }
+
 .overlay {
     position: absolute;
     background: yellow;
 }
+
 .groupselected {
     opacity: 0.4;
 }
+
 .groupnotselected {
-    
 }
+
 .boxedArea {
     margin-top: 10%;
     padding: 20px;
@@ -151,12 +191,14 @@ body {
     box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
     border-radius: 10px;
 }
-.grouplist > .groupparent:nth-child(odd){
+
+.grouplist > .groupparent:nth-child(odd) {
     clear: left;
 }
+
 .groupparent {
-    
 }
+
 .game {
     margin-left: 12.5%;
 }
@@ -165,6 +207,7 @@ body {
     text-align: center;
     font-size: 1.5em;
 }
+
 .loginLeerkracht {
     margin-top: 20% !important;
     font-size: 1.2em;
@@ -180,8 +223,8 @@ body {
     background-color: rgba(180, 185, 193,0.3);
     border-radius: 10px;
 }
+
 .groupnotselected:hover {
-  
     -moz-box-shadow: 0 4px 8px rgba(0,0,0,0.5);
     -o-box-shadow: 0 4px 8px rgba(0,0,0,0.5);
     -webkit-box-shadow: 0 4px 8px rgba(0,0,0,0.5);
@@ -190,12 +233,13 @@ body {
     -ms-transform: scale(1.4);
     -o-transform: scale(1.4);
     transform: scale(1.03);
-   
 }
+
 .groupmemberlist {
     padding-left: 15px;
     padding-top: 10px;
 }
+
 .groupimg {
     max-width: 100%;
     max-height: 100%;
@@ -206,5 +250,4 @@ body {
     .carousel-caption {
         display: none;
     }
-
 }
