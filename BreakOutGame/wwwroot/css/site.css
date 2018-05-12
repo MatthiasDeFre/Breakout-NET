@@ -45,9 +45,6 @@ body {
 .wGroupsB {
     margin: 10px;
 }
-th {
-    margin-right: 100px !important;
-}
 
 .zelfde {
     width: 250px !important;
@@ -166,6 +163,19 @@ th {
 .formEx {
     /*margin-left: 45%;*/
     margin-top: 50%;
+}
+
+.actiesFix {
+    margin-top: 15%;
+    text-align: center;
+}
+.sessieDetailFix {
+    margin-top: 8%;
+    margin-left: 32.5%;
+    margin-bottom: 3%;
+}
+.groupsFix {
+    border: 1px solid black;
 }
 
 
