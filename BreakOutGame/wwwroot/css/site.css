@@ -17,14 +17,16 @@ body {
     background-size: cover;
     color: white !important;
 }
+
 .loginFix {
     margin-top: 20%;
     margin-left: 34%;
     text-align: center;
 }
+
 .liButton {
     width: 200px;
-    font-weight: 600;   
+    font-weight: 600;
 }
 
 .kader {
@@ -39,6 +41,18 @@ body {
     -webkit-box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
     -moz-box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
     box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
+}
+.wGroupsB {
+    margin: 10px;
+}
+th {
+    margin-right: 100px !important;
+}
+
+.zelfde {
+    width: 250px !important;
+    text-align: center;
+    margin-top: 10px;
 }
 
 .progress {
@@ -139,6 +153,7 @@ body {
     margin-left: 40%;
     margin-top: 8%;
 }
+
 .sessiesGoedzetten {
     margin-top: 10%;
 }

@@ -3,51 +3,50 @@
 @{
     ViewData["Title"] = "SessionDetailScreen";
 }
-<h2>Detail Session_@Model.name</h2>
-<h3>Session actions</h3>
-<div>
-    <a asp-action="StartSession" asp-route-id="@Model.Id" class="btn btn-success btn-lg">Start Session</a>
-</div>
-<h3>Groups</h3>
-<div>
-    <table>
-        <tr>
-            <th>Groupname</th>
-            <th>Members</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-        @foreach (var group in Model.Groups)
-        {
-            @*@(String isBlocked = group.Status == GroupStatus.Blocked ? "Block" : "Deblock";)*@
-            <tr>
-                <td>@group.GroupName</td>
-                <td>
-                    <ul>
-                        @foreach (var student in group.Students)
-                        {
-                            <li>@student.Student.FirstName + " " + @student.Student.LastName</li>
-                        }
-                    </ul>
-                </td>
-                <td>
-
-                </td>
-                <td>
-                    @*//beter om te werken met een toggle?*@
-                    <a asp-controller="BoBGroup" asp-action="BlockGroup" asp-route-groupid="@group.Id" class="btn btn-success btn-lg">Block group</a>
-                    <a asp-controller="BoBGroup" asp-action="DeblockGroup" asp-route-groupid="@group.Id" class="btn btn-success btn-lg">Deblock group</a>
-                </td>
-            </tr>
-        }
-        <tr>
-            <th>Blokkeer alle groepen</th>
-            <th>Deblokkeer alle groepen</th>
-        </tr>
-        <tr>
-            @*//ook hier werken met een toggle*@
-            <td><a asp-controller="BoBGroup" asp-action="BlockAllGroups" asp-route-id="" class="btn btn-success btn-lg">Blokkeer alle groepen</a></td>
-            <td><a asp-controller="BoBGroup" asp-action="DeblockAllGroups" asp-route-id="" class="btn btn-success btn-lg">Deblokkeer alle groepen</a></td>
-        </tr>
-    </table>
+<h2>Detail @Model.name</h2>
+<div class="row">
+    <div class="col-md-3">
+        <h3>Session actions</h3>
+        <div>
+            <a asp-action="StartSession" asp-route-id="@Model.Id" class="btn btn-success btn-lg zelfde">Start Session</a>
+        </div>
+        <a asp-controller="BoBGroup" asp-action="BlockAllGroups" asp-route-id="" class="btn btn-danger btn-lg zelfde">Blokkeer alle groepen</a>
+        <a asp-controller="BoBGroup" asp-action="DeblockAllGroups" asp-route-id="" class="btn btn-success btn-lg zelfde">Deblokkeer alle groepen</a>
+    </div>
+    <div class="col-md-9">
+        <h3>Groups</h3>
+        <div>
+            <table>
+                <tr>
+                    <th>Groupname</th>
+                    <th>Members</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                @foreach (var group in Model.Groups)
+                {
+                    @*@(String isBlocked = group.Status == GroupStatus.Blocked ? "Block" : "Deblock";)*@
+                    <tr>
+                        <td>@group.GroupName</td>
+                        <td>
+                            <ul>
+                                @foreach (var student in group.Students)
+                                {
+                                    <li>@student.Student.FirstName @student.Student.LastName</li>
+                                }
+                            </ul>
+                        </td>
+                        <td>
+                            Status?
+                        </td>
+                        <td>
+                            @*//beter om te werken met een toggle?*@
+                            <a asp-controller="BoBGroup" asp-action="BlockGroup" asp-route-groupid="@group.Id" class="btn btn-primary btn-lg wGroupsB">Block group</a>
+                            <a asp-controller="BoBGroup" asp-action="DeblockGroup" asp-route-groupid="@group.Id" class="btn btn-primary btn-lg">Deblock group</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
 </div>
