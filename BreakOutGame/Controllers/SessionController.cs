@@ -48,7 +48,7 @@ namespace BreakOutGame.Controllers
         [HttpPost]
         public IActionResult ActivateSession(int sessionId)
         {
-            HttpContext.Session.SetInt32("sessionId", sessionId);
+            HttpContext.Session.SetInt32("SessionId", sessionId);
             BoBSession session = _boBSessionRepository.GetById(sessionId);
             try
             {
@@ -56,6 +56,7 @@ namespace BreakOutGame.Controllers
             }
             catch (InvalidOperationException ex)
             {
+                
                 return RedirectToAction("Index", "Session");
             }
             _boBSessionRepository.SaveChanges();
@@ -78,6 +79,7 @@ namespace BreakOutGame.Controllers
         }
 
         [SessionFilter]
+        
         public IActionResult SessionDetail(int sessionId)
         {
             BoBSession session = _boBSessionRepository.GetById(sessionId);
