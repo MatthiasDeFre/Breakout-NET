@@ -8,6 +8,7 @@ namespace BreakOutGame.Models.Domain
     public enum AssignmentStatus
     {
         NotCompleted,
-        Completed
+        Completed,
+        WaitingForCode
     }
 }

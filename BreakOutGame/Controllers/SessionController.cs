@@ -48,7 +48,7 @@ namespace BreakOutGame.Controllers
         [HttpPost]
         public IActionResult ActivateSession(int sessionId)
         {
-            HttpContext.Session.SetInt32("sessionId", sessionId);
+            HttpContext.Session.SetInt32("SessionId", sessionId);
             BoBSession session = _boBSessionRepository.GetById(sessionId);
             try
             {

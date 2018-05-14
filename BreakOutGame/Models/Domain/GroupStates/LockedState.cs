@@ -24,5 +24,10 @@ namespace BreakOutGame.Models.Domain.GroupStates
             }
             return correct;
         }
+
+        public override bool ValidateCode(Assignment assignment, int code)
+        {
+            return assignment.ValidateCode(code);
+        }
     }
 }

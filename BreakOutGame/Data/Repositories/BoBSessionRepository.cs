@@ -6,6 +6,7 @@ using BreakOutGame.Models.Domain;
 using BreakOutGame.Models.Domain.RepsitoryInterfaces;
 using BreakOutGame.Util;
 using Microsoft.EntityFrameworkCore;
+using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
 namespace BreakOutGame.Data.Repositories
 {
@@ -56,12 +57,23 @@ namespace BreakOutGame.Data.Repositories
                 .OrderBy(g => g.ReferenceNr)
                 .Include(g => g.Exercise)
                 .Include(g => g.GroupOperation)
-                .FirstOrDefault(g => g.Status == AssignmentStatus.NotCompleted);
+                .FirstOrDefault(g => g.Status == AssignmentStatus.NotCompleted || g.Status == AssignmentStatus.WaitingForCode);
         }
 
         public Boolean IsGroupAuthedForAction(int sessionId, int groupId)
         {
             return true;
+        }
+
+        public double GetCompletionPercentage(int sessionId, int groupId)
+        {
+            var assignments = _sessions.Where(s => s.Id == sessionId).SelectMany(g => g.Groups).Where(g => g.Id == groupId)
+                .Select(g => g.Path).SelectMany(g => g.Assignments);
+           return assignments.OrderBy(g => g.ReferenceNr)
+                .Where(g => g.Status != AssignmentStatus.Completed).Select(g => new
+                {
+                    Percentage= (double)(g.ReferenceNr-1) / assignments.Max(g2 => g.ReferenceNr)
+                }).FirstOrDefault().Percentage;
         }
 
         public void SaveChanges()

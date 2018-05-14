@@ -33,7 +33,7 @@ namespace BreakOutGame.Models.Domain
 
         public Assignment NextAssignment
         {
-            get { return Path.Assignments.OrderBy(a => a.ReferenceNr).FirstOrDefault(a => a.Status == AssignmentStatus.NotCompleted); }
+            get { return Path.Assignments.OrderBy(a => a.ReferenceNr).FirstOrDefault(a => a.Status != AssignmentStatus.Completed); }
         }
         public BoBGroup()
         {
@@ -66,6 +66,12 @@ namespace BreakOutGame.Models.Domain
         public bool ValidateAnswer(Assignment assignment, String answer)
         {
             return GroupState.ValidateAnswer(assignment, answer);
+        }
+
+        public bool ValidateCode(Assignment assignment, int code)
+        {
+            return GroupState.ValidateCode(assignment, code);
+
         }
     }
 }

@@ -25,7 +25,7 @@ namespace BreakOutGame.Data.Migrations
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                 });
-
+            
             migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
                 columns: table => new

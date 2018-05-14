@@ -28,6 +28,12 @@ namespace BreakOutGame.Controllers
             Assignment assignment=_bobSessionRepository.GetNextAssignment(sessionid,groupid);
             if (assignment == null)
                 return RedirectToAction("Index", "Home");
+            int percentage = Convert.ToInt32(_bobSessionRepository.GetCompletionPercentage(sessionid, groupid) * 100);
+            ViewData["percentage"] = percentage;
+            if (assignment.Status == AssignmentStatus.WaitingForCode)
+            {
+                return RedirectToAction("Action", assignment.ReferenceNr);
+            }
             return View(assignment);
         }
 
@@ -47,9 +53,31 @@ namespace BreakOutGame.Controllers
             }
             //return RedirectToAction("Action", assignment.ReferenceNumber);
             //SERIALIZE ACCESSCODE
+            return RedirectToAction("Action", assignment.ReferenceNr);
+        }
+
+        [SessionFilter]
+        public IActionResult Action(int sessionId, int referenceNumber)
+        {
+            BoBAction action = _bobSessionRepository.GetAction(sessionId, referenceNumber);
+            return View(action);
+        }
+
+        [HttpPost]
+        [SessionFilter]
+        [GroupFilter]
+        public IActionResult ValidateAccessCode(int sessionId, int groupId, int accessCode)
+        {
+            BoBGroup group = _bobSessionRepository.GetSpecificGroupFromSession(sessionId, groupId);
+            Assignment assignment = group.NextAssignment;
+            if (!assignment.ValidateCode(accessCode))
+            {
+                TempData["wrongaccess"] = true;
+                return RedirectToAction("Action");
+            }
+            _bobSessionRepository.SaveChanges();
             return RedirectToAction("Index");
         }
 
-       
     }
 }

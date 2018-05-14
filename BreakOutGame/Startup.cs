@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -37,9 +38,17 @@ namespace BreakOutGame
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+            {
+                config.SignIn.RequireConfirmedEmail = true;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAuthorization(options => {
+                options.AddPolicy("Customer", policy => policy.RequireClaim(ClaimTypes.Role, "teacher"));
+            });
+
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
@@ -49,12 +58,15 @@ namespace BreakOutGame
            
             services.AddSession();
 
+            services.AddScoped<AccountInit>();
 
             services.AddMvc();
+
+            services.Configure<AuthMessageSenderOptions>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, AccountInit init)
         {
             if (env.IsDevelopment())
             {
@@ -78,6 +90,7 @@ namespace BreakOutGame
                     name: "default",
                     template: "{controller=Session}/{action=Index}/{id?}");
             });
+            //init.InitializeUsersAndCustomers().Wait();
         }
 
     }

@@ -13,6 +13,7 @@ namespace BreakOutGame.Models.Domain.RepsitoryInterfaces
         BoBGroup GetSpecificGroupFromSession(int id, int groupId);
         BoBAction GetAction(int sessionId, int referenceNumber);
         Assignment GetNextAssignment(int sessionId, int groupId);
+        double GetCompletionPercentage(int sessionId, int groupId);
         void SaveChanges();
     }
 }

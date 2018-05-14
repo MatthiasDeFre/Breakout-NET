@@ -23,10 +23,20 @@ namespace BreakOutGame.Models.Domain
             String correctAnswer = GroupOperation.GetAnswer(Exercise.Answer);
             if (answer.Equals(correctAnswer))
             {
-                Status = AssignmentStatus.Completed;
+                Status = AssignmentStatus.WaitingForCode;
                 return true;
             }
             WrongCount++;
+            return false;
+        }
+
+        public Boolean ValidateCode(int code)
+        {
+            if (AccessCode.Equals(code))
+            {
+                Status = AssignmentStatus.Completed;
+                return true;
+            }
             return false;
         }
 

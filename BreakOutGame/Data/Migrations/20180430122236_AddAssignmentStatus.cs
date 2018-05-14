@@ -21,7 +21,6 @@ namespace BreakOutGame.Data.Migrations
                 defaultValue: 0
             );
         }
-
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(

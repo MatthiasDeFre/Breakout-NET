@@ -1,0 +1,21 @@
+﻿@using BreakOutGame.Models.Domain
+@model BreakOutGame.Models.Domain.BoBAction
+@{
+    ViewData["Title"] = "Actie";
+}
+
+<div id="pot">
+    <img src="~/images/vogel.gif" alt="vogel">
+</div>
+<div id="pot2">
+    <img src="~/images/vogel2.gif" alt="vogel">
+</div>
+<div>
+    <form method="post" asp-action="ValidateAccessCode">
+
+        <h3 class="sc">@Model.Action</h3>
+        <input name="accessCode" placeholder="ex. 12345" class="inpf">
+        <button class="btn btn-success btnf" type="submit">Controleer</button>
+    </form>
+</div>
+
