@@ -8,7 +8,7 @@
     <div class="col-md-5 actiesFix">
         <h3>Session actions</h3>
         <div>
-            <a asp-action="StartSession" asp-route-id="@Model.Id" class="btn btn-primary btn-lg zelfde">Start Session</a>
+            <a asp-action="ActivateSession" asp-route-id="@Model.Id" class="btn btn-primary btn-lg zelfde">Start Session</a>
         </div>
         <a asp-controller="BoBGroup" asp-action="BlockAllGroups" asp-route-id="" class="btn btn-danger btn-lg zelfde">Blokkeer alle groepen</a>
         <a asp-controller="BoBGroup"     asp-action="DeblockAllGroups" asp-route-id="" class="btn btn-success btn-lg zelfde">Deblokkeer alle groepen</a>
