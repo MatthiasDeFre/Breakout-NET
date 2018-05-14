@@ -166,7 +166,7 @@ body {
 }
 
 .actiesFix {
-    margin-top: 15%;
+    /*margin-top: 15%;*/
     text-align: center;
 }
 .sessieDetailFix {
@@ -284,4 +284,17 @@ body {
     .carousel-caption {
         display: none;
     }
+}
+div.card-body {
+    color: black;
+}
+div.card {
+    padding-bottom: 10px;
+}
+.btn-space {
+    margin-right: 5px;
+}
+
+.form-inlineblock {
+    display: inline-block;
 }

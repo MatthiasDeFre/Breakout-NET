@@ -82,8 +82,28 @@ namespace BreakOutGame.Controllers
         
         public IActionResult SessionDetail(int sessionId)
         {
-            BoBSession session = _boBSessionRepository.GetById(sessionId);
+            BoBSession session = _boBSessionRepository.GetByIdDetail(sessionId);
             return View("SessionDetail", session);
+        }
+
+        [SessionFilter]
+        [HttpPost]
+        public IActionResult EnableActions(int sessionId)
+        {
+            BoBSession session = _boBSessionRepository.GetById(sessionId);
+            session.AreActionsEnabled = true;
+            _boBSessionRepository.SaveChanges();
+            return RedirectToAction("SessionDetail");
+        }
+
+        [SessionFilter]
+        [HttpPost]
+        public IActionResult DisableActions(int sessionId)
+        {
+            BoBSession session = _boBSessionRepository.GetById(sessionId);
+            session.AreActionsEnabled = false;
+            _boBSessionRepository.SaveChanges();
+            return RedirectToAction("SessionDetail");
         }
     }
 }

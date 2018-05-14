@@ -18,12 +18,15 @@ namespace BreakOutGame.Models.Domain
         public AssignmentStatus Status { get; private set; }
         public int WrongCount { get; set; }
 
-        public Boolean ValidateAnswer(String answer)
+        public Boolean ValidateAnswer(String answer, Boolean areActionsEnabled)
         {
             String correctAnswer = GroupOperation.GetAnswer(Exercise.Answer);
             if (answer.Equals(correctAnswer))
             {
-                Status = AssignmentStatus.WaitingForCode;
+                if (areActionsEnabled)
+                    Status = AssignmentStatus.WaitingForCode;
+                else
+                    Status = AssignmentStatus.Completed;
                 return true;
             }
             WrongCount++;

@@ -9,6 +9,7 @@ namespace BreakOutGame.Models.Domain.RepsitoryInterfaces
     {
         IEnumerable<BoBSession> GetAll();
         BoBSession GetById(int id);
+        BoBSession GetByIdDetail(int id);
         IEnumerable<BoBGroup> GetGroupsFromSession(int id);
         BoBGroup GetSpecificGroupFromSession(int id, int groupId);
         BoBAction GetAction(int sessionId, int referenceNumber);

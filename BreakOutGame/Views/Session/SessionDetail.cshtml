@@ -1,20 +1,106 @@
-﻿@using BreakOutGame.Models.Domain
+﻿@using BreakOutGame.Extensions
+@using BreakOutGame.Models.Domain
 @model BreakOutGame.Models.Domain.BoBSession
 @{
     ViewData["Title"] = "SessionDetailScreen";
 }
 <h2 class="sessieDetailFix">Detail @Model.name</h2>
 <div class="row">
-    <div class="col-md-5 actiesFix">
-        <h3>Session actions</h3>
+    <div class="col-md-12 actiesFix">
+       
+        <h3>Sessie acties</h3>
         <div>
-            <a asp-action="ActivateSession" asp-route-id="@Model.Id" class="btn btn-primary btn-lg zelfde">Start Session</a>
+            <form method="post" class="form-inlineblock" asp-action="ActivateSession">
+                <input type="submit" class="btn btn-primary btn-lg zelfde" value="Start Session">
+            </form>
+            @if (Model.AreActionsEnabled)
+            {
+                <form method="post" class="form-inlineblock" asp-action="DisableActions">
+                    <input type="submit" class="btn btn-success btn-lg zelfde" value="Zet acties uit">
+                </form>
+            }
+            else
+            {
+                <form method="post" class="form-inlineblock" asp-action="EnableActions">
+                    <input type="submit" class="btn btn-success btn-lg zelfde" value="Zet acties aan">
+                </form>
+            }
         </div>
-        <a asp-controller="BoBGroup" asp-action="BlockAllGroups" asp-route-id="" class="btn btn-danger btn-lg zelfde">Blokkeer alle groepen</a>
-        <a asp-controller="BoBGroup"     asp-action="DeblockAllGroups" asp-route-id="" class="btn btn-success btn-lg zelfde">Deblokkeer alle groepen</a>
+        <form method="post" class="form-inlineblock" asp-controller="BoBGroup" asp-action="BlockAllGroups">
+            <input type="submit"  class="btn btn-danger btn-lg zelfde" value="Blokkeer alle groepen">
+        </form>
+        <form method="post" class="form-inlineblock" asp-controller="BoBGroup" asp-action="DeblockAllGroups">
+            <input type='submit' class="btn btn-success btn-lg zelfde" value="Deblokkeer alle groepen">
+        </form>
     </div>
-    <div class="col-md-7 groupsFix">
-        <h3>Groups</h3>
+ 
+</div>
+
+<div class="col-md-12">
+  
+</div>
+
+<div id="accordion" class="col-md-12">
+    <div>
+        <h3>Details</h3>
+        
+        <p>Aantal groepen: @Model.Groups.Count()</p>
+        @{
+            var counterA = 1;
+            foreach (var action in Model.Actions)
+            {
+                var a = action.Action;
+
+                <p>Actie @(counterA++): @a.Action</p>
+            }
+        }
+    </div> 
+    @foreach (var group in Model.Groups)
+    {
+        <div class="card">
+            <div class="card-header" id="@($"hgroup" + group.Id)">
+                <h5 class="mb-0">
+                    <button class="btn btn-link opendiv" data-toggle="collapse" data-target="@("#group" + group.Id)" aria-expanded="true" aria-controls="@("group" + group.Id)">
+                        @group.GroupName is momenteel @group.Status.FormatString()
+                    </button>
+                </h5>
+            </div>
+
+            <div id="@("group" + group.Id)" class="collapse" aria-labelledby="@("hgroup" + group.Id)" data-parent="#accordion">
+                <div class="card-body">
+                    @foreach (var assignment in group.Path.Assignments)
+                    {
+                        <p>Vraag @assignment.ReferenceNr: @assignment.Exercise.Name, Fouten: @assignment.WrongCount, Status: @assignment.Status.FormatString()</p>
+                    }
+                    <div>
+                        @{
+                            switch (group.Status)
+                            {
+                                case GroupStatus.Locked:
+                                    <a asp-controller="BoBGroup" asp-action="BlockGroup" asp-route-groupid="@group.Id" class="btn btn-primary btn-space float-right">Block group</a>
+                                    break;
+                                case GroupStatus.Blocked:
+                                    <a asp-controller="BoBGroup" asp-action="DeblockGroup" asp-route-groupid="@group.Id" class="btn btn-primary btn-space float-right">Deblock group</a>
+                                    break;
+                                case GroupStatus.Selected:
+                                    <a asp-controller="BoBGroup" asp-action="LockGroup" asp-route-groupid="@group.Id" class="btn btn-primary btn-space float-right">Vergrendel groep</a>
+                                    break;
+
+                            }
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+
+<div class="col-md-7 groupsFix">
+    <h3>Groups</h3>
+    <div id="accordion">
+
+
         <div>
             <table>
                 <tr>
@@ -50,3 +136,32 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        window.onload = function () {
+            var opendiv = sessionStorage.getItem("opendiv");
+            $(opendiv).addClass("show");
+            $("#accordion").find(".opendiv").click(function () {
+                var currentOpen = sessionStorage.getItem("opendiv");
+                var groupId = $(this).attr('data-target');
+                console.log(currentOpen);
+                console.log(groupId);
+                if (currentOpen != groupId) {
+                    sessionStorage.setItem('opendiv', groupId);
+                } else {
+                    sessionStorage.setItem('opendiv', null);
+                }
+            });
+            if (sessionStorage.scrollTop != "undefined") {
+                $(window).scrollTop(sessionStorage.scrollTop);
+            }
+
+        }
+        setInterval(function () {
+            location.reload();
+        }, 100000);
+        $(window).scroll(function () {
+            sessionStorage.scrollTop = $(this).scrollTop();
+        });
+    </script>
+}

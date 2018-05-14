@@ -42,9 +42,10 @@ namespace BreakOutGame.Controllers
         [HttpPost]
         public IActionResult ValidateAnswer(int sessionId, int groupId, String answer)
         {
+            BoBSession session = _bobSessionRepository.GetById(sessionId);
             BoBGroup group = _bobSessionRepository.GetSpecificGroupFromSession(sessionId, groupId);
             Assignment assignment = group.NextAssignment;
-            bool correct = group.ValidateAnswer(assignment, answer);
+            bool correct = session.ValidateAnswer(group, assignment, answer);
             _bobSessionRepository.SaveChanges();
             if (!correct && group.Status == GroupStatus.Blocked)
             {
@@ -53,7 +54,9 @@ namespace BreakOutGame.Controllers
             }
             //return RedirectToAction("Action", assignment.ReferenceNumber);
             //SERIALIZE ACCESSCODE
-            return RedirectToAction("Action", assignment.ReferenceNr);
+            if(session.AreActionsEnabled)
+                return RedirectToAction("Action", assignment.ReferenceNr);
+            return RedirectToAction("Index");
         }
 
         [SessionFilter]

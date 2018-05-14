@@ -63,9 +63,9 @@ namespace BreakOutGame.Models.Domain
             GroupState.Deblock();
         }
 
-        public bool ValidateAnswer(Assignment assignment, String answer)
+        public bool ValidateAnswer(Assignment assignment, String answer, Boolean areActionsEnabled)
         {
-            return GroupState.ValidateAnswer(assignment, answer);
+            return GroupState.ValidateAnswer(assignment, answer, areActionsEnabled);
         }
 
         public bool ValidateCode(Assignment assignment, int code)

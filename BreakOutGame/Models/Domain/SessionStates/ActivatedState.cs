@@ -26,5 +26,15 @@ namespace BreakOutGame.Models.Domain.SessionStates
         {
             group.Deselect();
         }
+
+        public override bool ValidateAnswer(BoBGroup group, Assignment assignment, string answer)
+        {
+            return group.ValidateAnswer(assignment, answer, Session.AreActionsEnabled);
+        }
+
+        public override bool ValidateCode(BoBGroup group, Assignment assignment, int code)
+        {
+            return group.ValidateCode(assignment, code);
+        }
     }
 }

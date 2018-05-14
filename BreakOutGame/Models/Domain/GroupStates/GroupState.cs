@@ -20,7 +20,7 @@ namespace BreakOutGame.Models.Domain.GroupStates
         public virtual void Lock(Boolean force) => throw new InvalidOperationException();
         public virtual void Block() => throw new InvalidOperationException();
         public virtual void Deblock() => throw new InvalidOperationException();
-        public virtual Boolean ValidateAnswer(Assignment assignment, String answer) => throw new InvalidOperationException();
+        public virtual Boolean ValidateAnswer(Assignment assignment, String answer, Boolean actionsEnabled) => throw new InvalidOperationException();
         public virtual Boolean ValidateCode(Assignment assignment, int code) => throw new InvalidOperationException();
 
 

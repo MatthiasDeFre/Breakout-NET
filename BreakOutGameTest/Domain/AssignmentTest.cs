@@ -23,7 +23,7 @@ namespace BreakOutGameTest.Domain
         public void CorrectAnswer_ReturnsTrue()
         {
             Assignment assignment = _dummyContext.Assignment1;
-            Assert.True(assignment.ValidateAnswer("5"));
+            Assert.True(assignment.ValidateAnswer("5", true));
             Assert.Equal(0, assignment.WrongCount);
         }
 
@@ -33,7 +33,7 @@ namespace BreakOutGameTest.Domain
         public void LazyLoading_AnswerBehaviour()
         {
             Assignment assignment = _dummyContext.LazyAssignment;
-            Assert.True(assignment.ValidateAnswer("5"));
+            Assert.True(assignment.ValidateAnswer("5", true));
             Assert.Equal(0, assignment.WrongCount);
             Assert.NotNull(assignment.GroupOperation.AnswerBehaviour);
         }
@@ -46,12 +46,12 @@ namespace BreakOutGameTest.Domain
             
             for (int i = 1; i <= 3; i++)
             {
-                Assert.False(group.ValidateAnswer(assignment,"nope"));
+                Assert.False(group.ValidateAnswer(assignment,"nope",true));
                 Assert.Equal(i, assignment.WrongCount);
             }
             Assert.Equal(GroupStatus.Blocked, group.Status);
             Assert.Equal(typeof(BlockedState), group.GroupState.GetType());
-            Assert.Throws<InvalidOperationException>(() => group.ValidateAnswer(assignment, "5"));
+            Assert.Throws<InvalidOperationException>(() => group.ValidateAnswer(assignment, "5", true));
         }
     }
 }

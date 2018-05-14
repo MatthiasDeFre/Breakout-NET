@@ -15,9 +15,11 @@ namespace BreakOutGame.Models.Domain
         public int BoxId { get; set; }
         public IEnumerable<SessionAction> Actions { get; set; }
 
+        public Boolean AreActionsEnabled { get; set; }
         public SessionStatus SessionStatus { get; set; }
 
         private SessionState _sessionState;
+      
         public SessionState SessionState {
             get
             {
@@ -53,6 +55,16 @@ namespace BreakOutGame.Models.Domain
         public void DeselectGroup(BoBGroup group)
         {
             SessionState.DeselectGroup(group);
+        }
+
+        public Boolean ValidateAnswer(BoBGroup group, Assignment assignment, String answer)
+        {
+            return SessionState.ValidateAnswer(group, assignment, answer);
+        }
+
+        public Boolean ValidateCode(BoBGroup group, Assignment assignment, int code)
+        {
+            return SessionState.ValidateCode(group, assignment, code);
         }
     }
 }
