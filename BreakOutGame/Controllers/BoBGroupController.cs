@@ -232,5 +232,18 @@ namespace BreakOutGame.Controllers
             bool active = boBSession.SessionStatus == SessionStatus.Started;
             return Json(active);
         }
+
+        [SessionFilter]
+        [GroupFilter]
+        [HttpPost]
+        public IActionResult AddToGroup(int sessionId, int groupId, int studentNumber)
+        {
+            //Get student from class from session
+            //If null redirect and tempdat
+            //Add student from "" to group
+            //Save changes
+
+            return null;
+        }
     }
 }

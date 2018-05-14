@@ -57,7 +57,7 @@
         // maybe reload here?
         location.reload();
     });*/
-    setInterval(function () {
+   setInterval(function () {
         console.log(doingstuff);
         if (!doingstuff)
             location.reload();

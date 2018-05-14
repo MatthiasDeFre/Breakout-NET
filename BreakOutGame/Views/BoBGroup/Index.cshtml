@@ -16,8 +16,7 @@
                 <hr/>
                 <img alt="De groepsafbeelding" src="/images/group2.png" class="groupimg" />
                 @await Html.PartialAsync("_GroupMembers", group)
-                <a asp-action="Index">Test</a>
-                <input class="nonclick"type="text"/>
+             
             </div>
             @if (group.Status == GroupStatus.NotSelected)
             {
