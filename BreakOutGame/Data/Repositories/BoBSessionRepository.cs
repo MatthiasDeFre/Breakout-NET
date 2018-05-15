@@ -33,6 +33,7 @@ namespace BreakOutGame.Data.Repositories
         public BoBSession GetByIdDetail(int id)
         {
             return _sessions
+                .Include(s => s.StudentClass)
                 .Include(s => s.Groups).ThenInclude(g => g.Students).ThenInclude(g => g.Student)
                 .Include(s => s.Groups).ThenInclude(G => G.Path).ThenInclude(p => p.Assignments).ThenInclude(a => a.Exercise)
                 .Include(s => s.Actions).ThenInclude(a => a.Action)
@@ -68,6 +69,17 @@ namespace BreakOutGame.Data.Repositories
                 .FirstOrDefault(g => g.Status == AssignmentStatus.NotCompleted || g.Status == AssignmentStatus.WaitingForCode);
         }
 
+        public Student GetStudentFromSession(int sessionId, String studentId)
+        {
+            return _sessions.Where(s => s.Id == sessionId).Select(s => s.StudentClass).SelectMany(c => c.Students)
+                .FirstOrDefault(s => s.ClassNumber.Equals(studentId));
+        }
+
+        public Boolean IsStudentInGroup(int sessionId, String studentId)
+        {
+            return _sessions.Where(s => s.Id == sessionId).SelectMany(s => s.Groups).SelectMany(g => g.Students)
+                .Select(g => g.Student).Any(g => g.ClassNumber == studentId);
+        }
         public Boolean IsGroupAuthedForAction(int sessionId, int groupId)
         {
             return true;

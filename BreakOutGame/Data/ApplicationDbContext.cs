@@ -37,6 +37,7 @@ namespace BreakOutGame.Data
             builder.ApplyConfiguration(new ExerciseConfiguration());
             builder.ApplyConfiguration(new AssignmentConfiguration());
             builder.ApplyConfiguration(new GroupOperationConfiguration());
+            builder.ApplyConfiguration(new StudentClassConfiguration());
             //Cross tables
             builder.ApplyConfiguration(new SessionActionConfiguration());
             builder.ApplyConfiguration(new GroupStudentConfiguration());

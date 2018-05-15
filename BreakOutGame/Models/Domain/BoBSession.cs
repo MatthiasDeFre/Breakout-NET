@@ -16,6 +16,8 @@ namespace BreakOutGame.Models.Domain
         public IEnumerable<SessionAction> Actions { get; set; }
 
         public Boolean AreActionsEnabled { get; set; }
+        public Boolean IsFreeJoinEnabled { get; set; }
+        public StudentClass StudentClass { get; set; }
         public SessionStatus SessionStatus { get; set; }
 
         private SessionState _sessionState;

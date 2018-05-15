@@ -7,6 +7,18 @@
     <h3>@Model.GroupName</h3>
     <p>Wacht tot het spel begint!</p>
     <div>
+        <div>
+            @{
+                if ((bool) ViewData["freejoin"])
+                {
+                    <form method="post" asp-action="AddToGroup">
+                        <p>@TempData["nostudent"]</p>
+                        <input type="text"  placeholder="Klasnummer" name="studentId" class="form-control"/>
+                        <input type="submit" class="btn btn-primary" />
+                    </form>
+                }
+            }
+        </div>
         <div class="game">
             <script src="https://cdn.htmlgames.com/embed.js?game=CubeCrash&amp;width=800&amp;height=480&amp;bgcolor=white"></script>
         </div>
@@ -16,7 +28,7 @@
 @section Scripts {
 
     <script>
-    var images = new Array();
+    /*var images = new Array();
     var x = 0;
     var intervalId;
 
@@ -32,19 +44,19 @@
             console.log("rip");
             clearInterval(intervalId);
         }
-    }
+    }*/
 
     window.onload = function() {
 
-        intervalId =setInterval(function() {
+       /* intervalId =setInterval(function() {
             changeImage();
-        }, 5000);
+        }, 5000);*/
         setInterval(
             function () {
                 var answer;
                 $.ajax({
                     url: "/BoBGroup/GetSessionStatus"
-                }).done(function(data) {
+                }).done(function (data) {
                     if (data === true) {
                         window.location.href = '@Url.Action("Index","Assignment")';
                     } else {

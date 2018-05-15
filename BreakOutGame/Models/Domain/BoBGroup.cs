@@ -11,7 +11,7 @@ namespace BreakOutGame.Models.Domain
     {
         public int Id { get; set; }
         public String GroupName { get; set; }
-        public IEnumerable<GroupStudent> Students { get; set; }
+        public IList<GroupStudent> Students { get; set; }
 
 
         public GroupStatus Status { get; set; }
@@ -72,6 +72,11 @@ namespace BreakOutGame.Models.Domain
         {
             return GroupState.ValidateCode(assignment, code);
 
+        }
+
+        public void AddStudent(Student student)
+        {
+            Students.Add(new GroupStudent(){BoBGroupId = Id,Group = this, Student = student, StudentId = student.Id});
         }
     }
 }

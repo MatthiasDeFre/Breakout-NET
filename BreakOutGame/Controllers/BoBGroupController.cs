@@ -76,6 +76,7 @@ namespace BreakOutGame.Controllers
             //   BoBGroup group = _boBGroupRepository.GetById(id);
 
             BoBSession session = _boBSessionRepository.GetById(sessionId);
+            ViewData["freejoin"] = session.IsFreeJoinEnabled;
             //Make sure the chosen groupId is from the current session
             BoBGroup group = _boBSessionRepository.GetSpecificGroupFromSession(sessionId, id);
 
@@ -102,10 +103,12 @@ namespace BreakOutGame.Controllers
             return RedirectToAction("WaitScreen");
         }
 
-       
+       [SessionFilter]
         [ResponseCache(VaryByHeader = "*", NoStore = true)]
-        public IActionResult WaitScreen()
-        {
+        public IActionResult WaitScreen(int sessionId)
+       {
+           BoBSession boBSession = _boBSessionRepository.GetById(sessionId);
+           ViewData["freejoin"] = boBSession.IsFreeJoinEnabled;
             int? groupId = HttpContext.Session.GetInt32("groupId");
             if (!groupId.HasValue)
             {
@@ -161,7 +164,6 @@ namespace BreakOutGame.Controllers
             _boBSessionRepository.SaveChanges();
             return RedirectToAction("SessionDetail","Session");
         }
-
 
         [SessionFilter]
         public IActionResult DeblockGroup(int groupId, int sessionId)
@@ -236,14 +238,27 @@ namespace BreakOutGame.Controllers
         [SessionFilter]
         [GroupFilter]
         [HttpPost]
-        public IActionResult AddToGroup(int sessionId, int groupId, int studentNumber)
+        public IActionResult AddToGroup(int sessionId, int groupId, String studentId)
         {
             //Get student from class from session
+            Student student= _boBSessionRepository.GetStudentFromSession(sessionId, studentId);
+            if (student == null)
+            {
+                TempData["nostudent"] = "Student bestaat niet :'(";
+                return RedirectToAction("WaitScreen"); 
+            }
             //If null redirect and tempdat
             //Add student from "" to group
+            if (_boBSessionRepository.IsStudentInGroup(sessionId, studentId))
+            {
+                TempData["nostudent"] = "Student zit al in een groep:'(";
+                return RedirectToAction("WaitScreen");
+            }
+            BoBGroup group = _boBSessionRepository.GetSpecificGroupFromSession(sessionId, groupId);
+            group.AddStudent(student);
             //Save changes
-
-            return null;
+            _boBSessionRepository.SaveChanges();
+            return RedirectToAction("WaitScreen");
         }
     }
 }

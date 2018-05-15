@@ -15,12 +15,16 @@ namespace BreakOutGame.Data.Mappers
             builder.ToTable("BoBSession");
             builder.HasKey(s => s.Id);
             builder.HasMany(s => s.Groups).WithOne();
+            builder.Property<String>("CLASSROOM_STUDENTCLASSNAME");
+            builder.HasOne(s => s.StudentClass).WithMany().HasForeignKey("CLASSROOM_STUDENTCLASSNAME");
             builder.Property(s => s.BoxId).HasColumnName("BOX_ID");
             builder.Property(s => s.SessionStatus).HasColumnName("SESSIONSTATUS");
             builder.Property(s => s.AreActionsEnabled).HasColumnName("ActionsEnabled");
+            builder.Property(s => s.IsFreeJoinEnabled).HasColumnName("FreeJoinEnabled");
 
             //Ignore :(
             builder.Ignore(s => s.SessionState);
+     
         }
     }
 }

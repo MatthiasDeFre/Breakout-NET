@@ -16,6 +16,9 @@ namespace BreakOutGame.Data.Mappers
             builder.Property(e => e.FirstName).HasColumnName("FIRSTNAME");
             builder.Property(e => e.LastName).HasColumnName("LASTNAME");
             builder.Property(e => e.ClassNumber).HasColumnName("CLASSNUMBER");
+           builder.Property<String>("STUDENTCLASS_STUDENTCLASSNAME");
+            builder.HasOne(s => s.StudentClass).WithMany(s => s.Students).HasForeignKey("STUDENTCLASS_STUDENTCLASSNAME");
+
         }
     }
 }

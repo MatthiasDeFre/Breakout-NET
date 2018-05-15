@@ -1,5 +1,7 @@
 ﻿@using BreakOutGame.Extensions
 @using BreakOutGame.Models.Domain
+@using BreakOutGame.Util
+@using Microsoft.AspNetCore.Mvc.Rendering
 @model BreakOutGame.Models.Domain.BoBSession
 @{
     ViewData["Title"] = "SessionDetailScreen";
@@ -10,8 +12,8 @@
        
         <h3>Sessie acties</h3>
         <div>
-            <form method="post" class="form-inlineblock" asp-action="ActivateSession">
-                <input type="submit" class="btn btn-primary btn-lg zelfde" value="Start Session" @(Model.Groups.All(g => g.Status == GroupStatus.Locked) ? "" : "disabled") title="Alle groepen moeten vergrendeld zijn">
+            <form method="post" class="form-inlineblock" asp-action="StartSession">
+                <input type="submit" class="btn btn-primary btn-lg zelfde" value="Start Session" @(Model.Groups.All(g => g.Status == GroupStatus.Locked) && Model.SessionStatus != SessionStatus.Started ? "" : "disabled") title="Alle groepen moeten vergrendeld zijn">
             </form>
             @if (Model.AreActionsEnabled)
             {
@@ -43,7 +45,7 @@
 <div id="accordion" class="col-md-12">
     <div>
         <h3>Details</h3>
-        
+        <p>Sessie voor klas: @Model.StudentClass.ClassName</p>
         <p>Aantal groepen: @Model.Groups.Count()</p>
         @{
             var counterA = 1;
@@ -55,7 +57,7 @@
             }
         }
     </div> 
-    @foreach (var group in Model.Groups)
+    @foreach (var group in Model.Groups.OrderBy(g => g.GroupName, new GroupNameComparer()))
     {
         <div class="card">
             <div class="card-header" id="@($"hgroup" + group.Id)">
@@ -86,7 +88,38 @@
                                     <a asp-controller="BoBGroup" asp-action="DeblockGroup" asp-route-groupid="@group.Id" class="btn btn-primary btn-space float-right">Deblock group</a>
                                     break;
                                 case GroupStatus.Selected:
+                                    <form method="post" class="form-inlineblock" asp-controller="BoBGroup" asp-action="LockGroup" asp-route-groupid="@group.Id">
+                                        <input type='submit' class="btn btn-primary btn-space float-right" value="Vergrendel groep">
+                                    </form>
                                     <a asp-controller="BoBGroup" asp-action="LockGroup" asp-route-groupid="@group.Id" class="btn btn-primary btn-space float-right">Vergrendel groep</a>
+                                    break;
+                                case GroupStatus.NotSelected:
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary btn-space float-right btn-modal" data-toggle="modal" data-target="#@("modal" +group.Id)">
+                                        Vergrendel groep
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="@("modal" +group.Id)" tabindex="-1" role="dialog" aria-labelledby="@("modaltitle" +group.Id)" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="@("modaltitle" +group.Id)">Opgelet!</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Deze groep is nog niet gekozen! Ben je zeker dat je deze groep wilt vergrendelen?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary btn-modal-close" data-dismiss="modal">Terug</button>
+                                                    <form method="post" class="form-inlineblock" asp-controller="BoBGroup" asp-action="LockGroup" asp-route-groupId="@group.Id">
+                                                        <input type='submit' class="btn btn-success btn-lg zelfde" value="Vergrendel groep">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     break;
 
                             }
@@ -141,6 +174,8 @@
 </div>
 @section Scripts {
     <script>
+        var doingstuff = false;
+        var scrolling = false;
         window.onload = function () {
             var opendiv = sessionStorage.getItem("opendiv");
             $(opendiv).addClass("show");
@@ -158,14 +193,29 @@
             if (sessionStorage.scrollTop != "undefined") {
                 $(window).scrollTop(sessionStorage.scrollTop);
             }
-          
-
         }
         setInterval(function () {
-            location.reload();
-        }, 100000);
+            if (!doingstuff && !scrolling) {
+                location.reload();
+            }
+           
+        }, 3000);
         $(window).scroll(function () {
             sessionStorage.scrollTop = $(this).scrollTop();
+        });
+        $(".btn-modal").click(function() {
+            doingstuff = true;
+        }); 
+        $(".btn-modal-close").click(function() {
+            doingstuff = false;
+        }); 
+        $(window).scroll(function () {
+            scrolling = true;
+            clearTimeout($.data(this, 'scrollTimer'));
+            $.data(this, 'scrollTimer', setTimeout(function() {
+                scrolling = false;
+                console.log("Haven't scrolled in 250ms!");
+            }, 250));
         });
     </script>
 }

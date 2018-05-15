@@ -31,3 +31,21 @@
         </div>
     </div>
 </div>
+
+   
+        <script>
+            window.onload = function () {
+                console.log("loaded");
+                setInterval(function() {
+                        console.log("done");
+                        $.ajax({
+                            method: "POST",
+                            url: "/Assignment/BlockCurrentGroup"
+                        }).done(function(data) {
+                            window.location.href = '@Url.Action("Index","Assignment")';
+                        });
+                    },
+                    2000);
+            }
+        </script>
+ 

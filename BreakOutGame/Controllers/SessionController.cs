@@ -70,12 +70,13 @@ namespace BreakOutGame.Controllers
         }
 
       
-
+        [SessionFilter]
+        [HttpPost]
         public IActionResult StartSession(int sessionId)
         {
             _boBSessionRepository.GetById(sessionId).Start();
             _boBSessionRepository.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(SessionDetail));
         }
 
         [SessionFilter]

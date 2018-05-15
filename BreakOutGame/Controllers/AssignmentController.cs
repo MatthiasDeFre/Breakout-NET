@@ -82,5 +82,16 @@ namespace BreakOutGame.Controllers
             return RedirectToAction("Index");
         }
 
+        [SessionFilter]
+        [GroupFilter]
+        public IActionResult BlockCurrentGroup(int groupId, int sessionId)
+        {
+            BoBGroup group = _bobSessionRepository.GetSpecificGroupFromSession(sessionId, groupId);
+            group.Block();
+            _bobSessionRepository.SaveChanges();
+            return RedirectToAction("Index", "Assignment");
+        }
+
+
     }
 }

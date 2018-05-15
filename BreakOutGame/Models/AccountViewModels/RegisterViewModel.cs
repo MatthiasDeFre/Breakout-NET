@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BreakOutGame.Models.AccountViewModels
@@ -11,6 +12,7 @@ namespace BreakOutGame.Models.AccountViewModels
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
+        [RegularExpression(@"^[a-zA-Z1-9\.]+@student\.hogent.be$", ErrorMessage = "Het email adress moet als volgt zijn adress@hogent.be")]
         public string Email { get; set; }
 
         [Required]

@@ -57,14 +57,14 @@
         // maybe reload here?
         location.reload();
     });*/
-   setInterval(function () {
+   /*setInterval(function () {
         console.log(doingstuff);
         if (!doingstuff)
             location.reload();
         else
             wanttoreload = true;
         console.log(wanttoreload + "reload");
-    }, 10000);
+    }, 10000);*/
    
 
 };
