@@ -21,6 +21,7 @@ namespace BreakOutGame.Data.Mappers
             builder.Property(s => s.SessionStatus).HasColumnName("SESSIONSTATUS");
             builder.Property(s => s.AreActionsEnabled).HasColumnName("ActionsEnabled");
             builder.Property(s => s.IsFreeJoinEnabled).HasColumnName("FreeJoinEnabled");
+            builder.Property(s => s.IsDistant).HasColumnName("TILE");
 
             //Ignore :(
             builder.Ignore(s => s.SessionState);

@@ -15,16 +15,28 @@
             <form method="post" class="form-inlineblock" asp-action="StartSession">
                 <input type="submit" class="btn btn-primary btn-lg zelfde" value="Start Session" @(Model.Groups.All(g => g.Status == GroupStatus.Locked) && Model.SessionStatus != SessionStatus.Started ? "" : "disabled") title="Alle groepen moeten vergrendeld zijn">
             </form>
-            @if (Model.AreActionsEnabled)
+            @if (Model.AreActionsEnabled || Model.IsDistant)
             {
                 <form method="post" class="form-inlineblock" asp-action="DisableActions">
-                    <input type="submit" class="btn btn-success btn-lg zelfde" value="Zet acties uit">
+                    <input type="submit" class="btn btn-success btn-lg zelfde" value="Zet acties uit" @(Model.IsDistant ? "disabled" : "")>
                 </form>
             }
             else
             {
                 <form method="post" class="form-inlineblock" asp-action="EnableActions">
                     <input type="submit" class="btn btn-success btn-lg zelfde" value="Zet acties aan">
+                </form>
+            }
+            @if (!Model.IsFreeJoinEnabled)
+            {
+                <form method="post" class="form-inlineblock" asp-action="EnableFreeJoin">
+                    <input type="submit" class="btn btn-success btn-lg zelfde" value="Zelf invullen aanzetten">
+                </form>
+            }
+            else
+            {
+                <form method="post" class="form-inlineblock" asp-action="DisableFreeJoin">
+                    <input type="submit" class="btn btn-success btn-lg zelfde" value="Zelf invullen uitzetten">
                 </form>
             }
         </div>
@@ -46,6 +58,7 @@
     <div>
         <h3>Details</h3>
         <p>Sessie voor klas: @Model.StudentClass.ClassName</p>
+        <p>Is voor afstandsleren? @(Model.IsDistant ? "Ja" : "Nee")</p>
         <p>Aantal groepen: @Model.Groups.Count()</p>
         @{
             var counterA = 1;
@@ -81,17 +94,20 @@
                         @{
                             switch (group.Status)
                             {
-                                case GroupStatus.Locked:
-                                    <a asp-controller="BoBGroup" asp-action="BlockGroup" asp-route-groupid="@group.Id" class="btn btn-primary btn-space float-right">Block group</a>
-                                    break;
                                 case GroupStatus.Blocked:
-                                    <a asp-controller="BoBGroup" asp-action="DeblockGroup" asp-route-groupid="@group.Id" class="btn btn-primary btn-space float-right">Deblock group</a>
+                                    <form method="post" class="form-inlinebloc float-rightk" asp-controller="BoBGroup" asp-action="DeblockGroup" asp-route-groupid="@group.Id">
+                                        <input type='submit' class="btn btn-primary btn-space float-right" value="Deblokkeer groep">
+                                    </form>  
+                                    break;
+                                case GroupStatus.Locked:
+                                    <form method="post" class="form-inlineblock float-right" asp-controller="BoBGroup" asp-action="BlockGroup" asp-route-groupid="@group.Id">
+                                        <input type='submit' class="btn btn-primary btn-space float-right" value="Blokkeer groep">
+                                    </form>  
                                     break;
                                 case GroupStatus.Selected:
-                                    <form method="post" class="form-inlineblock" asp-controller="BoBGroup" asp-action="LockGroup" asp-route-groupid="@group.Id">
+                                    <form method="post" class="form-inlineblock float-right" asp-controller="BoBGroup" asp-action="LockGroup" asp-route-groupid="@group.Id">
                                         <input type='submit' class="btn btn-primary btn-space float-right" value="Vergrendel groep">
                                     </form>
-                                    <a asp-controller="BoBGroup" asp-action="LockGroup" asp-route-groupid="@group.Id" class="btn btn-primary btn-space float-right">Vergrendel groep</a>
                                     break;
                                 case GroupStatus.NotSelected:
                                     <!-- Button trigger modal -->
@@ -214,8 +230,8 @@
             clearTimeout($.data(this, 'scrollTimer'));
             $.data(this, 'scrollTimer', setTimeout(function() {
                 scrolling = false;
-                console.log("Haven't scrolled in 250ms!");
-            }, 250));
+                console.log("Haven't scrolled in 500ms!");
+            }, 500));
         });
     </script>
 }

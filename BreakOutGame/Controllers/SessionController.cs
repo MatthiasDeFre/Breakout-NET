@@ -106,5 +106,25 @@ namespace BreakOutGame.Controllers
             _boBSessionRepository.SaveChanges();
             return RedirectToAction("SessionDetail");
         }
+        [SessionFilter]
+        [HttpPost]
+        public IActionResult EnableFreeJoin(int sessionId)
+        {
+            BoBSession session = _boBSessionRepository.GetById(sessionId);
+            session.IsFreeJoinEnabled = true;
+            _boBSessionRepository.SaveChanges();
+            return RedirectToAction("SessionDetail");
+        }
+
+        [SessionFilter]
+        [HttpPost]
+        public IActionResult DisableFreeJoin(int sessionId)
+        {
+            BoBSession session = _boBSessionRepository.GetById(sessionId);
+            session.IsFreeJoinEnabled = false;
+            _boBSessionRepository.SaveChanges();
+            return RedirectToAction("SessionDetail");
+        }
+
     }
 }
