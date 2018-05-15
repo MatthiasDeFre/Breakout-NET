@@ -1,23 +1,70 @@
 ﻿@model IEnumerable<BreakOutGame.Models.Domain.BoBSession>
 @{
     ViewData["Title"] = "ListSessions";
+    string[] cijfers = new String[Model.Count()];
+    for(int i = 0; i < Model.Count(); i++)
+    {
+        cijfers[i] = i.ToString();
+
+    }
 }
 
-<div class="row">
-    <h3 class="fixer">Sessions</h3>
-    </div>
-    @foreach (var item in Model)
-    {
-        <div class="row sessiesGoedzetten">
-            <tr>
-                <td>
-                    <p>@item.Id</p>
-                    <p>@item.name</p>
-                    <p>@item.SessionStatus</p>
-                    <form method="post" asp-action="ActivateSession" asp-route-sessionId="@item.Id">
-                        <button class="btn btn-primary" type="submit">Toon Details sessie</button>
-                    </form>
-                </td>
-            </tr>
+<div>
+    <div>
+        @{ int teller = 0;
+            string collapse = "show";}
+        @foreach(var item in Model)
+        {
+            string cijfer = cijfers[teller];
+            <div class="card" >
+                <div class="card" id="heading@(cijfer)">
+                    <h4 class="text-center">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse@(cijfer)" aria-expanded="true" aria-controls="collapse@(cijfer)">
+                            @item.name
+                        </button>
+                        </h4>
+                </div>
+                <div id="collapse@(cijfer)" class="collapse @collapse" >
+                    <div class="card-body">
+                        <h4>@item.name: </h4>
+                        <p>
+                            SessieCode: @item.BoxId<br />
+                        </p>
+                        <h4>Groepen:</h4>
+                        <table class="table">
+                            <tr><th>Groepsnaam</th><th colspan="4">GroepsLeden</th></tr>
+
+                            @*@foreach(var group in item.Groups){
+                                <tr>
+                                    <th>@group.GroupName</th>
+                                    @for (int i = 0; i < 4; i++)
+                                    {
+                                        try
+                                        {
+                                            string naam = group.Students.ElementAt(i).Student.FirstName;
+                                            <td>@naam</td>
+                                        }
+                                        catch
+                                        {
+                                            <td></td>
+
+                                        }
+
+                                    }
+                                </tr>
+
+                            }*@
+                        </table>
+                        <div class="text-center">
+                            <form method="post" asp-action="ActivateSession" asp-route-sessionId="@item.Id">
+                                <button class="btn btn-success" type="submit">Activeer Sessie</button>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+                </div>
+            collapse = "";
+            teller++;
+        }
         </div>
-    }
+    </div>
