@@ -96,28 +96,35 @@
 
                     <div>
                         @{
-                            switch (group.Status)
-                            {
-                                case GroupStatus.Blocked:
-                                    <form method="post" class="form-inlinebloc float-rightk" asp-controller="BoBGroup" asp-action="DeblockGroup" asp-route-groupid="@group.Id">
-                                        <input type='submit' class="btn btn-primary btn-space float-right" value="Deblokkeer groep">
-                                    </form>  
-                                    break;
-                                case GroupStatus.Locked:
+                           
+                                
+                                    <div @(group.Status != GroupStatus.Blocked ? "hidden" : "") id="@(group.Id+"s"+(int)GroupStatus.Blocked)" class="@("actionG"+group.Id)">
+                                        <form method="post" class="form-inlinebloc float-rightk" asp-controller="BoBGroup" asp-action="DeblockGroup" asp-route-groupid="@group.Id">
+                                            <input type='submit' class="btn btn-primary btn-space float-right" value="Deblokkeer groep">
+                                        </form>
+                                    </div>
+                                  
+                            
+                                    <div @(group.Status != GroupStatus.Locked ? "hidden" : "") id="@(group.Id+"s"+(int)GroupStatus.Locked)"class="@("actionG"+group.Id)">
                                     <form method="post" class="form-inlineblock float-right" asp-controller="BoBGroup" asp-action="BlockGroup" asp-route-groupid="@group.Id">
                                         <input type='submit' class="btn btn-primary btn-space float-right" value="Blokkeer groep">
-                                    </form>  
-                                    break;
-                                case GroupStatus.Selected:
-                                    <form method="post" class="form-inlineblock float-right" asp-controller="BoBGroup" asp-action="LockGroup" asp-route-groupid="@group.Id">
-                                        <input type='submit' class="btn btn-primary btn-space float-right" value="Vergrendel groep">
-                                    </form>
-                                    break;
-                                case GroupStatus.NotSelected:
+                                        </form> 
+                                    </div>
+                                   
+                              
+                                    <div @(group.Status != GroupStatus.Selected ? "hidden" : "") id="@(group.Id+"s"+ (int)GroupStatus.Selected)"class="@("actionG"+group.Id)">
+                                        <form method="post" class="form-inlineblock float-right" asp-controller="BoBGroup" asp-action="LockGroup" asp-route-groupid="@group.Id">
+                                            <input type='submit' class="btn btn-primary btn-space float-right" value="Vergrendel groep">
+                                        </form>
+                                    </div>
+                                   
+                             
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary btn-space float-right btn-modal" data-toggle="modal" data-target="#@("modal" +group.Id)">
-                                        Vergrendel groep
-                                    </button>
+                                    <div @(group.Status != GroupStatus.NotSelected ? "hidden" : "") id="@(group.Id+"s"+ (int)GroupStatus.NotSelected)"class="@("actionG"+group.Id)">
+                                        <button type="button" class="btn btn-primary btn-space float-right btn-modal" data-toggle="modal" data-target="#@("modal" +group.Id)">
+                                            Vergrendel groep
+                                        </button>
+                                    </div>
                                     <!-- Modal -->
                                     <div class="modal fade" id="@("modal" +group.Id)" tabindex="-1" role="dialog" aria-labelledby="@("modaltitle" +group.Id)" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -140,10 +147,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    break;
 
                             }
-                        }
+                        
                     </div>
                 </div>
 
@@ -196,24 +202,7 @@
     <script>
      /*   var doingstuff = false;
         var scrolling = false;
-        window.onload = function () {
-            var opendiv = sessionStorage.getItem("opendiv");
-            $(opendiv).addClass("show");
-            $("#accordion").find(".opendiv").click(function () {
-                var currentOpen = sessionStorage.getItem("opendiv");
-                var groupId = $(this).attr('data-target');
-                console.log(currentOpen);
-                console.log(groupId);
-                if (currentOpen != groupId) {
-                    sessionStorage.setItem('opendiv', groupId);
-                } else {
-                    sessionStorage.setItem('opendiv', null);
-                }
-            });
-            if (sessionStorage.scrollTop != "undefined") {
-                $(window).scrollTop(sessionStorage.scrollTop);
-            }
-        }
+       
         setInterval(function () {
             if (!doingstuff && !scrolling) {
                 location.reload();
@@ -237,18 +226,36 @@
                 console.log("Haven't scrolled in 500ms!");
             }, 500));
         });*/
+     window.onload = function () {
+         var opendiv = sessionStorage.getItem("opendiv");
+         $(opendiv).addClass("show");
+         $("#accordion").find(".opendiv").click(function () {
+             var currentOpen = sessionStorage.getItem("opendiv");
+             var groupId = $(this).attr('data-target');
+             console.log(currentOpen);
+             console.log(groupId);
+             if (currentOpen != groupId) {
+                 sessionStorage.setItem('opendiv', groupId);
+             } else {
+                 sessionStorage.setItem('opendiv', null);
+             }
+         });
+         if (sessionStorage.scrollTop != "undefined") {
+             $(window).scrollTop(sessionStorage.scrollTop);
+         }
+     }
      function getStatus(status) {
          switch(status) {
          case 3:
-             return " geblokkeerd"
+             return " geblokkeerd";
          case 2:
-             return " vergrendeld"
+             return " vergrendeld";
          case 0:
-             return " nog niet gekozen"
+             return " nog niet gekozen";
          case 1:
-             return " geselecteerd"
+             return " geselecteerd";
          default:
-             return " onbekend"
+             return " onbekend";
          }
      }
 
@@ -269,7 +276,7 @@
      function getNextAssignmentString(group, assigments) {
          var nextAssignment;
          $.each(assigments, function(i, assignment) {
-             console.log(assignment);
+            
              $("#progress"+group.id).append("<p>Vraag " + assignment.referenceNr + ": "  + assignment.exercise.name + ", Fouten: " + assignment.wrongCount + ", Status: " + getAssignmentStatus(assignment.status)+ "</p>");
              if(assignment.status != 1) {
                  nextAssignment = assignment;	
@@ -279,25 +286,34 @@
              return " en zit momenteel aan oefening "+ nextAssignment.referenceNr;
          }
          return " is klaar met alles";
-     }
+        }
+
+     var allLocked = false;
      setInterval(function () {
          $.get('SessionInfo', function(data) {
              $.each(data.groups, function(i, group) {
-                 console.log(group);
-                 $(".actionG" + group.Id).filter(function(){
-                     return this.id != group.Id+group.Status;
-                 }).attr("hidden");
-                 $("#"+group.Id+group.Status).removeAttr("hidden");
+                 if (group.status == 2) {
+                     allLocked = true;
+                 } else {
+                     allLocked = false;
+                 }
+                 $(".actionG" + group.id).filter(function () {
+                     return this.id != group.id+"s"+group.status;
+                 }).hide();
+                 
+                 $("#" + group.id + "s" + group.status).show();
+                 $("#" + group.id + "s" + group.status).removeAttr("hidden");
+            
                  $("#progress"+group.id).empty();
                  $("#title"+group.id).text(group.groupName + " is momenteel " + getStatus(group.status) + getNextAssignmentString(group, group.path.assignments));
 		
 
              });
+             if (allLocked) {
+                 //TODO
+             }
          });
            
-     }, 3000);
- 
-
-       
+     }, 3000);  
     </script>
 }

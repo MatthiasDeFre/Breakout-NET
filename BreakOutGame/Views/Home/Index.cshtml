@@ -3,7 +3,20 @@
 }
 <p>@TempData["bruteforce"]</p>
 <p>@TempData["error"]</p>
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+
+<div id="pot">
+    <img src="~/images/vogel.gif" alt="vogel">
+</div>
+<div id="pot2">
+    <img src="~/images/vogel2.gif" alt="vogel">
+</div>
+<form method="post" asp-controller="Session" asp-action="control">
+    <h3 class="sc">Sessiecode</h3>
+    <input name="id" placeholder="ex. 12345" class="inpf">
+    <button class="btn btn-success btnf" type="submit">Controleer</button>
+</form>
+
+@*<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -64,9 +77,9 @@
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
-</div>
+</div>*@
 
-<div class="row">
+@*<div class="row">
     <div class="col-md-3">
         <h2>Application uses</h2>
         <ul>
@@ -106,4 +119,4 @@
             <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
         </ul>
     </div>
-</div>
+</div>*@

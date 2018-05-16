@@ -5,14 +5,18 @@ using System.Threading.Tasks;
 using BreakOutGame.Filters;
 using BreakOutGame.Models.Domain;
 using BreakOutGame.Models.Domain.RepsitoryInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BreakOutGame.Controllers
 {
+    [AutoValidateAntiforgeryToken]
+    [Authorize(Policy = "teacher")]
     public class SessionController : Controller
     {
         private readonly IBoBSessionRepository _boBSessionRepository;
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View("SessionCodeScreen");
@@ -24,6 +28,7 @@ namespace BreakOutGame.Controllers
         }
 
         [SessionFilter]
+        [AllowAnonymous]
         public int getTotalAssignmentsForSession(int sessionId)
         {
             //get alle SESSIONPATH_ASSIGNMENTS voor een session path id
@@ -32,6 +37,7 @@ namespace BreakOutGame.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Control(int id)
         {
             BoBSession session = _boBSessionRepository.GetById(id);
@@ -130,6 +136,10 @@ namespace BreakOutGame.Controllers
         public IActionResult SessionInfo(int sessionId)
         {
             BoBSession session = _boBSessionRepository.GetByIdDetail(sessionId);
+            foreach (var boBGroup in session.Groups)
+            {
+                boBGroup.Path.Assignments.OrderBy(g => g.ReferenceNr);
+            }
             return Json(session);
         }
 

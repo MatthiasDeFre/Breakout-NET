@@ -64,6 +64,10 @@ namespace BreakOutGame.Controllers
                 {
                     TempData["blocked"] = "Je bent geblokkeerd";
                 }
+                if (session.IsFeedbackEnabled && group.NextAssignment.WrongCount >= 3)
+                {
+                    TempData["feedback"] = "Bekijk de feedback om dit hoofdstuk terug op te helderen";
+                }
                 return RedirectToAction("Index");
 
                 //return RedirectToAction("Opgave");

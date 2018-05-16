@@ -46,7 +46,7 @@ namespace BreakOutGame
                 .AddDefaultTokenProviders();
 
             services.AddAuthorization(options => {
-                options.AddPolicy("Customer", policy => policy.RequireClaim(ClaimTypes.Role, "teacher"));
+                options.AddPolicy("teacher", policy => policy.RequireClaim(ClaimTypes.Role, "teacher"));
             });
 
 
