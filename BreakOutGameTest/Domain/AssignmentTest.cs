@@ -46,12 +46,12 @@ namespace BreakOutGameTest.Domain
             
             for (int i = 1; i <= 3; i++)
             {
-                Assert.False(group.ValidateAnswer(assignment,"nope",true));
+                Assert.False(group.ValidateAnswer(assignment,"nope",true, true));
                 Assert.Equal(i, assignment.WrongCount);
             }
             Assert.Equal(GroupStatus.Blocked, group.Status);
             Assert.Equal(typeof(BlockedState), group.GroupState.GetType());
-            Assert.Throws<InvalidOperationException>(() => group.ValidateAnswer(assignment, "5", true));
+            Assert.Throws<InvalidOperationException>(() => group.ValidateAnswer(assignment, "5", true, true));
         }
     }
 }
