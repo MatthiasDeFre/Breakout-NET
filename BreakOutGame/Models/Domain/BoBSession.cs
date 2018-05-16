@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BreakOutGame.Models.Domain.SessionStates;
+using Newtonsoft.Json;
 
 namespace BreakOutGame.Models.Domain
 {
@@ -13,16 +14,20 @@ namespace BreakOutGame.Models.Domain
         public String name { get; set; }
         public IEnumerable<BoBGroup> Groups { get; set; }
         public int BoxId { get; set; }
+        [JsonIgnore]
         public IEnumerable<SessionAction> Actions { get; set; }
 
         public Boolean AreActionsEnabled { get; set; }
         public Boolean IsFreeJoinEnabled { get; set; }
+        public Boolean IsFeedbackEnabled { get; set; }
+        [JsonIgnore]
         public StudentClass StudentClass { get; set; }
         public Boolean IsDistant { get; set; }
         public SessionStatus SessionStatus { get; set; }
 
         private SessionState _sessionState;
-      
+
+        [JsonIgnore]
         public SessionState SessionState {
             get
             {

@@ -29,7 +29,7 @@ namespace BreakOutGame.Models.Domain.SessionStates
 
         public override bool ValidateAnswer(BoBGroup group, Assignment assignment, string answer)
         {
-            return group.ValidateAnswer(assignment, answer, Session.IsDistant || Session.AreActionsEnabled);
+            return group.ValidateAnswer(assignment, answer, Session.IsDistant || Session.AreActionsEnabled, !Session.IsFeedbackEnabled);
         }
 
         public override bool ValidateCode(BoBGroup group, Assignment assignment, int code)

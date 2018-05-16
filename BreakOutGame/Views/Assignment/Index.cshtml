@@ -8,15 +8,19 @@
             <div class="opdrachtNaamf">
                 <h2>Opdracht: @Model.Exercise.Name</h2>
             </div>
+            @{
+                @await Html.PartialAsync("../Shared/_TempData", "wronganswer")
+                @await Html.PartialAsync("../Shared/_TempData", "blocked")
+            }
             <div class="row">
                 <div id="pdf">
-                    <div class="col-xs-12 col-sm-9 col-md-8">
+                    <div class="col-sm-12 col-sm-9 col-md-8">
                         <object width="600" height="500" type="application/pdf" data="pdf/@Model.Exercise.PDF?#zoom=60&scrollbar=0&toolbar=0&navpanes=0" id="pdf_content">
                             <p>Insert your error message here, if the PDF cannot be displayed.</p>
                         </object>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-3 col-md-4">
+                <div class="col-sm-12 col-sm-3 col-md-4">
                     <form class="formEx" method="post" asp-action="ValidateAnswer">
                         <h3>@Model.GroupOperation.AssignmentString</h3>
                         <label>Antwoord</label>
@@ -32,20 +36,24 @@
     </div>
 </div>
 
-   
-        <script>
-            window.onload = function () {
-                console.log("loaded");
-                setInterval(function() {
-                        console.log("done");
-                        $.ajax({
-                            method: "POST",
-                            url: "/Assignment/BlockCurrentGroup"
-                        }).done(function(data) {
-                            window.location.href = '@Url.Action("Index","Assignment")';
-                        });
-                    },
-                    2000);
-            }
-        </script>
+   @{
+       if (Model.Exercise.Time > 0)
+       {
+           <script>
+               window.onload = function () {
+                   setInterval(
+                       function () {
+
+                           $.ajax({
+                               method: "POST",
+                               url: "/BoBGroup/BlockCurrentGroup"
+                           }).done(function (data) {
+                               window.location.href = '@Url.Action("Index","Assignment")';
+                           });
+                       },@Model.Exercise.Time * 60 * 1000);
+
+               }
+           </script>
+       }
+   }
  

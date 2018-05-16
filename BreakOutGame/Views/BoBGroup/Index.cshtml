@@ -4,11 +4,15 @@
     ViewData["Title"] = "Index";
 }
 <h2 class="firsth2">Overzicht groepen</h2>
+@{
+    @await Html.PartialAsync("../Shared/_TempData", "groupchosen")
+}
+
 <p>@TempData["groupchosen"]</p>
 <div class="grouplist">
     @foreach (var group in Model)
     {   
-        <div id="@("groupparent" + "_" + group.GroupName.Replace(" ", "_"))" class="col-xs-12 col-sm-6 col-md-6 groupparent">
+        <div id="@("groupparent" + "_" + group.GroupName.Replace(" ", "_"))" class="col-sm-12 col-sm-6 col-md-6 groupparent">
             <div class="overlay"></div>
             <div class="group @(group.Status == GroupStatus.NotSelected ? "groupnotselected" : "groupselected")" id="@(group.GroupName.Replace(" ", "_"))">
 

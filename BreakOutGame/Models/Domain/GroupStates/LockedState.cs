@@ -15,10 +15,10 @@ namespace BreakOutGame.Models.Domain.GroupStates
             Group.Status = GroupStatus.Blocked;
             Group.GroupState  =new BlockedState(Group);
         }
-        public override bool ValidateAnswer(Assignment assignment, string answer, Boolean actionsEnabled)
+        public override bool ValidateAnswer(Assignment assignment, string answer, Boolean actionsEnabled, Boolean blockingEnabled)
         {
             bool correct = assignment.ValidateAnswer(answer, actionsEnabled);
-            if (assignment.WrongCount == 3)
+            if (assignment.WrongCount == 3 && blockingEnabled)
             {
                 Block();
             }

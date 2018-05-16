@@ -59,6 +59,7 @@
         <h3>Details</h3>
         <p>Sessie voor klas: @Model.StudentClass.ClassName</p>
         <p>Is voor afstandsleren? @(Model.IsDistant ? "Ja" : "Nee")</p>
+        <p>Is feedback aan? @(Model.IsFeedbackEnabled ? "Ja" : "Nee")</p>
         <p>Aantal groepen: @Model.Groups.Count()</p>
         @{
             var counterA = 1;
@@ -75,7 +76,7 @@
         <div class="card">
             <div class="card-header" id="@($"hgroup" + group.Id)">
                 <h5 class="mb-0">
-                    <button class="btn btn-link opendiv" data-toggle="collapse" data-target="@("#group" + group.Id)" aria-expanded="true" aria-controls="@("group" + group.Id)">
+                    <button id=@("title"+ group.Id) class="btn btn-link opendiv" data-toggle="collapse" data-target="@("#group" + group.Id)" aria-expanded="true" aria-controls="@("group" + group.Id)">
                         @group.GroupName is momenteel @group.Status.FormatString() @(group.Path.Assignments.OrderBy(a => a.ReferenceNr).FirstOrDefault(a=> a.Status != AssignmentStatus.Completed) != null ? "en zit momenteel aan oefening " + group.Path.Assignments.OrderBy(a => a.ReferenceNr).FirstOrDefault(a => a.Status != AssignmentStatus.Completed).ReferenceNr : " is klaar met alles")
                     </button>
                 </h5>
@@ -86,10 +87,13 @@
                     <h3>Details</h3>
                     @await Html.PartialAsync("../BoBGroup/_GroupMembers", group)
                     <h3>Vooruitgang</h3>
-                    @foreach (var assignment in group.Path.Assignments)
-                    {
-                        <p>Vraag @assignment.ReferenceNr: @assignment.Exercise.Name, Fouten: @assignment.WrongCount, Status: @assignment.Status.FormatString()</p>
-                    }
+                    <div id="@("progress"+group.Id)">
+                        @foreach (var assignment in group.Path.Assignments)
+                        {
+                            <p>Vraag @assignment.ReferenceNr: @assignment.Exercise.Name, Fouten: @assignment.WrongCount, Status: @assignment.Status.FormatString()</p>
+                        }
+                    </div>
+
                     <div>
                         @{
                             switch (group.Status)
@@ -190,7 +194,7 @@
 </div>
 @section Scripts {
     <script>
-        var doingstuff = false;
+     /*   var doingstuff = false;
         var scrolling = false;
         window.onload = function () {
             var opendiv = sessionStorage.getItem("opendiv");
@@ -232,6 +236,68 @@
                 scrolling = false;
                 console.log("Haven't scrolled in 500ms!");
             }, 500));
-        });
+        });*/
+     function getStatus(status) {
+         switch(status) {
+         case 3:
+             return " geblokkeerd"
+         case 2:
+             return " vergrendeld"
+         case 0:
+             return " nog niet gekozen"
+         case 1:
+             return " geselecteerd"
+         default:
+             return " onbekend"
+         }
+     }
+
+     function getAssignmentStatus(status) {
+
+         switch(status) {
+         case 1:
+             return "Voltooid";
+         case 0:
+             return "Nog niet voltooid";
+         case 2:
+             return "Invoeren toegangscode";
+         default:
+             return null;
+         }
+     }
+
+     function getNextAssignmentString(group, assigments) {
+         var nextAssignment;
+         $.each(assigments, function(i, assignment) {
+             console.log(assignment);
+             $("#progress"+group.id).append("<p>Vraag " + assignment.referenceNr + ": "  + assignment.exercise.name + ", Fouten: " + assignment.wrongCount + ", Status: " + getAssignmentStatus(assignment.status)+ "</p>");
+             if(assignment.status != 1) {
+                 nextAssignment = assignment;	
+             }
+         });
+         if(nextAssignment != null) {
+             return " en zit momenteel aan oefening "+ nextAssignment.referenceNr;
+         }
+         return " is klaar met alles";
+     }
+     setInterval(function () {
+         $.get('SessionInfo', function(data) {
+             $.each(data.groups, function(i, group) {
+                 console.log(group);
+                 $(".actionG" + group.Id).filter(function(){
+                     return this.id != group.Id+group.Status;
+                 }).attr("hidden");
+                 $("#"+group.Id+group.Status).removeAttr("hidden");
+                 $("#progress"+group.id).empty();
+                 $("#title"+group.id).text(group.groupName + " is momenteel " + getStatus(group.status) + getNextAssignmentString(group, group.path.assignments));
+		
+
+             });
+         });
+           
+     }, 3000);
+ 
+
+       
     </script>
 }

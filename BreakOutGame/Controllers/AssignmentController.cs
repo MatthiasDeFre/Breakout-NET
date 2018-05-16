@@ -44,12 +44,28 @@ namespace BreakOutGame.Controllers
         {
             BoBSession session = _bobSessionRepository.GetById(sessionId);
             BoBGroup group = _bobSessionRepository.GetSpecificGroupFromSession(sessionId, groupId);
+            bool correct = false;
             Assignment assignment = group.NextAssignment;
-            bool correct = session.ValidateAnswer(group, assignment, answer);
-            _bobSessionRepository.SaveChanges();
-            if (!correct && group.Status == GroupStatus.Blocked)
+            try
             {
-                TempData["blocked"] = true;
+                correct = session.ValidateAnswer(group, assignment, answer);
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["blocked"] = "Roep de leerkracht om te vragen om je te deblokkeren";
+                return RedirectToAction("Index");
+            }
+            
+            _bobSessionRepository.SaveChanges();
+            if (!correct)
+            {
+                TempData["wronganswer"] = answer + " was niet het juiste antwoord";
+                if (group.Status == GroupStatus.Blocked)
+                {
+                    TempData["blocked"] = "Je bent geblokkeerd";
+                }
+                return RedirectToAction("Index");
+
                 //return RedirectToAction("Opgave");
             }
             //return RedirectToAction("Action", assignment.ReferenceNumber);

@@ -126,5 +126,12 @@ namespace BreakOutGame.Controllers
             return RedirectToAction("SessionDetail");
         }
 
+        [SessionFilter]
+        public IActionResult SessionInfo(int sessionId)
+        {
+            BoBSession session = _boBSessionRepository.GetByIdDetail(sessionId);
+            return Json(session);
+        }
+
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using BreakOutGame.Models.Domain.GroupStates;
+using Newtonsoft.Json;
 
 namespace BreakOutGame.Models.Domain
 {
@@ -11,6 +12,7 @@ namespace BreakOutGame.Models.Domain
     {
         public int Id { get; set; }
         public String GroupName { get; set; }
+        [JsonIgnore]
         public IList<GroupStudent> Students { get; set; }
 
 
@@ -18,6 +20,7 @@ namespace BreakOutGame.Models.Domain
 
 
         private GroupState _groupState;
+        [JsonIgnore]
         public GroupState GroupState
         {
             get
@@ -63,9 +66,9 @@ namespace BreakOutGame.Models.Domain
             GroupState.Deblock();
         }
 
-        public bool ValidateAnswer(Assignment assignment, String answer, Boolean areActionsEnabled)
+        public bool ValidateAnswer(Assignment assignment, String answer, Boolean areActionsEnabled, Boolean blockingEnabled)
         {
-            return GroupState.ValidateAnswer(assignment, answer, areActionsEnabled);
+            return GroupState.ValidateAnswer(assignment, answer, areActionsEnabled, blockingEnabled);
         }
 
         public bool ValidateCode(Assignment assignment, int code)

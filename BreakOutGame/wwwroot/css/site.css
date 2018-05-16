@@ -227,7 +227,7 @@ body {
 }
 
 .grouplist > .groupparent:nth-child(odd) {
-  
+    clear: both;
 }
 
 .groupparent {
@@ -300,4 +300,16 @@ div.card {
 
 .form-inlineblock {
     display: inline-block;
+}
+
+.loginlinks {
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 10px 0px;
+    border-style: solid;
+    border-color: rgb(201, 202, 204);
+    border-width: 1px;
+    -webkit-box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 4px 20px -1px rgba(0,0,0,0.75);
+    box-shadow: 4px 4px 20px -1px rgba(255, 255, 255, 0.75);
+    border-radius: 10px;
 }
