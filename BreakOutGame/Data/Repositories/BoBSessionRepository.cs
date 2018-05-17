@@ -47,7 +47,7 @@ namespace BreakOutGame.Data.Repositories
 
         public BoBAction GetAction(int sessionId, int referenceNumber)
         {
-            return _sessions.Where(s => s.Id == sessionId).SelectMany(g => g.Actions).Where(a => a.OrderNumber == referenceNumber).Select(a => a.Action).FirstOrDefault();
+            return _sessions.Where(s => s.Id == sessionId).SelectMany(g => g.Actions).Where(a => a.OrderNumber == referenceNumber - 1).Select(a => a.Action).FirstOrDefault();
         }
         public BoBGroup GetSpecificGroupFromSession(int id, int groupId)
         {

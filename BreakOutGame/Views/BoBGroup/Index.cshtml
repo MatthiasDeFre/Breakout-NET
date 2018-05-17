@@ -8,7 +8,6 @@
     @await Html.PartialAsync("../Shared/_TempData", "groupchosen")
 }
 
-<p>@TempData["groupchosen"]</p>
 <div class="grouplist">
     @foreach (var group in Model)
     {   

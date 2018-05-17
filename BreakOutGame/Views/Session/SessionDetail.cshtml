@@ -13,7 +13,7 @@
         <h3>Sessie acties</h3>
         <div>
             <form method="post" class="form-inlineblock" asp-action="StartSession">
-                <input type="submit" class="btn btn-primary btn-lg zelfde" value="Start Session" @(Model.Groups.All(g => g.Status == GroupStatus.Locked) && Model.SessionStatus != SessionStatus.Started ? "" : "disabled") title="Alle groepen moeten vergrendeld zijn">
+                <input id="startS" type="submit" class="btn btn-primary btn-lg zelfde" value="Start Session" @(Model.Groups.All(g => g.Status == GroupStatus.Locked) && Model.SessionStatus != SessionStatus.Started ? "" : "disabled") title="Alle groepen moeten vergrendeld zijn">
             </form>
             @if (Model.AreActionsEnabled || Model.IsDistant)
             {
@@ -209,9 +209,7 @@
             }
            
         }, 3000);
-        $(window).scroll(function () {
-            sessionStorage.scrollTop = $(this).scrollTop();
-        });
+        
         $(".btn-modal").click(function() {
             doingstuff = true;
         }); 
@@ -226,6 +224,9 @@
                 console.log("Haven't scrolled in 500ms!");
             }, 500));
         });*/
+     $(window).scroll(function () {
+         sessionStorage.scrollTop = $(this).scrollTop();
+     });
      window.onload = function () {
          var opendiv = sessionStorage.getItem("opendiv");
          $(opendiv).addClass("show");
@@ -288,13 +289,11 @@
          return " is klaar met alles";
         }
 
-     var allLocked = false;
+     var allLocked = true;
      setInterval(function () {
          $.get('SessionInfo', function(data) {
              $.each(data.groups, function(i, group) {
-                 if (group.status == 2) {
-                     allLocked = true;
-                 } else {
+                 if (group.status != 2) {
                      allLocked = false;
                  }
                  $(".actionG" + group.id).filter(function () {
@@ -309,9 +308,10 @@
 		
 
              });
-             if (allLocked) {
-                 //TODO
+             if (allLocked && data.status != 3) {
+                 $("#startS").prop("disabled", false);
              }
+             allLocked = true;
          });
            
      }, 3000);  

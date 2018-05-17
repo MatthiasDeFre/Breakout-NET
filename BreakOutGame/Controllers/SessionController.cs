@@ -85,11 +85,19 @@ namespace BreakOutGame.Controllers
             return RedirectToAction(nameof(SessionDetail));
         }
 
+        [HttpPost]
+        public IActionResult SetSessionId(int sessionId)
+        {
+            HttpContext.Session.SetInt32("SessionId", sessionId);
+            return RedirectToAction("SessionDetail");
+        }
+
         [SessionFilter]
         
         public IActionResult SessionDetail(int sessionId)
         {
             BoBSession session = _boBSessionRepository.GetByIdDetail(sessionId);
+            OrderGroupPaths(session.Groups);
             return View("SessionDetail", session);
         }
 
@@ -136,11 +144,16 @@ namespace BreakOutGame.Controllers
         public IActionResult SessionInfo(int sessionId)
         {
             BoBSession session = _boBSessionRepository.GetByIdDetail(sessionId);
-            foreach (var boBGroup in session.Groups)
-            {
-                boBGroup.Path.Assignments.OrderBy(g => g.ReferenceNr);
-            }
+           OrderGroupPaths(session.Groups);
             return Json(session);
+        }
+
+        private void OrderGroupPaths(IEnumerable<BoBGroup> groups)
+        {
+            foreach (var boBGroup in groups)
+            {
+                boBGroup.Path.Assignments = boBGroup.Path.Assignments.OrderBy(g => g.ReferenceNr);
+            }
         }
 
     }

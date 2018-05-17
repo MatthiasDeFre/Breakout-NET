@@ -8,6 +8,7 @@ using BreakOutGame.Models.Domain.RepsitoryInterfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BreakOutGame.Models.ViewModels;
+using Microsoft.AspNetCore.Routing;
 
 namespace BreakOutGame.Controllers
 {
@@ -21,18 +22,28 @@ namespace BreakOutGame.Controllers
 
         [GroupFilter]
         [SessionFilter]
-        public IActionResult Index(int groupid, int sessionid)
+        public IActionResult Index(int groupId, int sessionId)
         {
           //  BoBGroup bobgroup=_bobSessionRepository.GetSpecificGroupFromSession(sessionid, groupid);
          
-            Assignment assignment=_bobSessionRepository.GetNextAssignment(sessionid,groupid);
+            Assignment assignment=_bobSessionRepository.GetNextAssignment(sessionId,groupId);
             if (assignment == null)
-                return RedirectToAction("Index", "Home");
-            int percentage = Convert.ToInt32(_bobSessionRepository.GetCompletionPercentage(sessionid, groupid) * 100);
+            {
+                if (groupId == 0 || sessionId == 0)
+                {
+                    return RedirectToAction("Index", "Session");
+                }
+                return View("EndScreen");
+            }
+                
+            int percentage = Convert.ToInt32(_bobSessionRepository.GetCompletionPercentage(sessionId, groupId) * 100);
             ViewData["percentage"] = percentage;
             if (assignment.Status == AssignmentStatus.WaitingForCode)
             {
-                return RedirectToAction("Action", assignment.ReferenceNr);
+                return RedirectToAction("Action", new RouteValueDictionary
+                {
+                    {"referenceNumber", assignment.ReferenceNr}
+                });
             }
             return View(assignment);
         }
@@ -74,8 +85,11 @@ namespace BreakOutGame.Controllers
             }
             //return RedirectToAction("Action", assignment.ReferenceNumber);
             //SERIALIZE ACCESSCODE
-            if(session.AreActionsEnabled)
-                return RedirectToAction("Action", assignment.ReferenceNr);
+            if (session.AreActionsEnabled && !session.IsDistant)
+                return RedirectToAction("Action", new RouteValueDictionary
+                {
+                    {"referenceNumber", assignment.ReferenceNr}
+                });
             return RedirectToAction("Index");
         }
 
@@ -96,7 +110,10 @@ namespace BreakOutGame.Controllers
             if (!assignment.ValidateCode(accessCode))
             {
                 TempData["wrongaccess"] = true;
-                return RedirectToAction("Action");
+                return RedirectToAction("Action", new RouteValueDictionary
+                {
+                    {"referenceNumber", assignment.ReferenceNr}
+                });
             }
             _bobSessionRepository.SaveChanges();
             return RedirectToAction("Index");

@@ -27,7 +27,7 @@ namespace BreakOutGame.Models.Domain.SessionStates
             group.Deselect();
         }
 
-        public override bool ValidateAnswer(BoBGroup group, Assignment assignment, string answer)
+     /*   public override bool ValidateAnswer(BoBGroup group, Assignment assignment, string answer)
         {
             return group.ValidateAnswer(assignment, answer, Session.IsDistant || Session.AreActionsEnabled, !Session.IsFeedbackEnabled);
         }
@@ -35,6 +35,6 @@ namespace BreakOutGame.Models.Domain.SessionStates
         public override bool ValidateCode(BoBGroup group, Assignment assignment, int code)
         {
             return group.ValidateCode(assignment, code);
-        }
+        }*/
     }
 }

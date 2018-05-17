@@ -188,7 +188,7 @@ namespace BreakOutGame.Controllers
                     group.Block();
             }
             _boBSessionRepository.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("SessionDetail", "Session");
 
         }
 
@@ -202,7 +202,7 @@ namespace BreakOutGame.Controllers
                     group.Deblock();
             }
             _boBSessionRepository.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("SessionDetail", "Session");
         }
 
        

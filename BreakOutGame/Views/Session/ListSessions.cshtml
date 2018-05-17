@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BreakOutGame.Models.Domain.BoBSession>
+﻿@using BreakOutGame.Models.Domain
+@model IEnumerable<BreakOutGame.Models.Domain.BoBSession>
 @{
     ViewData["Title"] = "ListSessions";
     string[] cijfers = new String[Model.Count()];
@@ -28,7 +29,7 @@
                     <div class="card-body">
                         <h4>@item.name: </h4>
                         <p>
-                            SessieCode: @item.BoxId<br />
+                            SessieCode: @item.Id<br />
                         </p>
                         <h4>Groepen:</h4>
                         <table class="table">
@@ -56,9 +57,21 @@
                             }*@
                         </table>
                         <div class="text-center">
-                            <form method="post" asp-action="ActivateSession" asp-route-sessionId="@item.Id">
-                                <button class="btn btn-success" type="submit">Activeer Sessie</button>
-                            </form>
+                            @{
+                                if (item.SessionStatus == SessionStatus.Scheduled)
+                                {
+                                    <form method="post" asp-action="ActivateSession" asp-route-sessionId="@item.Id">
+                                        <button class="btn btn-success" type="submit">Activeer Sessie</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form method="post" asp-action="SetSessionId" asp-route-sessionId="@item.Id">
+                                        <button class="btn btn-success" type="submit">Details sessie</button>
+                                    </form>
+                                }
+                            }
+                          
                         </div>
                     </div>
             </div>
