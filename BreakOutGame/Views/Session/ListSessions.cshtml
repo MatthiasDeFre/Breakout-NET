@@ -27,7 +27,7 @@
                 </div>
                 <div id="collapse@(cijfer)" class="collapse @collapse" >
                     <div class="card-body">
-                        <h4>@item.name: </h4>
+                        @*<h4>@item.name: </h4>
                         <p>
                             SessieCode: @item.Id<br />
                         </p>
@@ -35,7 +35,7 @@
                         <table class="table">
                             <tr><th>Groepsnaam</th><th colspan="4">GroepsLeden</th></tr>
 
-                            @*@foreach(var group in item.Groups){
+                            @foreach(var group in item.Groups){
                                 <tr>
                                     <th>@group.GroupName</th>
                                     @for (int i = 0; i < 4; i++)
@@ -54,8 +54,8 @@
                                     }
                                 </tr>
 
-                            }*@
-                        </table>
+                            }
+                        </table>*@
                         <div class="text-center">
                             @{
                                 if (item.SessionStatus == SessionStatus.Scheduled)
@@ -76,7 +76,6 @@
                     </div>
             </div>
                 </div>
-            collapse = "";
             teller++;
         }
         </div>

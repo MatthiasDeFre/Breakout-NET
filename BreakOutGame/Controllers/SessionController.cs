@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace BreakOutGame.Controllers
 {
     [AutoValidateAntiforgeryToken]
-    [Authorize(Policy = "teacher")]
     public class SessionController : Controller
     {
         private readonly IBoBSessionRepository _boBSessionRepository;
