@@ -158,46 +158,6 @@
     }
 </div>
 
-<div class="col-md-7 groupsFix">
-    <h3>Groups</h3>
-    <div id="accordion">
-
-
-        <div>
-            <table>
-                <tr>
-                    <th>Groupname</th>
-                    <th>Members</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-                @foreach (var group in Model.Groups)
-                {
-                    @*@(String isBlocked = group.Status == GroupStatus.Blocked ? "Block" : "Deblock";)*@
-                    <tr>
-                        <td>@group.GroupName</td>
-                        <td>
-                            <ul>
-                                @foreach (var student in group.Students)
-                                {
-                                    <li>@student.Student.FirstName @student.Student.LastName</li>
-                                }
-                            </ul>
-                        </td>
-                        <td>
-                            Status?
-                        </td>
-                        <td>
-                            @*//beter om te werken met een toggle?*@
-                            <a asp-controller="BoBGroup" asp-action="BlockGroup" asp-route-groupid="@group.Id" class="btn btn-primary btn-lg wGroupsB">Block group</a>
-                            <a asp-controller="BoBGroup" asp-action="DeblockGroup" asp-route-groupid="@group.Id" class="btn btn-primary btn-lg">Deblock group</a>
-                        </td>
-                    </tr>
-                }
-            </table>
-        </div>
-    </div>
-</div>
 @section Scripts {
     <script>
      /*   var doingstuff = false;
