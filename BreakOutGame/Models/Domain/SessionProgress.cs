@@ -28,8 +28,10 @@ namespace BreakOutGame.Models.Domain
         }
         public double getSessionProgress()
         {
-            return 100 * (_current / _total);
+            return 100 * ((double)_current / _total);
         }
         public int Current { get { return this._current; } }
+
+        public int Total => this._total;
     }
 }

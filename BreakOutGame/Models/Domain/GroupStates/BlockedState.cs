@@ -11,7 +11,7 @@ namespace BreakOutGame.Models.Domain.GroupStates
       
         public override void Block()
         {
-            throw new InvalidOperationException("Deze groep is al geblokkeerd");
+            //throw new InvalidOperationException("Deze groep is al geblokkeerd");
         }
 
         public override void Deblock()

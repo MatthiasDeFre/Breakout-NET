@@ -18,7 +18,12 @@ namespace BreakOutGame.Models.Domain
             set => _pdf = value;
         }
 
-        public String Feedback { get; set; }
+        private String _feedback;
+        public String Feedback
+        {
+            get => Path.GetFileName(_feedback);
+            set => _feedback = value;
+        }
         public String Name { get; set; }
         public int Time { get; set; }
         //TO DO CATEGORY

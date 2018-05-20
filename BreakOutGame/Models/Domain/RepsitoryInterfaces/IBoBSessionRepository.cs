@@ -17,7 +17,7 @@ namespace BreakOutGame.Models.Domain.RepsitoryInterfaces
 
         Student GetStudentFromSession(int sessionId, String studentId);
         Boolean IsStudentInGroup(int sessionId, String studentId);
-        double GetCompletionPercentage(int sessionId, int groupId);
+        SessionProgress GetCompletionPercentage(int sessionId, int groupId);
         void SaveChanges();
     }
 }

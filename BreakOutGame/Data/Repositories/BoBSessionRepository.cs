@@ -85,15 +85,12 @@ namespace BreakOutGame.Data.Repositories
             return true;
         }
 
-        public double GetCompletionPercentage(int sessionId, int groupId)
+        public SessionProgress GetCompletionPercentage(int sessionId, int groupId)
         {
             var assignments = _sessions.Where(s => s.Id == sessionId).SelectMany(g => g.Groups).Where(g => g.Id == groupId)
                 .Select(g => g.Path).SelectMany(g => g.Assignments);
            return assignments.OrderBy(g => g.ReferenceNr)
-                .Where(g => g.Status != AssignmentStatus.Completed).Select(g => new
-                {
-                    Percentage= (double)(g.ReferenceNr-1) / assignments.Max(g2 => g.ReferenceNr)
-                }).FirstOrDefault().Percentage;
+                .Where(g => g.Status != AssignmentStatus.Completed).Select(g => new SessionProgress(assignments.Max(g2 => g2.ReferenceNr), g.ReferenceNr - 1)).FirstOrDefault();
         }
 
         public void SaveChanges()

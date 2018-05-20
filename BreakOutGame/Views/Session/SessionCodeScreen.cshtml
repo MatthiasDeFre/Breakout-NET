@@ -8,8 +8,11 @@
 <div id="pot2">
     <img src="~/images/vogel2.gif" alt="vogel">
 </div>
-    <form method="post" asp-action="control">
-        <h3 class="sc">Sessiecode</h3>
-        <input name="id" placeholder="ex. 12345" class="inpf">
-        <button class="btn btn-success btnf" type="submit">Controleer</button>
-    </form>
+@{
+    @await Html.PartialAsync("../Shared/_TempData", "sessioncode")
+}
+<form method="post" asp-action="control">
+    <h3 class="sc">Sessiecode</h3>
+    <input name="id" placeholder="ex. 12345" class="inpf">
+    <button class="btn btn-success btnf" type="submit">Controleer</button>
+</form>

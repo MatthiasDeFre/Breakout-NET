@@ -147,8 +147,10 @@ body {
 }
 
 .opdrachtNaamf {
-    margin-left: 40%;
+    text-align: center;
     margin-top: 8%;
+    width: 100%;
+    margin: auto;
 }
 
 .sessiesGoedzetten {
