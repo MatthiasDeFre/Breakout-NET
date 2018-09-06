@@ -8,10 +8,12 @@ using BreakOutGame.Models.Domain.RepsitoryInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BreakOutGame.Controllers
 {
     [AutoValidateAntiforgeryToken]
+    [Authorize(Policy = "teacher")]
     public class SessionController : Controller
     {
         private readonly IBoBSessionRepository _boBSessionRepository;
@@ -101,6 +103,7 @@ namespace BreakOutGame.Controllers
         public IActionResult ListSessions()
         {
             IEnumerable<BoBSession> lijst = _boBSessionRepository.GetAll();
+            ViewData["Classes"] = GetClassesAsSelectList(lijst);
             return View("ListSessions",lijst);
         }
 
@@ -228,6 +231,13 @@ namespace BreakOutGame.Controllers
                 boBGroup.Path.Assignments = boBGroup.Path.Assignments.OrderBy(g => g.ReferenceNr);
             }
         }
+
+        private SelectList GetClassesAsSelectList(IEnumerable<BoBSession> sessions)
+        {
+            return new SelectList(sessions.Select(s => s.StudentClass).Distinct().OrderBy(s => s.ClassName).ToList(),
+                nameof(StudentClass.ClassName), nameof(StudentClass.ClassName), 0);
+        }
+
 
     }
 }

@@ -13,7 +13,7 @@
         <h3>Sessie acties</h3>
         <div>
             <form method="post" class="form-inlineblock" asp-action="StartSession">
-                <input id="startS" type="submit" class="btn btn-primary btn-lg zelfde" value="Start Session" @(Model.Groups.All(g => g.Status == GroupStatus.Locked) && Model.SessionStatus != SessionStatus.Started ? "" : "disabled") title="Alle groepen moeten vergrendeld zijn">
+                <input id="startS" type="submit" class="btn btn-primary btn-lg zelfde" value="Start Session" @(Model.Groups.Any() &&(Model.Groups.All(g => g.Status == GroupStatus.Locked) && Model.SessionStatus != SessionStatus.Started) ? "" : "disabled") title="Alle groepen moeten vergrendeld zijn">
             </form>
             @if (Model.AreActionsEnabled || Model.IsDistant)
             {
@@ -239,7 +239,7 @@
          $.each(assigments, function(i, assignment) {
             
              $("#progress"+group.id).append("<p>Vraag " + assignment.referenceNr + ": "  + assignment.exercise.name + ", Fouten: " + assignment.wrongCount + ", Status: " + getAssignmentStatus(assignment.status)+ "</p>");
-             if(assignment.status != 1) {
+             if(assignment.status != 1 && nextAssignment == null) {
                  nextAssignment = assignment;	
              }
          });
@@ -265,7 +265,14 @@
             
                  $("#progress"+group.id).empty();
                  $("#title"+group.id).text(group.groupName + " is momenteel " + getStatus(group.status) + getNextAssignmentString(group, group.path.assignments));
-		
+
+                 $("#studentlist" + group.id).empty();
+              
+                 $.each(group.students,
+                     function (i, student) {
+                         $("#studentlist" + group.id)
+                             .append("<li>" + student.student.firstName + " " + student.student.lastName + "</li>");
+                     });
 
              });
              if (allLocked && data.status != 3) {

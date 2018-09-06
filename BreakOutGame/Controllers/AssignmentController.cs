@@ -126,11 +126,11 @@ namespace BreakOutGame.Controllers
 
             //Answer is correct, check if we need to show the next action 
             if (session.AreActionsEnabled && !session.IsDistant)
-                return RedirectToAction("Action", new RouteValueDictionary
-                {
-                    {"referenceNumber", assignment.ReferenceNr}
-
-                });
+            {
+                HttpContext.Session.SetInt32("referenceNumber", assignment.ReferenceNr);
+                return RedirectToAction("Action");
+            }
+                
 
             //Answer is correct, actions not enabled, show next assignment
             return RedirectToAction("Index");
@@ -145,7 +145,9 @@ namespace BreakOutGame.Controllers
         [SessionFilter]
         public IActionResult Action(int sessionId, int referenceNumber)
         {
-            BoBAction action = _bobSessionRepository.GetAction(sessionId, referenceNumber);
+            BoBAction action = _bobSessionRepository.GetAction(sessionId, HttpContext.Session.GetInt32("referenceNumber").Value);
+            if (action == null)
+                return RedirectToAction("Index");
             return View(action);
         }
 
@@ -173,10 +175,8 @@ namespace BreakOutGame.Controllers
                 {
                     //Try again
                     TempData["wrongaccess"] = true;
-                    return RedirectToAction("Action", new RouteValueDictionary
-                {
-                    {"referenceNumber", assignment.ReferenceNr}
-                });
+                    HttpContext.Session.SetInt32("referenceNumber", assignment.ReferenceNr);
+                    return RedirectToAction("Action");
                 }
             }
             catch (InvalidOperationException ex)

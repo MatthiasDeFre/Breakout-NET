@@ -12,7 +12,7 @@ namespace BreakOutGame.Models.Domain
     {
         public int Id { get; set; }
         public String GroupName { get; set; }
-        [JsonIgnore]
+       
         public IList<GroupStudent> Students { get; set; }
 
 

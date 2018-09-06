@@ -11,22 +11,40 @@
 }
 
 <div>
-    <div>
-        @{ int teller = 0;
+    <div class="form-row form-group">
+        <div class="col-md-8">
+            <label for="searchstring">Filter op sessienaam</label>
+            <input class="form-control" name="searchstring" id="searchstring" type="text" />
+        </div>
+        <div class="col-md-4">
+            <label>Filter op klas</label>
+            <select id="classlist" class="custom-select mb-3" asp-items="@(ViewData["Classes"] as SelectList)">
+                <option value="">Alle klassen</option>
+            </select>
+        </div>
+    </div>
+    <div id="sessions">
+        <p id="nofound" style="display: none">Geen sessies gevonden die voldoen aan de filter</p>
+        @{
+            int teller = 0;
             string collapse = "show";}
-        @foreach(var item in Model)
+        @foreach (var item in Model)
         {
             string cijfer = cijfers[teller];
-            <div class="card" >
+            <div class="card hiddenable">
                 <div class="card" id="heading@(cijfer)">
+
                     <h4 class="text-center">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse@(cijfer)" aria-expanded="true" aria-controls="collapse@(cijfer)">
-                            @item.name
+                        <button id="btntest" class="btn btn-link" data-toggle="collapse" data-target="#collapse@(cijfer)" aria-expanded="true" aria-controls="collapse@(cijfer)">
+                            @item.name <span>voor de klas: @item.StudentClass.ClassName</span>
                         </button>
-                        </h4>
+
+                    </h4>
+
                 </div>
-                <div id="collapse@(cijfer)" class="collapse @collapse" >
+                <div id="collapse@(cijfer)" class="collapse @collapse">
                     <div class="card-body">
+
                         @*<h4>@item.name: </h4>
                         <p>
                             SessieCode: @item.Id<br />
@@ -71,12 +89,43 @@
                                     </form>
                                 }
                             }
-                          
+
                         </div>
                     </div>
-            </div>
                 </div>
+            </div>
             teller++;
         }
-        </div>
     </div>
+</div>
+@section Scripts
+{
+    <script>
+        var filterfunction = function() {
+            $("#nofound").hide();
+            var selectedOption = $("#classlist").find("option:selected").val();
+            $(".hiddenable").each(function(i, test) {
+                var searchstring = $("#searchstring").val().toLowerCase();
+                var btnText = $(test).find("#btntest").text().trim().toLowerCase();
+                var indexOfClass = btnText.lastIndexOf(" voor de klas:");
+                var realText = btnText.substring(0, indexOfClass);
+                var classText = btnText.substring(indexOfClass + 15);
+            
+                //   $(test).hide();
+                if (realText.indexOf(searchstring) !== -1 && (selectedOption === "" || classText === selectedOption)) {
+                    $(test).show();
+                } else {
+                    $(test).hide();
+                }
+            });
+            if ($('#sessions').children('.hiddenable:visible').length === 0) {
+                // action when all are hidden
+                $("#nofound").show();
+                console.log("test");
+            } 
+        }
+        $('#searchstring').on('input',filterfunction);
+        $('#classlist').on("change", filterfunction);
+
+    </script>
+}

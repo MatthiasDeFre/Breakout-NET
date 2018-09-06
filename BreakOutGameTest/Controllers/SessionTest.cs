@@ -3,7 +3,9 @@ using Moq;
 using BreakOutGameTest.Data;
 using BreakOutGame.Models.Domain.RepsitoryInterfaces;
 using BreakOutGame.Controllers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace BreakOutGameTest.Controllers
 {
@@ -17,7 +19,7 @@ namespace BreakOutGameTest.Controllers
         {
             this._dummyContext = new DummyApplicationDbContext();
             this._sessionRepository = new Mock<IBoBSessionRepository>();
-            this._controller = new SessionController(_sessionRepository.Object);
+            this._controller = new SessionController(_sessionRepository.Object) ;
         }
 
         #region tests

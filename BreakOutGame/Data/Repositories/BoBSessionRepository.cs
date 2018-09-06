@@ -22,7 +22,7 @@ namespace BreakOutGame.Data.Repositories
         }
         public IEnumerable<BoBSession> GetAll()
         {
-            return _sessions.ToList();
+            return _sessions.Include(s => s.StudentClass).ToList();
         }
 
         public BoBSession GetById(int id)
