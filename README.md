@@ -1,4 +1,4 @@
-# BreakoutGame - Java
+# BreakoutGame - .NET
 
 ## Description
 
